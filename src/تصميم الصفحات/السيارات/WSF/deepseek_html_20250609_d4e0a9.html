@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>توبشيلد كليرتي شيلد - حماية الزجاج الأمامي المتطورة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0a84ff;
+            --secondary: #0066cc;
+            --accent: #00c6ff;
+            --dark: #121c36;
+            --light: #f0f8ff;
+            --text: #333;
+            --white: #fff;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, #1a2a4d 100%);
+            color: var(--white);
+            overflow-x: hidden;
+            line-height: 1.7;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        /* التصميم ثلاثي الأبعاد للرأس */
+        header {
+            background: rgba(10, 20, 40, 0.8);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 5px 30px rgba(0, 102, 204, 0.2);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 50px;
+            margin-left: 15px;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 15px rgba(0, 198, 255, 0.3);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin: 0 15px;
+        }
+        
+        nav ul li a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            position: relative;
+            padding: 5px 0;
+            transition: var(--transition);
+        }
+        
+        nav ul li a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: var(--transition);
+        }
+        
+        nav ul li a:hover {
+            color: var(--accent);
+        }
+        
+        nav ul li a:hover:after {
+            width: 100%;
+        }
+        
+        .cta-button {
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 5px 20px rgba(0, 198, 255, 0.4);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 198, 255, 0.6);
+        }
+        
+        /* قسم البطل */
+        .hero {
+            padding-top: 180px;
+            padding-bottom: 100px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .hero-text {
+            width: 50%;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .hero-text h2 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--white), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero-text p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .hero-image {
+            width: 45%;
+            position: relative;
+            perspective: 1000px;
+        }
+        
+        .car-glass {
+            width: 100%;
+            height: 400px;
+            background: url('https://images.unsplash.com/photo-1592198084033-aade902d1aae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') center/cover no-repeat;
+            border-radius: 20px;
+            transform: rotateY(-20deg);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(0, 198, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .protection-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 198, 255, 0.1), rgba(0, 198, 255, 0.05));
+            backdrop-filter: blur(2px);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .protection-text {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-align: center;
+            animation: pulse 2s infinite;
+        }
+        
+        /* مزايا المنتج */
+        .features {
+            padding: 100px 0;
+            background: linear-gradient(180deg, #1a2a4d 0%, #121c36 100%);
+            position: relative;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+        
+        .section-title p {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 35px 30px;
+            text-align: center;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 198, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .feature-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background: linear-gradient(135deg, rgba(0, 198, 255, 0.2), rgba(10, 132, 255, 0.2));
+            transition: var(--transition);
+            z-index: -1;
+        }
+        
+        .feature-card:hover:before {
+            height: 100%;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 102, 204, 0.3);
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            font-size: 2rem;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+        
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+        }
+        
+        /* قسم الضمان */
+        .warranty {
+            padding: 120px 0;
+            background: url('https://images.unsplash.com/photo-1551836022-d5d88e9218df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') center/cover fixed;
+            position: relative;
+        }
+        
+        .warranty:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(18, 28, 54, 0.9);
+        }
+        
+        .warranty-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .warranty-content h2 {
+            font-size: 3rem;
+            margin-bottom: 30px;
+            color: var(--accent);
+        }
+        
+        .warranty-content p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            line-height: 1.8;
+        }
+        
+        .warranty-badge {
+            display: inline-flex;
+            align-items: center;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 198, 255, 0.5);
+            transform: rotate(-5deg);
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        /* تقنية الشفاء الذاتي */
+        .healing-tech {
+            padding: 120px 0;
+            background: linear-gradient(180deg, #121c36 0%, #0c1427 100%);
+        }
+        
+        .tech-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 50px;
+        }
+        
+        .tech-video {
+            width: 50%;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+        
+        .tech-video video {
+            width: 100%;
+            display: block;
+        }
+        
+        .tech-text {
+            width: 45%;
+        }
+        
+        .tech-text h2 {
+            font-size: 2.8rem;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, var(--white), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .tech-text p {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        /* الدعوة للعمل */
+        .cta-section {
+            padding: 100px 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            text-align: center;
+        }
+        
+        .cta-section h2 {
+            font-size: 3.5rem;
+            margin-bottom: 30px;
+            color: var(--white);
+        }
+        
+        .cta-section p {
+            font-size: 1.4rem;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+        
+        .secondary-button {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .secondary-button:hover {
+            background: white;
+            color: var(--primary);
+        }
+        
+        /* الفوائد */
+        .benefits {
+            padding: 100px 0;
+            background: linear-gradient(180deg, #0c1427 0%, #121c36 100%);
+        }
+        
+        .benefits-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+        
+        .benefit-card {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid rgba(0, 198, 255, 0.1);
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0, 102, 204, 0.3);
+            background: rgba(0, 102, 204, 0.1);
+        }
+        
+        .benefit-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+        
+        .benefit-card ul {
+            list-style: none;
+            text-align: right;
+        }
+        
+        .benefit-card ul li {
+            padding: 10px 0;
+            font-size: 1.1rem;
+            position: relative;
+            padding-right: 25px;
+        }
+        
+        .benefit-card ul li:before {
+            content: '✓';
+            color: var(--accent);
+            position: absolute;
+            right: 0;
+        }
+        
+        footer {
+            background: var(--dark);
+            padding: 50px 0 20px;
+            text-align: center;
+            border-top: 1px solid rgba(0, 198, 255, 0.1);
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-section h3 {
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icons a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            transition: var(--transition);
+        }
+        
+        .social-icons a:hover {
+            background: var(--accent);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        /* الرسوم المتحركة */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(0, 198, 255, 0.7);
+            }
+            70% {
+                transform: scale(1.02);
+                box-shadow: 0 0 0 15px rgba(0, 198, 255, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(0, 198, 255, 0);
+            }
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(-5deg);
+            }
+            50% {
+                transform: translateY(-10px) rotate(-5deg);
+            }
+            100% {
+                transform: translateY(0) rotate(-5deg);
+            }
+        }
+        
+        /* التصميم سريع الاستجابة */
+        @media (max-width: 992px) {
+            .hero-content {
+                flex-direction: column;
+            }
+            
+            .hero-text, .hero-image {
+                width: 100%;
+            }
+            
+            .hero-text {
+                margin-bottom: 50px;
+                text-align: center;
+            }
+            
+            .tech-container {
+                flex-direction: column;
+            }
+            
+            .tech-video, .tech-text {
+                width: 100%;
+            }
+            
+            .buttons-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin: 20px 0;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero-text h2 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- رأس الصفحة -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTYgMjU2Ij48cmVjdCB3aWR0aD0iMjU2IiBoZWlnaHQ9IjI1NiIgZmlsbD0iIzEyMWMzNiIvPjxwYXRoIGQ9Ik0xMjgsMzJhOTYsOTYsMCwxLDAsOTYsOTZBOTYsOTYsMCwwLDAsMTI4LDMyWiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjE2IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgc3Ryb2tlLWRhc2hhcnJheT0iMTkyIDE5MiIgc3Ryb2tlLWRhc2hvZmZzZXQ9IjAiLz48Y2lyY2xlIGN4PSIxMjgiIGN5PSIxMjgiIHI9IjY0IiBmaWxsPSJub25lIiBzdHJva2U9IiMwYTg0ZmYiIHN0cm9rZS13aWR0aD0iMTYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBzdHJva2UtZGFzaGFycmF5PSI5NiA5NiIgc3Ryb2tlLWRhc2hvZmZzZXQ9IjAiLz48Y2lyY2xlIGN4PSIxMjgiIGN5PSIxMjgiIHI9IjMyIiBmaWxsPSJub25lIiBzdHJva2U9IiMwMGM2ZmYiIHN0cm9rZS13aWR0aD0iMTYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3RrokUtbGluZWpvaW49InJvdW5kIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS1kYXNoYXJyYXk9IjY0IDY0IiBzdHJva2UtZGFzaG9mZnNldD0iMCIvPjwvc3ZnPg==" alt="Topshield Logo">
+                <h1>توبشيلد</h1>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="#features">الميزات</a></li>
+                    <li><a href="#benefits">الفوائد</a></li>
+                    <li><a href="#warranty">الضمان</a></li>
+                    <li><a href="#technology">التقنية</a></li>
+                    <li><a href="#contact">اتصل بنا</a></li>
+                </ul>
+            </nav>
+            
+            <button class="cta-button">طلب المنتج</button>
+        </div>
+    </header>
+
+    <!-- قسم البطل -->
+    <section class="hero">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <h2>كليرتي شيلد – أفضل فيلم في العالم لحماية الزجاج الأمامي</h2>
+                <p>تقنية مبتكرة تتحدى الصخور والكسور وتوفر حماية لا مثيل لها</p>
+                <button class="cta-button">اكتشف الحماية المتطورة</button>
+            </div>
+            
+            <div class="hero-image">
+                <div class="car-glass">
+                    <div class="protection-layer">
+                        <div class="protection-text">حماية فائقة ضد الصدمات</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- مزايا المنتج -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>الميزات المتطورة</h2>
+                <p>يتميز فيلم كليرتي شيلد بتقنيات متقدمة تجعله الاختيار الأمثل لحماية زجاج سيارتك الأمامي</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>حماية ضد الصدمات</h3>
+                    <p>يوفر حماية فائقة ضد التشققات والكسور الناتجة عن الحصى والصخور والأجسام المتطايرة</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>شفافية كاملة</h3>
+                    <p>حماية غير مرئية للزجاج الأمامي بوضوح شفاف يشبه الزجاج الطبيعي</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-sun"></i>
+                    </div>
+                    <h3>حماية من الأشعة</h3>
+                    <p>يحمي من الأشعة فوق البنفسجية الضارة بنسبة 99% ويحمي المقصورة الداخلية</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-magic"></i>
+                    </div>
+                    <h3>الشفاء الذاتي</h3>
+                    <p>تقنية الشفاء الذاتي التي تقلل من ظهور الخدوش وتعيده لمظهره الأصلي</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <h3>متانة فائقة</h3>
+                    <p>سماكة استثنائية تزيد عن 200 ميكرون (زيادة 60% عن الأفلام التقليدية)</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>يحافظ على قيمة السيارة</h3>
+                    <p>يحافظ على مظهر سيارتك الأصلي وقيمتها السوقية عند إعادة البيع</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم الضمان -->
+    <section class="warranty" id="warranty">
+        <div class="container warranty-content">
+            <div class="warranty-badge">
+                <i class="fas fa-medal"></i>
+                <span style="margin: 0 15px;">ضمان مصنعي شامل</span>
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            
+            <h2>ضمان توبشيلد الشامل</h2>
+            <p>نحن نضمن لك جودة وأداء فيلم كليرتي شيلد المصنع بفخر في الولايات المتحدة الأمريكية. ضماننا الشامل يغطي جميع عيوب التصنيع ويضمن لك حماية طويلة الأمد لزجاج سيارتك الأمامي.</p>
+            <button class="cta-button" onclick="location.href='warranty.html'">تفاصيل الضمان الكاملة</button>
+        </div>
+    </section>
+
+    <!-- تقنية الشفاء الذاتي -->
+    <section class="healing-tech" id="technology">
+        <div class="container tech-container">
+            <div class="tech-video">
+                <video autoplay loop muted playsinline>
+                    <source src="https://assets.mixkit.co/videos/preview/mixkit-close-up-of-a-car-windshield-with-rain-43518-large.mp4" type="video/mp4">
+                    متصفحك لا يدعم تشغيل الفيديو
+                </video>
+            </div>
+            
+            <div class="tech-text">
+                <h2>تقنية الشفاء الذاتي المتطورة</h2>
+                <p>يتميز فيلم كليرتيشيلد بتقنية الشفاء الذاتي الفريدة التي تقوم بإصلاح الخدوش الصغيرة تلقائياً تحت تأثير حرارة الشمس أو الماء الدافئ.</p>
+                <p>هذه التقنية تضمن بقاء الزجاج الأمامي نظيفًا وخاليًا من العيوب والتلف، مما يطيل عمره الافتراضي ويقلل الحاجة إلى الاستبدال المتكرر.</p>
+                <button class="cta-button">شاهد التقنية في العمل</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- الفوائد -->
+    <section class="benefits" id="benefits">
+        <div class="container">
+            <div class="section-title">
+                <h2>فوائد كليرتي شيلد</h2>
+                <p>اكتشف لماذا يعتبر فيلم كليرتي شيلد من توبشيلد الاستثمار الأمثل لسيارتك</p>
+            </div>
+            
+            <div class="benefits-container">
+                <div class="benefit-card">
+                    <h3>السلامة والأمان</h3>
+                    <ul>
+                        <li>حماية فائقة ضد الكسر والصدمات</li>
+                        <li>حماية الركاب من الإصابات في الحوادث</li>
+                        <li>حماية أنظمة مساعدة السائق (ADAS)</li>
+                        <li>وضوح رؤية استثنائي في جميع الظروف</li>
+                    </ul>
+                </div>
+                
+                <div class="benefit-card">
+                    <h3>الحماية المتكاملة</h3>
+                    <ul>
+                        <li>حماية من الحصى والأجسام المتطايرة</li>
+                        <li>عزل 99% من الأشعة فوق البنفسجية</li>
+                        <li>منع بهت وتلف المقصورة الداخلية</li>
+                        <li>حماية من التآكل والتلف البيئي</li>
+                    </ul>
+                </div>
+                
+                <div class="benefit-card">
+                    <h3>الراحة والتوفير</h3>
+                    <ul>
+                        <li>تركيب سريع في أقل من 15 دقيقة</li>
+                        <li>توفير تكاليف الإصلاح الباهظة</li>
+                        <li>الحفاظ على قيمة السيارة عند البيع</li>
+                        <li>تقليل الحاجة للصيانة المتكررة</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- الدعوة للعمل -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>جاهز لحماية زجاج سيارتك الأمامي؟</h2>
+            <p>انضم إلى آلاف العملاء الراضين الذين اختاروا توبشيلد كليرتي شيلد للحصول على أفضل حماية ممكنة لسياراتهم</p>
+            
+            <div class="buttons-container">
+                <button class="cta-button">اطلب المنتج الآن</button>
+                <button class="secondary-button">العثور على مركز تركيب</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- تذييل الصفحة -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>توبشيلد</h3>
+                    <p>الرائد عالمياً في حلول حماية السيارات المتطورة</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>روابط سريعة</h3>
+                    <ul>
+                        <li><a href="#">منتجاتنا</a></li>
+                        <li><a href="#">مراكز التركيب</a></li>
+                        <li><a href="#">الأسئلة الشائعة</a></li>
+                        <li><a href="#">دعم العملاء</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>اتصل بنا</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +966 123 456 789</li>
+                        <li><i class="fas fa-envelope"></i> info@topshield.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> الرياض، المملكة العربية السعودية</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2023 توبشيلد. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // كود الجافا سكريبت للرسوم المتحركة والتأثيرات التفاعلية
+        document.addEventListener('DOMContentLoaded', function() {
+            // إضافة تأثير التمرير السلس للروابط
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // إضافة تأثير الظهور عند التمرير
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            document.querySelectorAll('.feature-card, .benefit-card, .tech-text, .tech-video').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+                
+                el.classList.add('visible');
+                el.style.opacity = '1';
+                el.style.transform = 'translateY(0)';
+            });
+            
+            // تأثير النبض للزر الرئيسي
+            const ctaButton = document.querySelector('.cta-button');
+            setInterval(() => {
+                ctaButton.style.transform = 'scale(1.05)';
+                setTimeout(() => {
+                    ctaButton.style.transform = 'scale(1)';
+                }, 600);
+            }, 3000);
+        });
+    </script>
+</body>
+</html>

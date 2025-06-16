@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كليرتي شيلد | الحماية المطلقة، الوضوح الفائق</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* ======== متغيرات الألوان الجديدة ======== */
+        :root {
+            --color-primary: #1A3372;       /* Navy Blue */
+            --color-primary-light: #25439d;
+            --color-secondary: #56B1DD;     /* Glass Blue */
+            --color-secondary-light: #89C5E8; /* Light Glass Blue */
+            --color-accent: #F7C100;        /* Gold */
+            --color-accent-dark: #C2971E;   /* Darker Gold */
+            --color-dark: #0D0D0D;
+            --color-dark-lighten: #1A1A1A;
+            --color-light: #FFFFFF;
+            --color-gray: #A0A0A0;
+            --color-success: #56B1DD;
+            --color-danger: #ff6b6b;
+            --font-family: 'Tajawal', sans-serif;
+            --transition-fast: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --transition-slow: 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --border-radius: 12px;
+            --section-spacing: 8rem 0;
+            --box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            --box-shadow-hover: 0 15px 40px rgba(86, 177, 221, 0.25);
+            --glass-bg: rgba(26, 51, 114, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        /* ======== إعدادات الجسم والخطوط ======== */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: linear-gradient(to bottom, var(--color-dark), var(--color-dark-lighten));
+            color: var(--color-gray);
+            line-height: 1.7;
+            text-align: right;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: var(--section-spacing);
+            position: relative;
+        }
+
+        /* ======== الأنماط العامة ======== */
+        h1, h2, h3, h4 {
+            color: var(--color-light);
+            font-weight: 700;
+            line-height: 1.3;
+        }
+        
+        .section-title {
+            font-size: 3.2rem;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: 50%;
+            transform: translateX(50%);
+            width: 120px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-secondary), var(--color-accent));
+            border-radius: 4px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 5rem auto;
+            font-size: 1.25rem;
+            color: var(--color-gray);
+            font-weight: 500;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--color-accent), var(--color-accent-dark));
+            color: var(--color-dark);
+            padding: 1.1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all var(--transition-fast);
+            border: none;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--color-accent-dark), var(--color-accent));
+            opacity: 0;
+            transition: opacity var(--transition-fast);
+            z-index: -1;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow-hover);
+        }
+        
+        .cta-button:hover::before {
+            opacity: 1;
+        }
+
+        /* ======== 1. الشريط العلوي ======== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.5rem 0;
+            transition: all var(--transition-fast);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            background: var(--glass-bg);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .navbar.scrolled {
+            padding: 1rem 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+        
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .logo img {
+            height: 45px;
+            transition: all var(--transition-fast);
+        }
+        
+        .navbar.scrolled .logo img {
+            height: 40px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+        }
+        
+        .nav-links a {
+            color: var(--color-light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: color var(--transition-fast);
+            font-size: 1.1rem;
+            padding: 0.5rem 0;
+        }
+        
+        .nav-links a:hover {
+            color: var(--color-accent);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--color-accent), var(--color-secondary));
+            transition: width var(--transition-fast);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-cta {
+            padding: 0.8rem 2rem;
+            font-size: 1.1rem;
+        }
+
+        /* ======== 2. القسم الرئيسي ======== */
+        .hero-section {
+            position: relative;
+            height: 100vh;
+            min-height: 800px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+        
+        .hero-video-overlay {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, transparent 0%, var(--color-dark) 100%);
+            z-index: 1;
+        }
+        
+        .hero-video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            max-width: 900px;
+            padding: 0 2rem;
+        }
+        
+        .hero-title {
+            font-size: 5.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.7);
+            background: linear-gradient(to right, var(--color-light), var(--color-secondary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin: 1.5rem 0 3rem 0;
+            color: var(--color-light);
+            opacity: 0.9;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 500;
+            line-height: 1.6;
+        }
+        
+        .hero-cta {
+            font-size: 1.2rem;
+            padding: 1.3rem 3rem;
+            margin-top: 2rem;
+            transform: scale(1.2);
+        }
+        
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 4rem;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            padding: 1.5rem 2.5rem;
+            border-radius: var(--border-radius);
+            min-width: 220px;
+            box-shadow: var(--box-shadow);
+            transition: all var(--transition-fast);
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--box-shadow-hover);
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--color-accent);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 1.1rem;
+            color: var(--color-light);
+            font-weight: 500;
+        }
+
+        /* ======== 3. قسم الفوائد ======== */
+        .benefits-section {
+            padding: var(--section-spacing);
+            background: linear-gradient(to bottom, var(--color-dark-lighten), var(--color-dark));
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+        
+        .benefit-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 2.8rem 2.2rem;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--glass-border);
+            transition: all var(--transition-fast);
+            box-shadow: var(--box-shadow);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .benefit-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-secondary), var(--color-accent));
+            transform: translateY(-100%);
+            transition: transform var(--transition-fast);
+            z-index: -1;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--box-shadow-hover);
+        }
+        
+        .benefit-card:hover::before {
+            transform: translateY(0);
+        }
+        
+        .benefit-icon {
+            font-size: 3rem;
+            color: var(--color-accent);
+            margin-bottom: 1.8rem;
+            transition: all var(--transition-fast);
+        }
+        
+        .benefit-card:hover .benefit-icon {
+            transform: scale(1.2);
+        }
+        
+        .benefit-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 1.2rem;
+            color: var(--color-light);
+        }
+        
+        .benefit-card p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        /* ======== 4. قسم التجارب العملية ======== */
+        .testimonials-section {
+            position: relative;
+            padding: var(--section-spacing);
+            background: linear-gradient(to bottom, var(--color-dark), var(--color-dark-lighten));
+            overflow: hidden;
+        }
+        
+        .testimonials-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--color-primary) 0%, transparent 70%);
+            opacity: 0.1;
+            z-index: 0;
+        }
+        
+        .testimonials-container {
+            position: relative;
+            z-index: 2;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .testimonial-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            position: relative;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .testimonial-card::before {
+            content: '\201C';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 5rem;
+            color: var(--color-accent);
+            opacity: 0.3;
+            font-family: Georgia, serif;
+        }
+        
+        .testimonial-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .author-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--color-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-dark);
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+        .author-info h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+        }
+        
+        .author-info p {
+            color: var(--color-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* ======== 5. قسم التقنية ======== */
+        .tech-section {
+            padding: var(--section-spacing);
+            background: linear-gradient(to bottom, var(--color-dark-lighten), var(--color-dark));
+        }
+        
+        .tech-container {
+            display: flex;
+            align-items: center;
+            gap: 5rem;
+            margin-top: 3rem;
+        }
+        
+        .tech-image {
+            flex: 1;
+            position: relative;
+            perspective: 1000px;
+        }
+        
+        .tech-image-inner {
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s ease;
+        }
+        
+        .tech-image:hover .tech-image-inner {
+            transform: rotateY(10deg) rotateX(5deg);
+        }
+        
+        .tech-image img {
+            width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            transform: translateZ(20px);
+        }
+        
+        .tech-content {
+            flex: 1;
+        }
+        
+        .tech-content .section-title {
+            text-align: right;
+        }
+        
+        .tech-list {
+            list-style: none;
+            margin-top: 2.5rem;
+        }
+        
+        .tech-list li {
+            display: flex;
+            gap: 1.2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-left: 40px;
+        }
+        
+        .tech-list li::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 30px;
+            height: 30px;
+            background-color: var(--color-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-accent);
+            font-weight: 900;
+            font-size: 1.2rem;
+        }
+        
+        .tech-list li:nth-child(1)::before { content: '1'; }
+        .tech-list li:nth-child(2)::before { content: '2'; }
+        .tech-list li:nth-child(3)::before { content: '3'; }
+        .tech-list li:nth-child(4)::before { content: '4'; }
+
+        /* ======== 6. القسم التفاعلي ======== */
+        .interactive-demo-section {
+            padding: var(--section-spacing);
+            background: linear-gradient(to bottom, var(--color-dark), var(--color-primary));
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .interactive-demo-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, var(--color-primary-light) 0%, transparent 40%);
+            opacity: 0.2;
+            z-index: 1;
+        }
+        
+        .interactive-container {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(13, 13, 13, 0.7);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--glass-border);
+            padding: 3.5rem;
+            box-shadow: var(--box-shadow);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        .demo-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .demo-header h3 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: var(--color-accent);
+        }
+        
+        .demo-header p {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .windshield-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin: 2rem auto;
+            aspect-ratio: 16/9;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+        
+        .windshield-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        
+        .rock {
+            position: absolute;
+            width: 35px;
+            height: 35px;
+            background: radial-gradient(circle, #8d8d8d 0%, #4e4e4e 100%);
+            border-radius: 50% 40% 30% 60%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+            opacity: 0;
+            z-index: 5;
+        }
+        
+        .crack {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 1px;
+            height: 1px;
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 4;
+        }
+        
+        .crack::before, .crack::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            background-color: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
+            border-radius: 2px;
+        }
+        
+        .crack::before {
+            width: 120px;
+            height: 3px;
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+        
+        .crack::after {
+            width: 140px;
+            height: 3px;
+            transform: translate(-50%, -50%) rotate(-35deg);
+        }
+        
+        .shield-effect {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle, rgba(86, 177, 221, 0.4), transparent 70%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+            transition: all 0.5s ease-out;
+            z-index: 3;
+        }
+        
+        .shield-effect.active {
+            transform: translate(-50%, -50%) scale(1.5);
+            opacity: 1;
+        }
+        
+        .shield-status {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            color: var(--color-light);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            z-index: 6;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .shield-status.protected {
+            color: var(--color-success);
+            box-shadow: 0 0 15px rgba(86, 177, 221, 0.4);
+        }
+        
+        .shield-status.unprotected {
+            color: var(--color-danger);
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .switch-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .switch-label {
+            color: var(--color-light);
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+        
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 100px;
+            height: 40px;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #333;
+            transition: .4s;
+            border-radius: 40px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 32px;
+            width: 32px;
+            left: 4px;
+            bottom: 4px;
+            background: linear-gradient(135deg, var(--color-accent), var(--color-accent-dark));
+            transition: .4s;
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        
+        input:checked + .slider {
+            background-color: var(--color-primary);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(60px);
+            background: var(--color-secondary);
+        }
+        
+        #runDemoBtn {
+            background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
+            color: var(--color-light);
+            border: none;
+            padding: 1.1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            box-shadow: var(--box-shadow);
+        }
+        
+        #runDemoBtn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: var(--box-shadow-hover);
+        }
+        
+        #runDemoBtn:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        /* ======== 7. قسم الضمان ======== */
+        .warranty-section {
+            padding: var(--section-spacing);
+            background: linear-gradient(135deg, var(--color-primary), var(--color-dark));
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .warranty-container {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .warranty-icon {
+            font-size: 5rem;
+            color: var(--color-accent);
+            margin-bottom: 1.5rem;
+        }
+        
+        .warranty-section .section-title {
+            color: var(--color-light);
+        }
+        
+        .warranty-section .section-subtitle {
+            color: var(--color-light);
+            opacity: 0.8;
+            font-size: 1.2rem;
+        }
+        
+        .warranty-features {
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            margin-top: 4rem;
+            flex-wrap: wrap;
+        }
+        
+        .warranty-feature {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            min-width: 250px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .warranty-feature i {
+            font-size: 2.5rem;
+            color: var(--color-accent);
+            margin-bottom: 1.5rem;
+        }
+        
+        .warranty-feature h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .link-arrow {
+            color: var(--color-accent);
+            text-decoration: none;
+            font-weight: 700;
+            margin-top: 3rem;
+            display: inline-block;
+            font-size: 1.2rem;
+            padding: 0.8rem 1.5rem;
+            border: 2px solid var(--color-accent);
+            border-radius: 50px;
+            transition: all var(--transition-fast);
+        }
+        
+        .link-arrow:hover {
+            background-color: var(--color-accent);
+            color: var(--color-dark);
+        }
+        
+        .link-arrow i {
+            transition: transform var(--transition-fast);
+        }
+        
+        .link-arrow:hover i {
+            transform: translateX(-5px);
+        }
+
+        /* ======== 8. Footer ======== */
+        .site-footer {
+            background: linear-gradient(to top, var(--color-dark), var(--color-dark-lighten));
+            padding: 6rem 0 3rem 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .footer-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .site-footer h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, var(--color-light), var(--color-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .site-footer p {
+            max-width: 600px;
+            margin: 1.5rem auto 3rem auto;
+            font-size: 1.1rem;
+        }
+        
+        .footer-cta {
+            padding: 1.2rem 3rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-bottom {
+            margin-top: 5rem;
+            padding-top: 2.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1300px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 2.5rem 2rem 0;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1.8rem;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            color: var(--color-light);
+            font-size: 1.3rem;
+            transition: all var(--transition-fast);
+        }
+        
+        .social-links a:hover {
+            background: var(--color-accent);
+            color: var(--color-dark);
+            transform: translateY(-5px);
+        }
+
+        /* ======== الرسوم المتحركة ======== */
+        .animate-on-load {
+            animation: fadeInUp 1s ease-out forwards;
+            opacity: 0;
+        }
+        
+        .hero-title.animate-on-load { animation-delay: 0.2s; }
+        .hero-subtitle.animate-on-load { animation-delay: 0.4s; }
+        .hero-cta.animate-on-load { animation-delay: 0.6s; }
+        .stat-item:nth-child(1).animate-on-load { animation-delay: 0.8s; }
+        .stat-item:nth-child(2).animate-on-load { animation-delay: 1.0s; }
+        .stat-item:nth-child(3).animate-on-load { animation-delay: 1.2s; }
+        
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes rock-hit {
+            0% { opacity: 1; top: 20%; left: -5%; transform: scale(0.8) rotate(0deg); }
+            100% { opacity: 1; top: 50%; left: 50%; transform: scale(1.2) translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        @keyframes rock-bounce {
+            0% { opacity: 1; top: 20%; left: -5%; transform: scale(0.8) rotate(0deg); }
+            70% { opacity: 1; top: 50%; left: 50%; transform: scale(1.2) translate(-50%, -50%) rotate(360deg); }
+            100% { opacity: 0; top: 30%; left: 105%; transform: scale(0.9) rotate(720deg); }
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(86, 177, 221, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(86, 177, 221, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(86, 177, 221, 0); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* ======== تصميم متجاوب ======== */
+        @media (max-width: 1200px) {
+            .hero-title {
+                font-size: 4.5rem;
+            }
+            
+            .section-title {
+                font-size: 2.8rem;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 4rem;
+            }
+            
+            .tech-container {
+                flex-direction: column;
+                gap: 3rem;
+            }
+            
+            .section-title {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3.2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .nav-links, .nav-cta {
+                display: none;
+            }
+            
+            .navbar-container {
+                justify-content: center;
+            }
+            
+            .hero-stats {
+                gap: 1.5rem;
+            }
+            
+            .stat-item {
+                min-width: 180px;
+                padding: 1.2rem;
+            }
+            
+            .stat-number {
+                font-size: 2.2rem;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1.5rem;
+                text-align: center;
+            }
+            
+            .controls {
+                flex-direction: column;
+                gap: 2rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .section-subtitle {
+                margin-bottom: 3rem;
+            }
+            
+            .hero-cta {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar" id="navbar">
+        <div class="navbar-container">
+            <div class="logo">
+                <img src="https://i.ibb.co/8mTp1wD/topshield-logo.png" alt="شعار توبشيلد" />
+            </div>
+            <div class="nav-links">
+                <a href="#benefits-section">المميزات</a>
+                <a href="#testimonials-section">تجارب العملاء</a>
+                <a href="#tech-section">التقنية</a>
+                <a href="#warranty-section">الضمان</a>
+            </div>
+            <a href="#cta-section" class="cta-button nav-cta">ابحث عن موزع</a>
+        </div>
+    </nav>
+
+    <header class="hero-section">
+        <div class="hero-video-overlay"></div>
+        <video autoplay muted loop playsinline class="hero-video">
+            <source src="https://player.vimeo.com/external/577928158.sd.mp4?s=9b5d5f8d0c3f6d8d3d4f4d5f8d0c3f6d8d3d4f4d&profile_id=165" type="video/mp4">
+        </video>
+        <div class="hero-content">
+            <h1 class="hero-title animate-on-load">الحماية المطلقة التي لن تراها أبدًا</h1>
+            <p class="hero-subtitle animate-on-load">كليرتي شيلد™: درع غير مرئي لزجاج سيارتك، مصمم بأحدث التقنيات الأمريكية ليتحدى أقسى الظروف ويحافظ على وضوح لا مثيل له.</p>
+            <a href="#benefits-section" class="cta-button hero-cta animate-on-load">اكتشف القوة الخفية</a>
+            
+            <div class="hero-stats">
+                <div class="stat-item animate-on-load">
+                    <div class="stat-number">99.9%</div>
+                    <div class="stat-label">حماية من الأشعة فوق البنفسجية</div>
+                </div>
+                <div class="stat-item animate-on-load">
+                    <div class="stat-number">5x</div>
+                    <div class="stat-label">أكثر متانة من الزجاج العادي</div>
+                </div>
+                <div class="stat-item animate-on-load">
+                    <div class="stat-number">10</div>
+                    <div class="stat-label">سنوات ضمان</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="benefits-section" class="benefits-section">
+            <div class="container">
+                <h2 class="section-title animate-on-scroll">تفوق في كل تفصيلة</h2>
+                <p class="section-subtitle animate-on-scroll">كليرتي شيلد ليس مجرد فيلم حماية، بل هو استثمار في راحة بالك وقيمة سيارتك.</p>
+                <div class="benefits-grid">
+                    <div class="benefit-card animate-on-scroll">
+                        <div class="benefit-icon"><i class="fa-solid fa-shield-heart"></i></div>
+                        <h3>مقاومة فائقة للصدمات</h3>
+                        <p>بنية متعددة الطبقات تمتص وتوزع قوة الصدمات الناتجة عن الحصى والحطام المتطاير، لتحافظ على زجاجك سليماً.</p>
+                    </div>
+                    <div class="benefit-card animate-on-scroll">
+                        <div class="benefit-icon"><i class="fa-solid fa-eye"></i></div>
+                        <h3>وضوح كريستالي فائق</h3>
+                        <p>شفافية لا تضاهى تضمن رؤية واضحة تماماً بدون أي تشويه، مما يعزز أمانك أثناء القيادة ليلاً ونهاراً.</p>
+                    </div>
+                    <div class="benefit-card animate-on-scroll">
+                        <div class="benefit-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                        <h3>تقنية الشفاء الذاتي</h3>
+                        <p>الخدوش السطحية الناتجة عن الغسيل أو الاستخدام اليومي تختفي تلقائياً عند التعرض للحرارة.</p>
+                    </div>
+                    <div class="benefit-card animate-on-scroll">
+                        <div class="benefit-icon"><i class="fa-solid fa-car-on"></i></div>
+                        <h3>توافق مع أنظمة ADAS</h3>
+                        <p>مصمم خصيصاً ليعمل بكفاءة مع أنظمة مساعدة السائق المتقدمة دون التأثير على أداء الكاميرات والحساسات.</p>
+                    </div>
+                    <div class="benefit-card animate-on-scroll">
+                        <div class="benefit-icon"><i class="fa-solid fa-sun"></i></div>
+                        <h3>حماية من الأشعة فوق البنفسجية</h3>
+                        <p>يحجب الأشعة فوق البنفسجية الضارة ليحمي بشرتك والمقصورة الداخلية لسيارتك من التلف والبهتان.</p>
+                    </div>
+                    <div class="benefit-card animate-on-scroll">
+                        <div class="benefit-icon"><i class="fa-solid fa-sack-dollar"></i></div>
+                        <h3>يحافظ على قيمة السيارة</h3>
+                        <p>الحفاظ على الزجاج الأمامي الأصلي للسيارة يرفع من قيمتها عند إعادة البيع ويوفر تكاليف الاستبدال الباهظة.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="testimonials-section" class="testimonials-section">
+            <div class="container">
+                <h2 class="section-title animate-on-scroll">تجارب عملية من مستخدمينا</h2>
+                <p class="section-subtitle animate-on-scroll">قصص نجاح حقيقية من عملائنا الذين اختبروا قوة حماية كليرتي شيلد</p>
+                
+                <div class="testimonials-container">
+                    <div class="testimonial-grid">
+                        <div class="testimonial-card animate-on-scroll">
+                            <div class="testimonial-content">
+                                "بعد تركيب كليرتي شيلد على سيارتي، تعرضت لصخرة كبيرة أثناء القيادة على طريق سريع. الصدمة كانت قوية جداً، لكن الزجاج لم يتأثر إطلاقاً. هذا المنتج أنقذني من تكلفة استبدال زجاج كاملة!"
+                            </div>
+                            <div class="testimonial-author">
+                                <div class="author-avatar">م</div>
+                                <div class="author-info">
+                                    <h4>محمد السديري</h4>
+                                    <p>مالك تويوتا لاندكروزر</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="testimonial-card animate-on-scroll">
+                            <div class="testimonial-content">
+                                "الوضوح الذي يوفره كليرتي شيلد لا يصدق! حتى بعد عامين من الاستخدام، الزجاج يبدو وكأنه جديد. لا خدوش ولا بقع ماء، خاصة أثناء القيادة تحت المطر. استثمار يستحق كل ريال."
+                            </div>
+                            <div class="testimonial-author">
+                                <div class="author-avatar">س</div>
+                                <div class="author-info">
+                                    <h4>سارة الفهد</h4>
+                                    <p>مالكة مرسيدس GLE</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="testimonial-card animate-on-scroll">
+                            <div class="testimonial-content">
+                                "كنت متشككاً في البداية، لكن بعد تجربة المنتج على سيارتي الرياضية، أصبحت مقتنعاً تماماً. الحماية من الخدوش والصدمات ممتازة، والأهم أن الفيلم لا يؤثر على أداء أنظمة المساعدة في القيادة."
+                            </div>
+                            <div class="testimonial-author">
+                                <div class="author-avatar">خ</div>
+                                <div class="author-info">
+                                    <h4>خالد الحربي</h4>
+                                    <p>مالك بورش 911</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tech-section" class="tech-section">
+            <div class="container">
+                <h2 class="section-title animate-on-scroll">هندسة متقدمة للحماية</h2>
+                <p class="section-subtitle animate-on-scroll">يتكون كليرتي شيلد من بنية هجينة فريدة تجمع بين أفضل المواد لتوفير حماية ومتانة لا مثيل لها.</p>
+                
+                <div class="tech-container">
+                    <div class="tech-image animate-on-scroll">
+                        <div class="tech-image-inner">
+                            <img src="https://i.ibb.co/vL4yfXK/tech-layers.jpg" alt="رسم بياني لطبقات فيلم كليرتي شيلد">
+                        </div>
+                    </div>
+                    <div class="tech-content animate-on-scroll">
+                        <h2 class="section-title">التقنية وراء الحماية</h2>
+                        <p>اكتشف كيف تعمل طبقات الحماية المتعددة معاً لتوفير أعلى مستوى من الحماية مع الحفاظ على الوضوح البصري المثالي.</p>
+                        <ul class="tech-list">
+                            <li><strong>الطبقة العلوية المقاومة للخدش:</strong> معززة بتقنية النانو سيراميك لطرد الماء والحفاظ على نظافة الزجاج.</li>
+                            <li><strong>طبقة البولي يوريثان (TPU):</strong> مرونة فائقة وقدرة على الشفاء الذاتي من الخدوش الطفيفة.</li>
+                            <li><strong>نواة امتصاص الصدمات:</strong> طبقة متينة مصممة خصيصاً لتشتيت طاقة الصدمات وحماية الزجاج.</li>
+                            <li><strong>اللاصق البصري فائق الوضوح:</strong> يضمن تثبيتاً قوياً بدون التأثير على شفافية الرؤية.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="interactive-demo-section">
+            <div class="container">
+                <div class="interactive-container">
+                    <div class="demo-header">
+                        <h3 class="animate-on-scroll">اختبر قوة الحماية بنفسك</h3>
+                        <p class="animate-on-scroll">شاهد كيف يحمي كليرتي شيلد زجاج سيارتك من الصدمات القوية</p>
+                    </div>
+                    
+                    <div class="windshield-container animate-on-scroll">
+                        <div class="shield-status" id="shieldStatus">بدون حماية</div>
+                        <img src="https://i.ibb.co/3Yw3Lm1/car-windshield.jpg" alt="زجاج أمامي" class="windshield-img">
+                        <div class="rock" id="rock"></div>
+                        <div class="crack" id="crack"></div>
+                        <div class="shield-effect" id="shieldEffect"></div>
+                    </div>
+                    
+                    <div class="controls">
+                        <div class="switch-container">
+                            <span class="switch-label">تفعيل كليرتي شيلد</span>
+                            <label class="switch">
+                                <input type="checkbox" id="shieldToggle">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <button id="runDemoBtn" class="cta-button">اختبر الصدمة الآن</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="warranty-section" class="warranty-section">
+            <div class="container warranty-container">
+                <div class="warranty-icon animate-on-scroll"><i class="fa-solid fa-award"></i></div>
+                <h2 class="section-title animate-on-scroll">ضمان رائد في الصناعة</h2>
+                <p class="section-subtitle animate-on-scroll">نحن واثقون من جودة منتجاتنا، ولهذا نقدم ضماناً شاملاً يمنحك راحة البال الكاملة. هذا هو التزامنا بالجودة وحماية استثمارك.</p>
+                
+                <div class="warranty-features">
+                    <div class="warranty-feature animate-on-scroll">
+                        <i class="fa-solid fa-calendar-check"></i>
+                        <h4>ضمان 10 سنوات</h4>
+                        <p>ضمان شامل ضد عيوب التصنيع</p>
+                    </div>
+                    <div class="warranty-feature animate-on-scroll">
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                        <h4>خدمة مجانية</h4>
+                        <p>فحص وخدمة مجانية كل عام</p>
+                    </div>
+                    <div class="warranty-feature animate-on-scroll">
+                        <i class="fa-solid fa-arrows-rotate"></i>
+                        <h4>استبدال مجاني</h4>
+                        <p>استبدال مجاني في حال التلف</p>
+                    </div>
+                </div>
+                
+                <a href="/warranty-details" class="link-arrow">اعرف المزيد عن تفاصيل الضمان <i class="fa-solid fa-arrow-left"></i></a>
+            </div>
+        </section>
+    </main>
+
+    <footer id="cta-section" class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <h2>هل أنت مستعد للحماية المطلقة؟</h2>
+                <p>ابحث عن أقرب موزع معتمد لكليرتي شيلد واستمتع بتجربة قيادة آمنة وواضحة اليوم.</p>
+                <a href="#" class="cta-button footer-cta">ابحث عن موزع معتمد الآن</a>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 توبشيلد. جميع الحقوق محفوظة.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" aria-label="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- منطق تغيير خلفية الشريط العلوي عند التمرير ---
+            const navbar = document.getElementById('navbar');
+            if (navbar) {
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 50) {
+                        navbar.classList.add('scrolled');
+                    } else {
+                        navbar.classList.remove('scrolled');
+                    }
+                });
+            }
+
+            // --- منطق الرسوم المتحركة عند التمرير (IntersectionObserver) ---
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.15
+            });
+
+            const elementsToAnimate = document.querySelectorAll('.animate-on-scroll');
+            elementsToAnimate.forEach(el => observer.observe(el));
+
+            // --- منطق قسم "عيش التجربة" التفاعلي ---
+            const runDemoBtn = document.getElementById('runDemoBtn');
+            const shieldToggle = document.getElementById('shieldToggle');
+            const rock = document.getElementById('rock');
+            const crack = document.getElementById('crack');
+            const shieldEffect = document.getElementById('shieldEffect');
+            const shieldStatus = document.getElementById('shieldStatus');
+            let isDemoRunning = false;
+
+            if (runDemoBtn && shieldToggle && rock && crack && shieldEffect && shieldStatus) {
+                
+                const updateShieldStatus = () => {
+                    const isShieldActive = shieldToggle.checked;
+                    shieldStatus.classList.remove('protected', 'unprotected');
+                    if(isShieldActive) {
+                        shieldStatus.textContent = "كليرتي شيلد مُفعّل";
+                        shieldStatus.classList.add('protected');
+                    } else {
+                        shieldStatus.textContent = "بدون حماية";
+                        shieldStatus.classList.add('unprotected');
+                    }
+                };
+
+                // تحديث الحالة الأولية عند تحميل الصفحة
+                updateShieldStatus();
+
+                runDemoBtn.addEventListener('click', () => {
+                    if (isDemoRunning) return;
+                    isDemoRunning = true;
+                    runDemoBtn.disabled = true;
+
+                    // إعادة تعيين الحالة
+                    crack.style.transform = 'translate(-50%, -50%) scale(0)';
+                    crack.style.opacity = '0';
+                    rock.style.animation = 'none';
+                    void rock.offsetWidth; // Force reflow to restart animation
+
+                    const isShieldActive = shieldToggle.checked;
+
+                    if (isShieldActive) {
+                        shieldEffect.classList.add('active');
+                        rock.style.animation = 'rock-bounce 1.5s ease-out forwards';
+                        setTimeout(() => shieldEffect.classList.remove('active'), 1500);
+                    } else {
+                        rock.style.animation = 'rock-hit 1s ease-in forwards';
+                        setTimeout(() => {
+                            crack.style.transform = 'translate(-50%, -50%) scale(1)';
+                            crack.style.opacity = '1';
+                        }, 950);
+                    }
+
+                    setTimeout(() => {
+                        isDemoRunning = false;
+                        runDemoBtn.disabled = false;
+                    }, 2000);
+                });
+
+                shieldToggle.addEventListener('change', updateShieldStatus);
+            }
+            
+            // إضافة تأثير النبض للزر الرئيسي
+            const ctaButtons = document.querySelectorAll('.cta-button');
+            ctaButtons.forEach(button => {
+                setInterval(() => {
+                    button.classList.toggle('pulse');
+                }, 3000);
+            });
+        });
+    </script>
+</body>
+</html>

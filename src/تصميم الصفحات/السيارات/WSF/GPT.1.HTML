@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>كليرتي شيلد - حماية الزجاج الأمامي</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --topshield-primary-navy: #1A3372;
+      --topshield-primary-blue: #2976B4;
+      --topshield-glass-blue: #56B1DD;
+      --topshield-glass-blue-light: #89C5E8;
+      --topshield-accent-gold: #F7C100;
+      --topshield-accent-gold-darker: #C2971E;
+      --topshield-white: #FFFFFF;
+      --topshield-background-light: #F0F4F8;
+      --topshield-border-subtle: #DDE3EA;
+      --topshield-text-dark: #1A3372;
+      --topshield-text-main: #56B1DD;
+      --topshield-dark-elevated: #1F2937;
+    }
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: linear-gradient(135deg, var(--topshield-background-light) 70%, var(--topshield-glass-blue-light));
+      color: var(--topshield-primary-navy);
+    }
+    .glass-card {
+      background: linear-gradient(135deg, var(--topshield-background-content) 85%, var(--topshield-glass-blue-light) 120%);
+      box-shadow: 0 8px 40px 0 rgba(86,177,221,0.09), 0 2px 8px 0 var(--topshield-border-subtle);
+      border-radius: 2rem;
+      padding: 2.5rem 2rem;
+      transition: box-shadow 0.2s;
+      border: 2px solid var(--topshield-border-subtle);
+    }
+    .glass-card:hover {
+      box-shadow: 0 12px 64px 0 rgba(41,118,180,0.16), 0 4px 18px 0 var(--topshield-glass-blue);
+      border-color: var(--topshield-accent-gold);
+    }
+    .benefit-icon {
+      font-size: 2.6rem;
+      color: var(--topshield-accent-gold);
+      background: linear-gradient(135deg, var(--topshield-glass-blue), var(--topshield-accent-gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 5px var(--topshield-glass-blue-light));
+    }
+    .benefit {
+      transition: transform 0.2s;
+    }
+    .benefit:hover {
+      transform: scale(1.04) rotate(-1deg);
+      background: linear-gradient(120deg, var(--topshield-glass-blue-light), #fff);
+    }
+    .cta-btn {
+      background: linear-gradient(90deg, var(--topshield-primary-navy), var(--topshield-accent-gold));
+      color: var(--topshield-white);
+      padding: 1rem 2.5rem;
+      border-radius: 1.5rem;
+      font-weight: 900;
+      font-size: 1.2rem;
+      box-shadow: 0 6px 28px 0 var(--topshield-glass-blue-light);
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.2s;
+    }
+    .cta-btn:hover {
+      transform: scale(1.07) translateY(-2px);
+      box-shadow: 0 10px 40px 0 var(--topshield-primary-blue);
+      background: linear-gradient(90deg, var(--topshield-accent-gold), var(--topshield-primary-blue));
+    }
+    .shield-glow {
+      box-shadow: 0 0 40px 6px var(--topshield-glass-blue-light), 0 0 60px 6px var(--topshield-accent-gold-darker) inset;
+      border-radius: 50%;
+      margin-bottom: 2rem;
+    }
+    .tag {
+      background: linear-gradient(90deg, var(--topshield-accent-gold), var(--topshield-glass-blue));
+      color: var(--topshield-white);
+      font-weight: 900;
+      padding: 0.5rem 1.3rem;
+      border-radius: 1.5rem;
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+      display: inline-block;
+      letter-spacing: 2px;
+    }
+    @media (max-width: 800px) {
+      .glass-card { padding: 1.2rem 0.5rem; }
+      .benefit-list { gap: 1rem; }
+    }
+    .fade-in {
+      animation: fade-in 1.5s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+      opacity: 0;
+    }
+    @keyframes fade-in {
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-6">
+  <div class="max-w-5xl w-full mx-auto glass-card shadow-xl fade-in">
+    <div class="flex flex-col items-center text-center">
+      <span class="tag">جديد | الحماية المطلقة</span>
+      <div class="shield-glow">
+        <svg width="85" height="85" fill="none" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="48" stroke="#F7C100" stroke-width="4"/>
+          <ellipse cx="50" cy="54" rx="33" ry="26" fill="#56B1DD" fill-opacity="0.09"/>
+          <path d="M30 45 Q50 15 70 45 Q50 65 30 45" stroke="#2976B4" stroke-width="3" fill="#fff" fill-opacity="0.08"/>
+          <path d="M50 40 L50 67" stroke="#2976B4" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="50" cy="39" r="7" fill="#F7C100" fill-opacity="0.95"/>
+        </svg>
+      </div>
+      <h1 class="text-4xl sm:text-5xl font-black mb-2" style="color: var(--topshield-primary-navy); letter-spacing:2px;">
+        كليرتي شيلد™  
+      </h1>
+      <p class="text-xl font-bold mb-4" style="color: var(--topshield-primary-blue)">
+        أفضل فيلم في العالم لحماية الزجاج الأمامي – من توبشيلد
+      </p>
+      <p class="text-lg mb-8" style="color: var(--topshield-dark-elevated)">
+        استثمر في الذكاء. استثمر في الأمان. حماية تتحدى الصخور، الكسر والترميل بتقنية متقدمة وشفافية الكريستال.  
+      </p>
+    </div>
+    <!-- الفوائد الرئيسية -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 benefit-list mb-8">
+      <!-- 1 -->
+      <div class="benefit flex flex-row items-start gap-4 p-4 rounded-xl bg-white shadow hover:shadow-xl fade-in">
+        <span class="benefit-icon material-icons">security</span>
+        <div>
+          <h2 class="text-xl font-bold" style="color:var(--topshield-primary-navy)">حماية قصوى من الصدمات والكسر</h2>
+          <p class="text-base mt-1">درع متطور يحمي الزجاج الأمامي من الحصى، الصخور، والأجسام المتطايرة، ويمنع التشققات والكسور. أمان وراحة في كل رحلة.</p>
+        </div>
+      </div>
+      <!-- 2 -->
+      <div class="benefit flex flex-row items-start gap-4 p-4 rounded-xl bg-white shadow hover:shadow-xl fade-in">
+        <span class="benefit-icon material-icons">visibility</span>
+        <div>
+          <h2 class="text-xl font-bold" style="color:var(--topshield-primary-blue)">شفافية لا تُرى</h2>
+          <p class="text-base mt-1">حماية غير مرئية كليًا وشفافة للغاية، لا تؤثر على وضوح الرؤية مطلقًا. المطر ينزلق والرؤية تظل كريستالية.</p>
+        </div>
+      </div>
+      <!-- 3 -->
+      <div class="benefit flex flex-row items-start gap-4 p-4 rounded-xl bg-white shadow hover:shadow-xl fade-in">
+        <span class="benefit-icon material-icons">wb_sunny</span>
+        <div>
+          <h2 class="text-xl font-bold" style="color:var(--topshield-accent-gold)">حاجز ضد الأشعة فوق البنفسجية</h2>
+          <p class="text-base mt-1">يعزل 99% من الأشعة فوق البنفسجية، يحمي ديكور المقصورة والركاب من التلف والبهتان.</p>
+        </div>
+      </div>
+      <!-- 4 -->
+      <div class="benefit flex flex-row items-start gap-4 p-4 rounded-xl bg-white shadow hover:shadow-xl fade-in">
+        <span class="benefit-icon material-icons">autorenew</span>
+        <div>
+          <h2 class="text-xl font-bold" style="color:var(--topshield-glass-blue)">تقنية الشفاء الذاتي</h2>
+          <p class="text-base mt-1">الخدوش تختفي تلقائيًا مع تقنية الشفاء الذاتي، ويحافظ الفيلم على شكله الأصلي لفترة أطول.</p>
+        </div>
+      </div>
+      <!-- 5 -->
+      <div class="benefit flex flex-row items-start gap-4 p-4 rounded-xl bg-white shadow hover:shadow-xl fade-in">
+        <span class="benefit-icon material-icons">layers</span>
+        <div>
+          <h2 class="text-xl font-bold" style="color:var(--topshield-primary-navy)">متانة استثنائية</h2>
+          <p class="text-base mt-1">سماكة تزيد عن 200 ميكرون - أقوى 60% من الأفلام التقليدية. حماية تدوم وتبهر.</p>
+        </div>
+      </div>
+      <!-- 6 -->
+      <div class="benefit flex flex-row items-start gap-4 p-4 rounded-xl bg-white shadow hover:shadow-xl fade-in">
+        <span class="benefit-icon material-icons">paid</span>
+        <div>
+          <h2 class="text-xl font-bold" style="color:var(--topshield-primary-blue)">يحافظ على قيمة سيارتك</h2>
+          <p class="text-base mt-1">يحافظ على الزجاج الأصلي وقيمة سيارتك عند البيع، ويوفر عليك تكاليف الإصلاح.</p>
+        </div>
+      </div>
+      <!-- 7 -->
+      <div class="benefit flex flex-row items-start gap-4 p-4 rounded-xl bg-white shadow hover:shadow-xl fade-in">
+        <span class="benefit-icon material-icons">build_circle</span>
+        <div>
+          <h2 class="text-xl font-bold" style="color:var(--topshield-accent-gold)">تركيب سهل وسريع</h2>
+          <p class="text-base mt-1">يتم تركيبه في أقل من 15 دقيقة، بفضل تقنية اليوريثان الحراري المرنة. راحة وسرعة بلا انتظار.</p>
+        </div>
+      </div>
+      <!-- 8 -->
+      <div class="benefit flex flex-row items-start gap-4 p-4 rounded-xl bg-white shadow hover:shadow-xl fade-in">
+        <span class="benefit-icon material-icons">verified</span>
+        <div>
+          <h2 class="text-xl font-bold" style="color:var(--topshield-accent-gold-darker)">ضمان مصنعي شامل</h2>
+          <p class="text-base mt-1">ضمان رسمي من توبشيلد على الجودة والأداء - مصنع في أمريكا. اطمئن، الجودة هنا.</p>
+        </div>
+      </div>
+    </div>
+    <!-- زر الضمان -->
+    <div class="flex justify-center">
+      <button class="cta-btn" onclick="showWarrantySection()">شاهد تفاصيل الضمان الشامل</button>
+    </div>
+    <!-- قسم الضمان الديناميكي -->
+    <div id="warranty-section" style="display:none;" class="mt-10 p-8 rounded-3xl glass-card border-4 border-yellow-400 shadow-xl relative">
+      <div class="absolute -top-8 left-1/2 transform -translate-x-1/2 shield-glow">
+        <svg width="58" height="58" fill="none" viewBox="0 0 58 58">
+          <circle cx="29" cy="29" r="27" stroke="#F7C100" stroke-width="4"/>
+          <path d="M14 26 Q29 9 44 26 Q29 43 14 26" stroke="#2976B4" stroke-width="3" fill="#fff" fill-opacity="0.09"/>
+        </svg>
+      </div>
+      <h3 class="text-3xl font-bold mb-4" style="color:var(--topshield-accent-gold)">ضمان توبشيلد الشامل</h3>
+      <p class="text-lg mb-4" style="color:var(--topshield-primary-navy)">اطمئن مع ضمان توبشيلد… تغطية قوية، التزام لا يتزعزع.</p>
+      <ul class="list-disc text-right text-base pr-6 mb-4" style="color:var(--topshield-text-main)">
+        <li>تغطية كاملة لأي خلل مصنعي أو تقني.</li>
+        <li>ضمان ضد التغير اللوني، التقشر، فقدان الشفافية أو الأداء.</li>
+        <li>دعم فني سريع من فريق توبشيلد.</li>
+        <li>التزام بالاستبدال أو التصليح بدون تأخير.</li>
+        <li>دليل إرشادات شامل للاستخدام السليم والحفاظ على الأداء العالي.</li>
+      </ul>
+      <div class="flex items-center gap-3 mt-3">
+        <span class="benefit-icon material-icons">shield</span>
+        <span class="text-base font-bold" style="color:var(--topshield-accent-gold-darker)">الضمان = ثقة + صرامة + مصداقية</span>
+      </div>
+    </div>
+  </div>
+  <!-- Google Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script>
+    // زر عرض الضمان
+    function showWarrantySection() {
+      document.getElementById('warranty-section').scrollIntoView({behavior: "smooth"});
+      setTimeout(function(){
+        document.getElementById('warranty-section').style.display = "block";
+      }, 200);
+    }
+  </script>
+</body>
+</html>

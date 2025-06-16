@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>محاكي تظليل السيارات | TOPSHIELD</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    /* هوية اللون المختصرة */
+    :root{
+      --ts-blue:#102E6A; --ts-gold:#FFC107; --ts-gray-100:#F3F4F6;
+    }
+    body{font-family:'Cairo',sans-serif;background:var(--ts-gray-100);}
+    .btn{@apply rounded-md border-2 font-bold text-xs flex items-center justify-center transition;}
+    .btn-tint{width:3.5rem;height:3.5rem;}
+    /* حاوية المعاينة */
+    #viewer{position:relative;width:100%;padding-top:56%;}
+    #viewer img,#tintLayer{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;}
+    #tintLayer{background:rgba(0,0,0,0);mix-blend-mode:multiply;pointer-events:none;z-index:20;}
+    #frameImg{pointer-events:none;z-index:30;}
+  </style>
+</head>
+
+<body class="text-sm text-gray-700">
+
+<!-- ===== شريط علوي مبسط ===== -->
+<header class="bg-[var(--ts-blue)] text-white h-14 flex items-center shadow-md">
+  <div class="container mx-auto px-4 flex justify-between w-full">
+    <h1 class="font-bold text-base sm:text-lg">محاكي تظليل السيارات</h1>
+    <span class="font-bold hidden sm:block">TOPSHIELD</span>
+  </div>
+</header>
+
+<main class="container mx-auto p-4 lg:p-8 grid lg:grid-cols-12 gap-6">
+
+  <!-- ==== لوحة التحكُّم ==== -->
+  <aside class="lg:col-span-4 space-y-6">
+    <!-- اختيار السيارة -->
+    <section class="bg-white rounded-xl shadow p-4 space-y-3">
+      <h2 class="font-bold text-[var(--ts-blue)] text-lg">① اختر السيارة</h2>
+      <div id="carButtons" class="flex flex-wrap gap-3"></div>
+    </section>
+
+    <!-- اختيار التظليل -->
+    <section class="bg-white rounded-xl shadow p-4 space-y-3">
+      <h2 class="font-bold text-[var(--ts-blue)] text-lg">② اختر درجة التظليل</h2>
+      <div id="tintButtons" class="flex flex-wrap gap-2"></div>
+    </section>
+  </aside>
+
+  <!-- ==== المعاينة ==== -->
+  <section class="lg:col-span-8 bg-white rounded-xl shadow p-4">
+    <div id="viewer" class="mb-4">
+      <div id="placeholder"
+           class="absolute inset-0 flex flex-col items-center justify-center text-gray-400">
+        <i class="fas fa-car-side fa-3x mb-2"></i>
+        <p class="font-semibold">اختر سيارة لبدء المحاكاة</p>
+      </div>
+
+      <img id="baseImg" src="" alt="Base" style="display:none;z-index:10">
+      <div id="tintLayer" style="display:none"></div>
+      <img id="frameImg" src="" alt="Frame" style="display:none">
+    </div>
+  </section>
+
+</main>
+
+<!-- Font Awesome (للأيقونة في الـ placeholder) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js"></script>
+
+<script>
+/* ===== بيانات السيارات =====
+   يجب أن تضع الصور داخل مجلَّد /images بجانب الملف:
+   images/
+     sedan_base.png                ← جسم السيارة (زجاج عادي)
+     sedan_frame.png               ← نفس السيارة لكن شبابيكها شفافة
+     suv_base.png   ، suv_frame.png ← الخ…
+*/
+const cars={
+  sedan :{name:'سيدان', base:'images/sedan_base.png', frame:'images/sedan_frame.png'},
+  suv   :{name:'دفع رباعي',base:'images/suv_base.png' , frame:'images/suv_frame.png' },
+  sport :{name:'رياضية',   base:'images/sport_base.png',frame:'images/sport_frame.png'},
+  truck :{name:'شاحنة',    base:'images/truck_base.png',frame:'images/truck_frame.png'}
+};
+
+/* ===== تدرّجات التظليل ===== */
+const tints=[
+  {name:'5%', vlt:0.05}, {name:'20%',vlt:0.20},{name:'35%',vlt:0.35},
+  {name:'50%',vlt:0.50},{name:'70%',vlt:0.70},{name:'شفاف',vlt:1.0}
+];
+
+/* ===== عناصر DOM سريعة ===== */
+const carWrap   =document.getElementById('carButtons');
+const tintWrap  =document.getElementById('tintButtons');
+const baseImg   =document.getElementById('baseImg');
+const frameImg  =document.getElementById('frameImg');
+const tintLayer =document.getElementById('tintLayer');
+const placeholder=document.getElementById('placeholder');
+
+/* ===== توليد أزرار السيارات ديناميكياً ===== */
+Object.entries(cars).forEach(([key,val])=>{
+  const btn=document.createElement('button');
+  btn.className='btn w-24 h-20 border-gray-300 bg-white hover:border-[var(--ts-gold)]';
+  btn.innerHTML=`<i class="fas fa-car-side mb-1"></i><span>${val.name}</span>`;
+  btn.onclick=()=>selectCar(key,btn);
+  carWrap.appendChild(btn);
+});
+
+/* ===== توليد أزرار التظليل ===== */
+tints.forEach(t=>{
+  const btn=document.createElement('button');
+  btn.className='btn btn-tint border-gray-300';
+  btn.dataset.vlt=t.vlt;
+  btn.textContent=t.name;
+  btn.onclick=()=>selectTint(t.vlt,btn);
+  tintWrap.appendChild(btn);
+});
+
+/* === متغيّرات حالة === */
+let currentCar=null;
+let currentVLT=1;
+
+/* اختيار سيارة */
+function selectCar(key,button){
+  currentCar=cars[key];
+  /* إبراز الزر */
+  [...carWrap.children].forEach(b=>b.classList.remove('border-[var(--ts-gold)]','ring-4'));
+  button.classList.add('border-[var(--ts-gold)]','ring-4');
+
+  /* تحميل الصور */
+  baseImg.src =currentCar.base;
+  frameImg.src=currentCar.frame;
+  baseImg.style.display='block';
+  frameImg.style.display='block';
+  tintLayer.style.display='block';
+  placeholder.style.display='none';
+
+  applyTint();
+}
+
+/* اختيار تظليل */
+function selectTint(vlt,button){
+  currentVLT=vlt;
+  /* إبراز الزر */
+  [...tintWrap.children].forEach(b=>b.classList.remove('ring-4','ring-[var(--ts-blue)]'));
+  button.classList.add('ring-4','ring-[var(--ts-blue)]');
+  applyTint();
+}
+
+/* تطبيق التظليل فعلياً */
+function applyTint(){
+  const opacity=(1-currentVLT).toFixed(2);
+  tintLayer.style.background=`rgba(0,0,0,${opacity})`;
+}
+
+/* بدء: أختار افتراضياً sedan + 35% */
+window.addEventListener('DOMContentLoaded',()=>{
+  carWrap.firstElementChild.click();           // أول سيارة
+  tintWrap.children[2].click();                // 35%
+});
+</script>
+</body>
+</html>

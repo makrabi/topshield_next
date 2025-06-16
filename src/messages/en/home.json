@@ -1,0 +1,13 @@
+{
+  "hero": {
+    "title": "Welcome to Our Platform",
+    "description": "A secure and internationalized Next.js application."
+  },
+  "features": {
+    "title": "Features",
+    "item1": "Support for multiple languages",
+    "item2": "RTL support for Arabic",
+    "item3": "Dynamic metadata"
+  },
+  "call_to_action": "Get Started"
+}

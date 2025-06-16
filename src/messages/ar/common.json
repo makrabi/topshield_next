@@ -1,0 +1,17 @@
+{
+  "navigation": {
+    "home": "الرئيسية",
+    "about": "حول",
+    "services": "الخدمات",
+    "contact": "اتصل بنا",
+    "dashboard": "لوحة التحكم"
+  },
+  "buttons": {
+    "submit": "إرسال",
+    "cancel": "إلغاء",
+    "save": "حفظ"
+  },
+  "footer": {
+    "copyright": "© 2025 جميع الحقوق محفوظة."
+  }
+}

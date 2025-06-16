@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كليرتي شيلد من توبشيلد | حماية تتحدى المستقبل</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* ======== إعدادات عامة وألوان الهوية ======== */
+        :root {
+            /* ألوان الشعار الأساسية */
+            --topshield-primary-navy: #1A3372;
+            --topshield-primary-blue: #2976B4;
+            --topshield-glass-blue: #56B1DD;
+            --topshield-glass-blue-light: #89C5E8;
+            --topshield-accent-gold: #F7C100;
+            --topshield-accent-gold-darker: #C2971E;
+            --topshield-white: #FFFFFF;
+            --topshield-black: #000000;
+            
+            /* ألوان إضافية للتصميم */
+            --topshield-background-dark: #0a122a;
+            --topshield-text-light-gray: #E0E0E0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--topshield-background-dark);
+            color: var(--topshield-text-light-gray);
+            text-align: right;
+            overflow-x: hidden;
+        }
+
+        h2 {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: var(--topshield-white);
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--topshield-accent-gold), var(--topshield-glass-blue));
+            border-radius: 2px;
+        }
+
+        section {
+            padding: 6rem 2rem;
+        }
+
+        /* ======== 1. الشريط العلوي والقسم الرئيسي ======== */
+        .hero-section {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--topshield-white);
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .navbar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 3rem;
+            z-index: 10;
+        }
+
+        .logo img {
+            height: 50px; /* اضبط حجم الشعار */
+            filter: brightness(0) invert(1); /* جعل الشعار أبيض */
+        }
+
+        .warranty-button {
+            background-color: var(--topshield-accent-gold);
+            color: var(--topshield-primary-navy);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(247, 193, 0, 0.3);
+        }
+
+        .warranty-button:hover {
+            background-color: var(--topshield-accent-gold-darker);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(247, 193, 0, 0.5);
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            z-index: -2;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(26, 51, 114, 0.7);
+            z-index: -1;
+        }
+
+        .hero-title {
+            font-size: 6rem;
+            font-weight: 900;
+            text-shadow: 0 0 25px rgba(86, 177, 221, 0.5);
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-top: 1rem;
+            max-width: 600px;
+            animation: fadeInUp 1s ease-out 0.5s;
+            animation-fill-mode: both;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            font-size: 2rem;
+            animation: bounce 2s infinite;
+        }
+
+        /* ======== 2. قسم "عيش التجربة" التفاعلي ======== */
+        .interactive-demo {
+            background-color: #0d183a;
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        .windshield-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin: 2rem auto;
+            aspect-ratio: 16/9;
+        }
+
+        .windshield-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .rock {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-image: url('images/rock.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0;
+            z-index: 5;
+        }
+
+        .crack {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 150px;
+            height: 150px;
+            background-image: url('images/crack.png');
+            background-size: contain;
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 4;
+        }
+
+        .shield-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(86, 177, 221, 0.4), transparent 70%);
+            border-radius: 50px;
+            transform: scale(0);
+            opacity: 0;
+            transition: all 0.5s ease-out;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .shield-effect.active {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .shield-status {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.5);
+            color: var(--topshield-white);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            z-index: 6;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        #runDemoBtn {
+            padding: 1rem 2.5rem;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--topshield-primary-navy);
+            background-color: var(--topshield-accent-gold);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #runDemoBtn:hover {
+            background-color: var(--topshield-accent-gold-darker);
+            transform: scale(1.05);
+        }
+
+        /* مفتاح التبديل */
+        .switch {
+          position: relative;
+          display: inline-block;
+          width: 90px;
+          height: 34px;
+        }
+        .switch input {
+          opacity: 0;
+          width: 0;
+          height: 0;
+        }
+        .slider {
+          position: absolute;
+          cursor: pointer;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: #ccc;
+          transition: .4s;
+          border-radius: 34px;
+        }
+        .slider:before {
+          position: absolute;
+          content: "";
+          height: 26px;
+          width: 26px;
+          left: 4px;
+          bottom: 4px;
+          background-color: white;
+          transition: .4s;
+          border-radius: 50%;
+        }
+        input:checked + .slider {
+          background-color: var(--topshield-glass-blue);
+        }
+        input:checked + .slider:before {
+          transform: translateX(55px);
+        }
+        .label-text {
+            position: absolute;
+            top: 40px;
+            width: 100%;
+            text-align: center;
+            color: var(--topshield-white);
+        }
+
+        /* ======== 3. قسم الفوائد ======== */
+        .benefits-section {
+            background-color: var(--topshield-background-dark);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .benefit-card {
+            background-color: #0d183a;
+            padding: 2.5rem 2rem;
+            border-radius: 15px;
+            border: 1px solid var(--topshield-primary-navy);
+            text-align: center;
+            transition: all 0.4s ease;
+            /* لإخفاء العناصر قبل ظهورها */
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .benefit-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--topshield-glass-blue);
+            box-shadow: 0 10px 30px rgba(86, 177, 221, 0.2);
+        }
+
+        .benefit-icon {
+            font-size: 3rem;
+            color: var(--topshield-glass-blue);
+            margin-bottom: 1.5rem;
+        }
+
+        .benefit-card h3 {
+            font-size: 1.5rem;
+            color: var(--topshield-white);
+            margin-bottom: 1rem;
+        }
+
+        .benefit-card p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--topshield-text-light-gray);
+        }
+
+        /* ======== 4. قسم الضمان ======== */
+        #warranty-section {
+            background-color: var(--topshield-primary-navy);
+            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+            color: var(--topshield-white);
+            text-align: center;
+        }
+
+        .warranty-content {
+            max-width: 900px;
+            margin: 0 auto;
+            border: 2px solid var(--topshield-accent-gold);
+            padding: 3rem;
+            border-radius: 10px;
+            background: rgba(26, 51, 114, 0.5);
+            box-shadow: 0 0 40px rgba(247, 193, 0, 0.2);
+        }
+
+        .warranty-icon {
+            position: relative;
+            font-size: 5rem;
+            color: var(--topshield-accent-gold);
+            margin-bottom: 1rem;
+        }
+        .warranty-icon .fa-crown {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-15deg);
+            font-size: 2.5rem;
+        }
+
+        #warranty-section h2 {
+            color: var(--topshield-accent-gold);
+            font-size: 2.5rem;
+        }
+        #warranty-section h2::after {
+            background: var(--topshield-accent-gold);
+        }
+
+        #warranty-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .warranty-details {
+            text-align: right;
+            margin-bottom: 2.5rem;
+        }
+
+        .warranty-details h4 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--topshield-glass-blue-light);
+        }
+
+        .warranty-details ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .warranty-details ul li {
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+
+        .warranty-details ul li i {
+            color: var(--topshield-accent-gold);
+            margin-left: 10px;
+        }
+
+        .cta-button {
+            background-color: var(--topshield-glass-blue);
+            color: var(--topshield-white);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(86, 177, 221, 0.3);
+        }
+
+        .cta-button:hover {
+            background-color: var(--topshield-glass-blue-light);
+            transform: translateY(-3px);
+            color: var(--topshield-primary-navy);
+        }
+
+        /* ======== 5. Footer ======== */
+        .site-footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--topshield-background-dark);
+            border-top: 1px solid var(--topshield-primary-navy);
+        }
+
+        /* ======== رسوم متحركة ======== */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+
+        @keyframes rock-hit {
+            0% { opacity: 1; top: 20%; left: -5%; transform: scale(0.5) rotate(0deg); }
+            100% { opacity: 1; top: 50%; left: 50%; transform: scale(1) translate(-50%, -50%) rotate(360deg); }
+        }
+
+        @keyframes rock-bounce {
+            0% { opacity: 1; top: 20%; left: -5%; transform: scale(0.5) rotate(0deg); }
+            70% { opacity: 1; top: 50%; left: 50%; transform: scale(1) translate(-50%, -50%) rotate(360deg); }
+            100% { opacity: 0; top: 30%; left: 105%; transform: scale(0.7) rotate(720deg); }
+        }
+
+        /* ======== تصميم متجاوب ======== */
+        @media (max-width: 768px) {
+            h2 { font-size: 2rem; }
+            .hero-title { font-size: 3.5rem; }
+            .hero-subtitle { font-size: 1.2rem; }
+            .navbar { padding: 1rem 1.5rem; }
+            .warranty-button { padding: 0.6rem 1.2rem; font-size: 0.9rem; }
+            .controls { flex-direction: column; gap: 1.5rem; }
+        }
+    </style>
+    </head>
+<body>
+
+    <header class="hero-section">
+        <nav class="navbar">
+            <div class="logo">
+                <img src="images/logo.png" alt="شعار توبشيلد" />
+            </div>
+            <a href="#warranty-section" class="warranty-button">الضمان الشامل</a>
+        </nav>
+        <div class="hero-content">
+            <h1 class="hero-title">كليرتي شيلد™</h1>
+            <p class="hero-subtitle">تقنية مبتكرة تتحدى الصخور والكسور. حماية لا مثيل لها.</p>
+            <i class="fa-solid fa-chevron-down scroll-indicator"></i>
+        </div>
+        <div class="video-overlay"></div>
+        <video autoplay muted loop class="hero-video">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-dashboard-of-a-car-on-a-road-trip-4131-large.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </header>
+
+    <main>
+        <section class="interactive-demo">
+            <h2>عِش تجربة الحماية الفائقة</h2>
+            <div class="windshield-container">
+                <div class="shield-status" id="shieldStatus">بدون حماية</div>
+                <img src="images/windshield.png" alt="زجاج أمامي" class="windshield-img">
+                <div class="rock" id="rock"></div>
+                <div class="crack" id="crack"></div>
+                <div class="shield-effect" id="shieldEffect"></div>
+            </div>
+            <div class="controls">
+                <button id="runDemoBtn">اختبر الصدمة</button>
+                <label class="switch">
+                    <input type="checkbox" id="shieldToggle">
+                    <span class="slider"></span>
+                    <span class="label-text">تفعيل كليرتي شيلد</span>
+                </label>
+            </div>
+        </section>
+
+        <section class="benefits-section">
+            <h2>لماذا كليرتي شيلد هو الخيار الأمثل؟</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card animate-on-scroll">
+                    <div class="benefit-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                    <h3>يحمي من الصدمات والكسر</h3>
+                    <p>يوفر حماية فائقة للزجاج ضد التشققات والكسور الناتجة عن الحصى والصخور المتطايرة.</p>
+                </div>
+                <div class="benefit-card animate-on-scroll">
+                    <div class="benefit-icon"><i class="fa-solid fa-eye"></i></div>
+                    <h3>حماية شفافة وغير مرئية</h3>
+                    <p>وضوح بصري فائق يشبه الزجاج الطبيعي، يعزز الرؤية ويسمح بانزلاق المطر بسهولة.</p>
+                </div>
+                <div class="benefit-card animate-on-scroll">
+                    <div class="benefit-icon"><i class="fa-solid fa-sun"></i></div>
+                    <h3>يحمي من الأشعة UV</h3>
+                    <p>يعزل 99% من الأشعة فوق البنفسجية الضارة، حماية للركاب والمقصورة الداخلية من التلف والبهتان.</p>
+                </div>
+                <div class="benefit-card animate-on-scroll">
+                    <div class="benefit-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                    <h3>تقنية الشفاء الذاتي</h3>
+                    <p>الخدوش الطفيفة تختفي تلقائياً، مما يحافظ على مظهر الزجاج نظيفاً وخالياً من العيوب.</p>
+                </div>
+                <div class="benefit-card animate-on-scroll">
+                    <div class="benefit-icon"><i class="fa-solid fa-layer-group"></i></div>
+                    <h3>متانة وسماكة استثنائية</h3>
+                    <p>سماكة تزيد عن 200 ميكرون، أي 60% أكثر من الأفلام التقليدية، لحماية تدوم طويلاً.</p>
+                </div>
+                <div class="benefit-card animate-on-scroll">
+                    <div class="benefit-icon"><i class="fa-solid fa-sack-dollar"></i></div>
+                    <h3>يحافظ على قيمة السيارة</h3>
+                    <p>يحافظ على مظهر سيارتك الأصلي وقيمتها السوقية عند إعادة البيع ويقلل تكاليف الإصلاح.</p>
+                </div>
+                <div class="benefit-card animate-on-scroll">
+                    <div class="benefit-icon"><i class="fa-solid fa-bolt"></i></div>
+                    <h3>سهولة التركيب</h3>
+                    <p>بفضل مرونته العالية، يمكن تركيبه بسهولة في أقل من 15 دقيقة، مما يوفر وقتك وجهدك.</p>
+                </div>
+                <div class="benefit-card animate-on-scroll">
+                    <div class="benefit-icon"><i class="fa-solid fa-award"></i></div>
+                    <h3>ضمان مصنعي شامل</h3>
+                    <p>مصنّع بفخر في الولايات المتحدة الأمريكية مع ضمان شامل يعكس ثقتنا المطلقة بجودته.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="warranty-section" class="warranty-section">
+            <div class="warranty-content">
+                <div class="warranty-icon">
+                    <i class="fa-solid fa-shield-alt"></i>
+                    <i class="fa-solid fa-crown"></i>
+                </div>
+                <h2>الضمان المصنعي الشامل من توبشيلد</h2>
+                <p>نحن في توبشيلد لا نعد بالجودة فحسب، بل نضمنها. فيلم كليرتي شيلد مدعوم بضمان مصنعي شامل وصارم، هو شهادة على ثقتنا في الهندسة الأمريكية المتقدمة والمواد الفائقة التي نستخدمها. هذا الضمان يؤكد التزامنا بحماية استثمارك وراحة بالك.</p>
+                <div class="warranty-details">
+                    <h4>تفاصيل الضمان:</h4>
+                    <ul>
+                        <li><i class="fa-solid fa-check-circle"></i> يغطي العيوب المصنعية مثل تغير اللون، التشقق، أو التقشر.</li>
+                        <li><i class="fa-solid fa-check-circle"></i> ضمان على وضوح الرؤية وعدم الاصفرار.</li>
+                        <li><i class="fa-solid fa-check-circle"></i> يسري الضمان عند التركيب لدى أحد موزعينا المعتمدين.</li>
+                        <li><i class="fa-solid fa-check-circle"></i> التزامنا بالجودة هو التزامنا بسلامتك وقيمة سيارتك.</li>
+                    </ul>
+                </div>
+                <a href="#" class="cta-button">تواصل مع موزع معتمد</a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2025 توبشيلد. جميع الحقوق محفوظة. تصميم وتطوير بواسطة خبير/ة البرمجة.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- منطق الرسوم المتحركة عند التمرير (Scroll Animation) ---
+            // هذا الكود يجعل العناصر تظهر بشكل جميل عند وصول المستخدم إليها
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1 // تظهر الرسوم عندما يكون 10% من العنصر مرئياً
+            });
+
+            const elementsToAnimate = document.querySelectorAll('.animate-on-scroll');
+            elementsToAnimate.forEach(el => observer.observe(el));
+
+
+            // --- منطق قسم "عيش التجربة" التفاعلي ---
+            const runDemoBtn = document.getElementById('runDemoBtn');
+            const shieldToggle = document.getElementById('shieldToggle');
+            const rock = document.getElementById('rock');
+            const crack = document.getElementById('crack');
+            const shieldEffect = document.getElementById('shieldEffect');
+            const shieldStatus = document.getElementById('shieldStatus');
+            let isDemoRunning = false;
+
+            runDemoBtn.addEventListener('click', () => {
+                if (isDemoRunning) return; // منع التشغيل المتكرر
+                isDemoRunning = true;
+                runDemoBtn.disabled = true;
+
+                // إعادة تعيين الحالة
+                crack.style.transform = 'translate(-50%, -50%) scale(0)';
+                crack.style.opacity = '0';
+                rock.style.animation = 'none';
+                
+                // إعادة رسم العنصر لحل مشكلة إعادة تشغيل الأنيميشن في بعض المتصفحات
+                void rock.offsetWidth;
+
+
+                const isShieldActive = shieldToggle.checked;
+
+                if (isShieldActive) {
+                    shieldStatus.textContent = "كليرتي شيلد مُفعّل";
+                    shieldStatus.style.color = 'var(--topshield-glass-blue-light)';
+                    
+                    // تفعيل الدرع
+                    shieldEffect.classList.add('active');
+                    
+                    // تشغيل حركة الصخرة وهي ترتد
+                    rock.style.animation = 'rock-bounce 1.5s ease-out forwards';
+                    
+                    setTimeout(() => {
+                        shieldEffect.classList.remove('active');
+                    }, 1500);
+
+                } else {
+                    shieldStatus.textContent = "بدون حماية";
+                    shieldStatus.style.color = '#ff6b6b';
+                    
+                    // تشغيل حركة الصخرة وهي تصطدم
+                    rock.style.animation = 'rock-hit 1s ease-in forwards';
+                    
+                    // إظهار الكسر بعد الاصطدام
+                    setTimeout(() => {
+                        crack.style.transition = 'all 0.2s ease-out';
+                        crack.style.transform = 'translate(-50%, -50%) scale(1)';
+                        crack.style.opacity = '1';
+                    }, 950);
+                }
+
+                // السماح بتشغيل العرض مرة أخرى بعد انتهاء الحركة
+                setTimeout(() => {
+                    isDemoRunning = false;
+                    runDemoBtn.disabled = false;
+                }, 2000);
+            });
+        });
+    </script>
+    </body>
+</html>

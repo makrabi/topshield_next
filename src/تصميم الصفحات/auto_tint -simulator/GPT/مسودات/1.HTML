@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TOPSHIELD - متجر التظليل الذكي</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      background-color: #f6f7fa;
+    }
+    .brand-gradient { background: linear-gradient(90deg,#102e6a,#ffc107 80%);}
+    .brand-shadow { box-shadow: 0 8px 30px rgba(16,46,106,0.08);}
+    .card { background: #fff; border-radius: 1.5rem; box-shadow: 0 8px 30px #e3e7ee30; }
+    .gold-underline { display: inline-block; border-bottom: 3px solid #ffc107; }
+    .hero { background: linear-gradient(90deg,#fffbe7 60%,#f6f7fa 100%); }
+    .section-title { font-size: 2rem; font-weight:900; color: #102e6a;}
+    .buy-btn { background: linear-gradient(90deg,#ffc107 70%,#ffdf6d 100%); color: #102e6a; font-weight: bold;}
+    .buy-btn:hover { background: #102e6a; color: #fff;}
+    .tab-active { color: #ffc107; border-bottom:2px solid #ffc107;}
+    .tab-inactive { color:#102e6a;}
+    .tint-preview { transition: background 0.4s;}
+    .shadow-xl2 { box-shadow: 0 10px 32px #102e6a22;}
+  </style>
+</head>
+<body class="min-h-screen">
+  <!-- Header -->
+  <header class="brand-gradient p-0 m-0 w-full shadow-xl2">
+    <div class="container mx-auto flex justify-between items-center px-5 py-2">
+      <img src="https://assets.stickpng.com/images/580b57fcd9996e24bc43c521.png" class="h-12" alt="Topshield Logo">
+      <nav class="flex gap-6 font-bold text-white text-lg">
+        <a href="#" class="hover:text-yellow-300 transition">الرئيسية</a>
+        <a href="#" class="hover:text-yellow-300 transition">منتجاتنا</a>
+        <a href="#" class="hover:text-yellow-300 transition">المعرض</a>
+        <a href="#" class="hover:text-yellow-300 transition">آراء العملاء</a>
+        <a href="#" class="hover:text-yellow-300 transition">تواصل معنا</a>
+      </nav>
+    </div>
+  </header>
+  
+  <!-- Main Content -->
+  <main class="container mx-auto px-3 py-10">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+      <!-- محاكاة التظليل والشراء -->
+      <section class="card p-8 flex flex-col items-center w-full shadow-xl">
+        <h1 class="section-title mb-4 gold-underline">محاكاة تظليل سيارتك</h1>
+        <!-- محاكاة صورة السيارة -->
+        <div class="w-full flex flex-col items-center gap-5">
+          <img id="previewImage" src="https://placehold.co/600x250/cccccc/333?text=اختر+سيارتك" alt="معاينة السيارة" class="rounded-xl shadow-xl2 w-full max-w-lg mb-2" style="background: #eee;">
+          <div id="tint-overlay" class="absolute" style="display:none;"></div>
+        </div>
+        <!-- اختيار نوع السيارة -->
+        <div class="w-full grid grid-cols-2 gap-3 my-6">
+          <button onclick="selectCar('رياضية')" class="bg-ts-blue text-white rounded-lg py-2 px-2 font-bold shadow hover:bg-ts-gold hover:text-ts-blue-dark transition">رياضية</button>
+          <button onclick="selectCar('سيدان')" class="bg-ts-blue text-white rounded-lg py-2 px-2 font-bold shadow hover:bg-ts-gold hover:text-ts-blue-dark transition">سيدان</button>
+          <button onclick="selectCar('دفع رباعي')" class="bg-ts-blue text-white rounded-lg py-2 px-2 font-bold shadow hover:bg-ts-gold hover:text-ts-blue-dark transition">دفع رباعي</button>
+          <button onclick="selectCar('شاحنة')" class="bg-ts-blue text-white rounded-lg py-2 px-2 font-bold shadow hover:bg-ts-gold hover:text-ts-blue-dark transition">شاحنة</button>
+        </div>
+        <!-- اختيار نسبة التظليل العامة -->
+        <div class="flex gap-2 my-2 w-full justify-center">
+          <label class="font-bold">نسبة التظليل:</label>
+          <select id="vlt-select" class="p-2 rounded-lg border border-ts-gray-300 text-base font-bold focus:border-ts-gold focus:ring-2 focus:ring-ts-gold">
+            <option value="1">بدون</option>
+            <option value="0.8">80%</option>
+            <option value="0.7">70%</option>
+            <option value="0.5">50%</option>
+            <option value="0.35">35%</option>
+            <option value="0.25">25%</option>
+            <option value="0.15">15%</option>
+            <option value="0.05">5%</option>
+          </select>
+        </div>
+        <!-- السعر وزر الشراء -->
+        <div class="bg-gradient-to-l from-yellow-100 to-yellow-300 rounded-xl shadow-lg w-full text-center p-6 mt-6">
+          <div class="text-3xl font-extrabold text-ts-gold mb-2">599 ريال</div>
+          <div class="text-lg mb-4 font-bold text-ts-blue">قص بالكمبيوتر | أمريكي أصلي | ضمان 10 سنوات</div>
+          <button class="buy-btn py-3 px-7 rounded-xl shadow-lg text-xl transition mt-2">اشترِ الآن <i class="fas fa-bolt"></i></button>
+        </div>
+      </section>
+      
+      <!-- المزايا + التقييمات + الأسئلة الشائعة -->
+      <section class="flex flex-col gap-8">
+        <!-- Tabs -->
+        <div class="card p-6">
+          <div class="flex gap-6 border-b-2 border-gray-100 mb-4">
+            <button id="tab1" class="tab-active pb-2 text-lg font-bold" onclick="activateTab(1)">المزايا</button>
+            <button id="tab2" class="tab-inactive pb-2 text-lg font-bold" onclick="activateTab(2)">عن المنتج</button>
+            <button id="tab3" class="tab-inactive pb-2 text-lg font-bold" onclick="activateTab(3)">الأسئلة الشائعة</button>
+          </div>
+          <div id="tab-content-1" class="block">
+            <ul class="grid grid-cols-2 gap-4">
+              <li class="flex gap-2 items-center"><i class="fas fa-award text-ts-gold text-xl"></i>ضمان 10 سنوات</li>
+              <li class="flex gap-2 items-center"><i class="fas fa-cut text-ts-gold text-xl"></i>قص بالكمبيوتر دقيق</li>
+              <li class="flex gap-2 items-center"><i class="fas fa-star text-ts-gold text-xl"></i>حماية من الأشعة الضارة</li>
+              <li class="flex gap-2 items-center"><i class="fas fa-car-side text-ts-gold text-xl"></i>جمالية فاخرة وخصوصية</li>
+            </ul>
+          </div>
+          <div id="tab-content-2" class="hidden">
+            <p class="mb-3 font-bold">منتج توب شيلد - تظليل حراري أمريكي</p>
+            <ul class="list-disc pr-6">
+              <li>7 طبقات متخصصة للحماية</li>
+              <li>تظليل عازل حراري عالي الكفاءة</li>
+              <li>مقاوم للخدش وتلاشي الألوان</li>
+              <li>مطابق لمواصفات المرور السعودية والخليجية</li>
+            </ul>
+          </div>
+          <div id="tab-content-3" class="hidden">
+            <ul>
+              <li class="mb-2 font-bold text-ts-blue">هل يُسبب التظليل حجب للرؤية الليلية؟ <span class="font-normal text-gray-700 block">منتجاتنا مطابقة لأعلى معايير الشفافية ولا تؤثر على الرؤية الليلية.</span></li>
+              <li class="mb-2 font-bold text-ts-blue">هل التثبيت يشمل جميع النوافذ؟ <span class="font-normal text-gray-700 block">نعم، يشمل الزجاج الأمامي، الجانبي، الخلفي، والسقف (إن وجد).</span></li>
+              <li class="mb-2 font-bold text-ts-blue">هل يمكن إزالة التظليل لاحقًا؟ <span class="font-normal text-gray-700 block">نعم بسهولة دون أي آثار على الزجاج الأصلي.</span></li>
+            </ul>
+          </div>
+        </div>
+        <!-- تقييمات العملاء -->
+        <div class="card p-6">
+          <div class="flex items-center gap-3 mb-2">
+            <i class="fas fa-user-circle text-2xl text-ts-blue"></i>
+            <span class="font-bold text-xl text-ts-blue">تجارب عملائنا</span>
+          </div>
+          <div class="flex flex-col gap-4">
+            <div class="bg-gray-50 rounded-lg p-4 shadow-sm">
+              <span class="font-bold">محمد:</span> <span class="text-gray-700">"الجودة فاقت توقعاتي، والسيارة أصبحت أروع!"</span>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-4 shadow-sm">
+              <span class="font-bold">سارة:</span> <span class="text-gray-700">"خدمة عملاء ممتازة وتثبيت بدون عيوب. أنصح به."</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+  
+  <!-- Footer / Trust Badges -->
+  <footer class="brand-gradient p-0 mt-14">
+    <div class="container mx-auto flex justify-center items-center gap-10 py-6">
+      <div class="flex gap-3 items-center text-white font-bold"><i class="fas fa-truck"></i>شحن سريع</div>
+      <div class="flex gap-3 items-center text-white font-bold"><i class="fas fa-lock"></i>دفع آمن</div>
+      <div class="flex gap-3 items-center text-white font-bold"><i class="fas fa-shield-alt"></i>ضمان أصلي</div>
+      <div class="flex gap-3 items-center text-white font-bold"><i class="fas fa-headset"></i>دعم 24/7</div>
+    </div>
+    <div class="text-center text-white py-2 bg-[#102e6a] text-sm tracking-widest">جميع الحقوق محفوظة © 2024 توب شيلد</div>
+  </footer>
+  
+  <!-- JS -->
+  <script>
+    // محاكاة تغيير السيارة والتظليل
+    const previewImage = document.getElementById('previewImage');
+    const vltSelect = document.getElementById('vlt-select');
+    function selectCar(name) {
+      // يمكنك تخصيص الروابط الفعلية للصور لاحقًا
+      let url = 'https://placehold.co/600x250/cccccc/333?text=' + name;
+      previewImage.src = url;
+      previewImage.alt = "معاينة " + name;
+    }
+    vltSelect.addEventListener('change', function(){
+      const vlt = parseFloat(this.value);
+      let filter = vlt < 1 ? `brightness(${vlt+0.3}) grayscale(${1-vlt})` : "none";
+      previewImage.style.filter = filter;
+    });
+
+    // Tabs
+    function activateTab(tabNum) {
+      for(let i=1;i<=3;i++){
+        document.getElementById('tab'+i).classList.remove('tab-active');
+        document.getElementById('tab'+i).classList.add('tab-inactive');
+        document.getElementById('tab-content-'+i).classList.add('hidden');
+      }
+      document.getElementById('tab'+tabNum).classList.add('tab-active');
+      document.getElementById('tab'+tabNum).classList.remove('tab-inactive');
+      document.getElementById('tab-content-'+tabNum).classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>

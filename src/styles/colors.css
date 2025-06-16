@@ -1,0 +1,26 @@
+/* /src/styles/colors.css */
+/* TOPSHIELD Official Brand Colors - 100% Accurate Sampling */
+
+:root {
+  /* ألوان الشعار الأساسية */
+  --topshield-primary-navy: #1A3372;          /* الأزرق الداكن - كلمة الشعار */
+  --topshield-primary-blue: #2976B4;          /* أزرق متوسط - خطوط الكرة الأرضية */
+  --topshield-glass-blue: #56B1DD;            /* أزرق زجاجي - تعبئة الكرة الأرضية */
+  --topshield-glass-blue-light: #89C5E8;      /* أزرق فاتح لامع للظلال */
+  --topshield-accent-gold: #F7C100;           /* الذهبي الأساسي - التاج وحدود الكرة */
+  --topshield-accent-gold-darker: #C2971E;    /* الذهبي الغامق - ظل التاج */
+  --topshield-white: #FFFFFF;                 /* الأبيض - خطوط وانعكاسات */
+
+  /* ألوان الواجهة العامة (اختيارية) */
+  --topshield-background-light: #F0F4F8;
+  --topshield-border-subtle: #DDE3EA;
+  --topshield-text-light: #94A3B8;
+  --topshield-overlay-dark: rgba(0, 0, 0, 0.5);
+
+  /* ألوان النصوص والتباينات */
+  --topshield-background-content: #FFFFFF;
+  --topshield-text-dark: #1A3372;
+  --topshield-text-medium: #2976B4;
+  --topshield-text-main: #56B1DD;
+  --topshield-dark-elevated: #1F2937;
+}

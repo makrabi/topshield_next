@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>توبشيلد - تحليل توفير الطاقة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #2c3e50);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+            color: #e0e0ff;
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .card {
+            background: rgba(20, 30, 48, 0.85);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(79, 172, 254, 0.5);
+        }
+        
+        .card-header i {
+            font-size: 2rem;
+            margin-left: 15px;
+            color: #4facfe;
+        }
+        
+        .card-header h2 {
+            font-size: 1.8rem;
+            color: #4facfe;
+        }
+        
+        .chart-container {
+            flex: 1;
+            min-height: 300px;
+            position: relative;
+        }
+        
+        .legend {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 30px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            font-size: 1.1rem;
+        }
+        
+        .legend-color {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            margin-left: 10px;
+        }
+        
+        .comparison {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        
+        .comparison-item {
+            text-align: center;
+            flex: 1;
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        .comparison-item h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #00f2fe;
+        }
+        
+        .value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .topshield-value {
+            color: #00d2a0;
+        }
+        
+        .normal-value {
+            color: #ff6b6b;
+        }
+        
+        .savings {
+            color: #00d2a0;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .heat-bar {
+            height: 30px;
+            background: linear-gradient(to right, #1e3c72, #2a5298, #3498db, #2ecc71, #f1c40f, #e67e22, #e74c3c);
+            border-radius: 15px;
+            margin: 25px 0;
+            position: relative;
+        }
+        
+        .marker {
+            position: absolute;
+            top: -35px;
+            width: 3px;
+            height: 40px;
+            background: white;
+        }
+        
+        .marker-label {
+            position: absolute;
+            top: -65px;
+            left: -15px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .info-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .info-item i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #4facfe;
+        }
+        
+        .info-item .value {
+            font-size: 2rem;
+            color: #00f2fe;
+        }
+        
+        .footer-note {
+            text-align: center;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            margin-top: 30px;
+            font-size: 1.2rem;
+            color: #a0d2ff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-note .highlight {
+            color: #00d2a0;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        .season-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .season-btn {
+            background: rgba(79, 172, 254, 0.3);
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .season-btn.active {
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.5);
+        }
+        
+        .glass-structure {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 30px 0;
+        }
+        
+        .glass-pane {
+            width: 150px;
+            height: 250px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.8), rgba(200,220,255,0.3));
+            border: 3px solid #a0d2ff;
+            border-radius: 10px;
+            position: relative;
+            box-shadow: 0 0 20px rgba(79, 172, 254, 0.5);
+        }
+        
+        .coating {
+            position: absolute;
+            width: 100%;
+            height: 20px;
+            background: rgba(0, 210, 160, 0.6);
+            box-shadow: 0 0 10px rgba(0, 210, 160, 0.8);
+        }
+        
+        .top-coating {
+            top: 30%;
+        }
+        
+        .bottom-coating {
+            bottom: 30%;
+        }
+        
+        .radiation {
+            position: absolute;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 100, 100, 0.7);
+            border-radius: 2px;
+        }
+        
+        .radiation-blocked {
+            background: rgba(0, 210, 160, 0.7);
+            box-shadow: 0 0 8px rgba(0, 210, 160, 0.8);
+        }
+        
+        .radiation-transmitted {
+            background: rgba(255, 215, 0, 0.7);
+            box-shadow: 0 0 8px rgba(255, 215, 0, 0.8);
+        }
+        
+        .radiation-1 {
+            top: 15%;
+        }
+        
+        .radiation-2 {
+            top: 40%;
+        }
+        
+        .radiation-3 {
+            top: 65%;
+        }
+        
+        .radiation-4 {
+            top: 85%;
+        }
+        
+        .radiation-label {
+            position: absolute;
+            font-size: 0.9rem;
+            color: white;
+            background: rgba(0,0,0,0.6);
+            padding: 2px 8px;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+        
+        @media (max-width: 1100px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            header h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-solar-panel"></i> تحليل توفير الطاقة مع نوافذ توبشيلد</h1>
+            <p>مقارنة بصرية توضح الفرق في الأداء بين نوافذ توبشيلد والنوافذ التقليدية</p>
+        </header>
+        
+        <div class="season-controls">
+            <button class="season-btn active" data-season="summer">وضع الصيف <i class="fas fa-sun"></i></button>
+            <button class="season-btn" data-season="winter">وضع الشتاء <i class="fas fa-snowflake"></i></button>
+        </div>
+        
+        <div class="dashboard">
+            <!-- الرسم البياني السنوي لتوفير الطاقة -->
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-chart-line"></i>
+                    <h2>توفير الطاقة السنوي</h2>
+                </div>
+                <div class="chart-container">
+                    <canvas id="energyChart"></canvas>
+                </div>
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #ff6b6b;"></div>
+                        <span>نوافذ عادية</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #00d2a0;"></div>
+                        <span>نوافذ توبشيلد</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- توزيع استهلاك الطاقة -->
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-chart-pie"></i>
+                    <h2>توزيع استهلاك الطاقة</h2>
+                </div>
+                <div class="chart-container">
+                    <canvas id="consumptionChart"></canvas>
+                </div>
+                <div class="comparison">
+                    <div class="comparison-item">
+                        <h3>نوافذ عادية</h3>
+                        <div class="value normal-value">54%</div>
+                        <div>تكاليف التدفئة/التبريد</div>
+                    </div>
+                    <div class="comparison-item">
+                        <h3>توبشيلد</h3>
+                        <div class="value topshield-value">32%</div>
+                        <div>تكاليف التدفئة/التبريد</div>
+                    </div>
+                    <div class="comparison-item">
+                        <h3>التوفير</h3>
+                        <div class="savings">22%</div>
+                        <div>انخفاض التكاليف</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- الراحة الحرارية -->
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-thermometer-half"></i>
+                    <h2>الراحة الحرارية الداخلية</h2>
+                </div>
+                <div class="chart-container">
+                    <div class="heat-bar">
+                        <div class="marker" style="left: 20%;">
+                            <div class="marker-label">نوافذ عادية: 28°C</div>
+                        </div>
+                        <div class="marker" style="left: 50%;">
+                            <div class="marker-label">مثالي: 22°C</div>
+                        </div>
+                        <div class="marker" style="left: 45%;">
+                            <div class="marker-label">توبشيلد: 22°C</div>
+                        </div>
+                    </div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <i class="fas fa-temperature-high"></i>
+                            <div>درجة الحرارة الخارجية</div>
+                            <div class="value">35°C</div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-home"></i>
+                            <div>الراحة مع نوافذ عادية</div>
+                            <div class="value normal-value">28°C</div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <div>الراحة مع توبشيلد</div>
+                            <div class="value topshield-value">22°C</div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-leaf"></i>
+                            <div>تحسن الراحة</div>
+                            <div class="savings">6°C</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- توفير التكاليف -->
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-coins"></i>
+                    <h2>التوفير المالي السنوي</h2>
+                </div>
+                <div class="chart-container">
+                    <canvas id="savingsChart"></canvas>
+                </div>
+                <div class="comparison">
+                    <div class="comparison-item">
+                        <h3>نوافذ عادية</h3>
+                        <div class="value normal-value">$1,850</div>
+                        <div>تكاليف الطاقة السنوية</div>
+                    </div>
+                    <div class="comparison-item">
+                        <h3>توبشيلد</h3>
+                        <div class="value topshield-value">$1,100</div>
+                        <div>تكاليف الطاقة السنوية</div>
+                    </div>
+                    <div class="comparison-item">
+                        <h3>التوفير</h3>
+                        <div class="savings">$750</div>
+                        <div>سنوياً</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- أداء الزجاج مع الأشعة -->
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-sun"></i>
+                    <h2>أداء الزجاج مع الأشعة</h2>
+                </div>
+                <div class="glass-structure">
+                    <div class="glass-pane">
+                        <div class="coating top-coating"></div>
+                        <div class="coating bottom-coating"></div>
+                        <div class="radiation radiation-1 radiation-blocked"></div>
+                        <div class="radiation radiation-2 radiation-transmitted"></div>
+                        <div class="radiation radiation-3 radiation-blocked"></div>
+                        <div class="radiation radiation-4 radiation-transmitted"></div>
+                        <div class="radiation-label" style="top: 13%; left: 110%;">أشعة تحت الحمراء (حرارة) 85% عكس</div>
+                        <div class="radiation-label" style="top: 38%; left: 110%;">ضوء مرئي 80% مرور</div>
+                        <div class="radiation-label" style="top: 63%; left: 110%;">أشعة تحت الحمراء (حرارة) 90% عكس</div>
+                        <div class="radiation-label" style="top: 83%; left: 110%;">ضوء مرئي 75% مرور</div>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <i class="fas fa-fire"></i>
+                        <div>عكس الحرارة</div>
+                        <div class="value topshield-value">87%</div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-lightbulb"></i>
+                        <div>مرور الضوء</div>
+                        <div class="value">78%</div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-shield-virus"></i>
+                        <div>عزل حراري</div>
+                        <div class="value topshield-value">90%</div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-bolt"></i>
+                        <div>توفير طاقة</div>
+                        <div class="savings">40%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-note">
+            <p>نوافذ <span class="highlight">توبشيلد</span> توفر توفيراً طاقياً يصل إلى <span class="highlight">40%</span> مقارنة بالنوافذ التقليدية</p>
+            <p>مع حفاظ على الراحة الحرارية المثالية على مدار السنة</p>
+        </div>
+    </div>
+
+    <script>
+        // بيانات الرسم البياني السنوي
+        const months = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
+        const normalData = [820, 780, 700, 600, 550, 850, 980, 950, 800, 700, 750, 900];
+        const topshieldData = [620, 600, 580, 520, 480, 550, 600, 580, 540, 500, 520, 600];
+        
+        // رسم بياني لتوفير الطاقة السنوي
+        const energyCtx = document.getElementById('energyChart').getContext('2d');
+        const energyChart = new Chart(energyCtx, {
+            type: 'line',
+            data: {
+                labels: months,
+                datasets: [
+                    {
+                        label: 'نوافذ عادية',
+                        data: normalData,
+                        borderColor: '#ff6b6b',
+                        backgroundColor: 'rgba(255, 107, 107, 0.1)',
+                        borderWidth: 4,
+                        tension: 0.3,
+                        fill: true
+                    },
+                    {
+                        label: 'نوافذ توبشيلد',
+                        data: topshieldData,
+                        borderColor: '#00d2a0',
+                        backgroundColor: 'rgba(0, 210, 160, 0.1)',
+                        borderWidth: 4,
+                        tension: 0.3,
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        min: 400,
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: '#a0d2ff',
+                            callback: function(value) {
+                                return value + ' ك.و.س';
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: '#a0d2ff'
+                        }
+                    }
+                }
+            }
+        });
+        
+        // رسم بياني دائري لتوزيع استهلاك الطاقة
+        const consumptionCtx = document.getElementById('consumptionChart').getContext('2d');
+        const consumptionChart = new Chart(consumptionCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['التبريد', 'التدفئة', 'الإضاءة', 'الأجهزة'],
+                datasets: [
+                    {
+                        data: [25, 20, 15, 40],
+                        backgroundColor: ['#ff6b6b', '#e74c3c', '#3498db', '#2ecc71'],
+                        borderWidth: 0
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: '#a0d2ff',
+                            padding: 20,
+                            font: {
+                                size: 14
+                            }
+                        }
+                    }
+                },
+                cutout: '65%'
+            }
+        });
+        
+        // رسم بياني للتوفير المالي
+        const savingsCtx = document.getElementById('savingsChart').getContext('2d');
+        const savingsChart = new Chart(savingsCtx, {
+            type: 'bar',
+            data: {
+                labels: ['السنة 1', 'السنة 2', 'السنة 3', 'السنة 4', 'السنة 5'],
+                datasets: [
+                    {
+                        label: 'نوافذ عادية',
+                        data: [1850, 1900, 1950, 2000, 2050],
+                        backgroundColor: 'rgba(255, 107, 107, 0.7)',
+                        borderColor: '#ff6b6b',
+                        borderWidth: 2
+                    },
+                    {
+                        label: 'توبشيلد',
+                        data: [1100, 1080, 1060, 1040, 1020],
+                        backgroundColor: 'rgba(0, 210, 160, 0.7)',
+                        borderColor: '#00d2a0',
+                        borderWidth: 2
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: '#a0d2ff',
+                            callback: function(value) {
+                                return '$' + value;
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: '#a0d2ff'
+                        }
+                    }
+                }
+            }
+        });
+        
+        // التحكم في الأزرار الموسمية
+        const seasonButtons = document.querySelectorAll('.season-btn');
+        seasonButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                seasonButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                const season = this.getAttribute('data-season');
+                updateSeasonalData(season);
+            });
+        });
+        
+        function updateSeasonalData(season) {
+            const tempOut = document.querySelector('.info-item .value');
+            const comfortNormal = document.querySelectorAll('.info-item .value')[1];
+            const comfortTopshield = document.querySelectorAll('.info-item .value')[2];
+            
+            if (season === 'summer') {
+                tempOut.textContent = '35°C';
+                comfortNormal.textContent = '28°C';
+                comfortNormal.className = 'value normal-value';
+                comfortTopshield.textContent = '22°C';
+                
+                // تحديث شريط الحرارة
+                document.querySelector('.marker:nth-child(1)').style.left = '20%';
+                document.querySelector('.marker:nth-child(1) .marker-label').textContent = 'نوافذ عادية: 28°C';
+                document.querySelector('.marker:nth-child(3)').style.left = '45%';
+            } else {
+                tempOut.textContent = '5°C';
+                comfortNormal.textContent = '15°C';
+                comfortNormal.className = 'value normal-value';
+                comfortTopshield.textContent = '22°C';
+                
+                // تحديث شريط الحرارة
+                document.querySelector('.marker:nth-child(1)').style.left = '35%';
+                document.querySelector('.marker:nth-child(1) .marker-label').textContent = 'نوافذ عادية: 15°C';
+                document.querySelector('.marker:nth-child(3)').style.left = '50%';
+            }
+        }
+        
+        // تأثيرات متحركة للزجاج
+        const glassPane = document.querySelector('.glass-pane');
+        setInterval(() => {
+            glassPane.style.boxShadow = '0 0 25px rgba(79, 172, 254, 0.7)';
+            setTimeout(() => {
+                glassPane.style.boxShadow = '0 0 20px rgba(79, 172, 254, 0.5)';
+            }, 800);
+        }, 2000);
+    </script>
+</body>
+</html>

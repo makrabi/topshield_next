@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOPSHIELD PRO - حماية متقدمة للزجاج الأمامي</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --topshield-primary-navy: #1A3372;
+            --topshield-primary-blue: #2976B4;
+            --topshield-glass-blue: #56B1DD;
+            --topshield-glass-blue-light: #89C5E8;
+            --topshield-accent-gold: #F7C100;
+            --topshield-accent-gold-darker: #C2971E;
+            --topshield-white: #FFFFFF;
+            --topshield-background-light: #F0F4F8;
+            --topshield-text-dark: #1A3372;
+            --topshield-text-medium: #2976B4;
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--topshield-background-light);
+            color: var(--topshield-text-dark);
+        }
+        
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+        }
+        
+        .hero-bg {
+            background: linear-gradient(135deg, var(--topshield-primary-navy) 0%, var(--topshield-primary-blue) 100%);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .gold-btn {
+            background: linear-gradient(135deg, var(--topshield-accent-gold) 0%, var(--topshield-accent-gold-darker) 100%);
+            box-shadow: 0 4px 15px rgba(247, 193, 0, 0.4);
+        }
+        
+        .gold-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(247, 193, 0, 0.6);
+        }
+        
+        .windshield {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(160deg, #89C5E8, #56B1DD, #2976B4);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+        
+        .impact {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            animation: impactEffect 0.5s forwards;
+            display: none;
+        }
+        
+        .healed {
+            animation: healEffect 2s forwards;
+        }
+        
+        @keyframes impactEffect {
+            0% { transform: scale(0); opacity: 0.8; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); opacity: 0; }
+        }
+        
+        @keyframes healEffect {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(0); opacity: 0; }
+        }
+        
+        .protection-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            border-radius: 10px;
+            display: none;
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: 0;
+            width: 70%;
+            height: 4px;
+            background: var(--topshield-accent-gold);
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+    <!-- شريط التنقل -->
+    <nav class="glass-morphism py-4 px-6 fixed w-full top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center">
+                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[#1A3372] to-[#2976B4] flex items-center justify-center">
+                    <i class="fas fa-shield-alt text-white text-xl"></i>
+                </div>
+                <span class="text-xl font-bold text-[#1A3372] mr-3">TOPSHIELD PRO</span>
+            </div>
+            
+            <div class="hidden md:flex space-x-8">
+                <a href="#features" class="text-[#1A3372] hover:text-[#2976B4] font-semibold transition">المميزات</a>
+                <a href="#benefits" class="text-[#1A3372] hover:text-[#2976B4] font-semibold transition">الفوائد</a>
+                <a href="#simulation" class="text-[#1A3372] hover:text-[#2976B4] font-semibold transition">المحاكاة</a>
+                <a href="#warranty" class="text-[#1A3372] hover:text-[#2976B4] font-semibold transition">الضمان</a>
+            </div>
+            
+            <button class="md:hidden text-[#1A3372]">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- القسم الرئيسي -->
+    <section class="hero-bg min-h-screen flex items-center pt-20">
+        <div class="container mx-auto px-4 py-16 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 text-white mb-12 md:mb-0">
+                <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-6">
+                    TOPSHIELD PRO – درعك الذكي لحماية الطلاء والزجاج الأمامي
+                </h1>
+                <p class="text-xl mb-8 opacity-90">
+                    تقنية مبتكرة تتحدى الصخور والكسور وتوفر حماية لا مثيل لها
+                </p>
+                <div class="flex space-x-4">
+                    <button class="gold-btn text-[#1A3372] font-bold py-3 px-8 rounded-full text-lg transition">
+                        اطلب الآن
+                    </button>
+                    <button class="glass-morphism text-white font-bold py-3 px-8 rounded-full text-lg transition hover:bg-white/20">
+                        <i class="fas fa-play-circle mr-2"></i> شاهد الفيديو
+                    </button>
+                </div>
+            </div>
+            
+            <div class="md:w-1/2 relative">
+                <div class="windshield" id="windshield">
+                    <div class="protection-layer" id="protectionLayer"></div>
+                </div>
+                <div class="flex justify-center mt-8 space-x-4">
+                    <button id="impactBtn" class="bg-[#2976B4] text-white py-2 px-6 rounded-full">
+                        <i class="fas fa-bolt mr-2"></i>تأثير الاصطدام
+                    </button>
+                    <button id="healBtn" class="bg-[#F7C100] text-[#1A3372] py-2 px-6 rounded-full">
+                        <i class="fas fa-magic mr-2"></i>الشفاء الذاتي
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- مميزات المنتج -->
+    <section id="features" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 section-title">مميزات <span class="text-[#2976B4]">كليرتي شيلد</span></h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <!-- ميزة 1 -->
+                <div class="feature-card glass-morphism p-8 rounded-2xl transition duration-500">
+                    <div class="w-16 h-16 rounded-full bg-[#F0F4F8] flex items-center justify-center mb-6">
+                        <i class="fas fa-shield-alt text-2xl text-[#2976B4]"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">تعزيز السلامة</h3>
+                    <p class="text-gray-700">
+                        يوفر حماية قصوى لزجاج سيارتك الأمامي ضد الصدمات ليحميه من الكسر والتشقق والتلف، ويحافظ على سلامة الركاب.
+                    </p>
+                </div>
+                
+                <!-- ميزة 2 -->
+                <div class="feature-card glass-morphism p-8 rounded-2xl transition duration-500">
+                    <div class="w-16 h-16 rounded-full bg-[#F0F4F8] flex items-center justify-center mb-6">
+                        <i class="fas fa-eye text-2xl text-[#2976B4]"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">حماية شفافة</h3>
+                    <p class="text-gray-700">
+                        يوفر حماية غير مرئية للزجاج الأمامي بوضوح شفاف يشبه الزجاج الطبيعي، ويعزز الرؤية بشكل ملحوظ.
+                    </p>
+                </div>
+                
+                <!-- ميزة 3 -->
+                <div class="feature-card glass-morphism p-8 rounded-2xl transition duration-500">
+                    <div class="w-16 h-16 rounded-full bg-[#F0F4F8] flex items-center justify-center mb-6">
+                        <i class="fas fa-sun text-2xl text-[#2976B4]"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">حماية من الأشعة</h3>
+                    <p class="text-gray-700">
+                        يعزل الأشعة فوق البنفسجية الضارة بنسبة 99%، ويحمي الديكور الداخلي والمقاعد من البهت والتلف.
+                    </p>
+                </div>
+                
+                <!-- ميزة 4 -->
+                <div class="feature-card glass-morphism p-8 rounded-2xl transition duration-500">
+                    <div class="w-16 h-16 rounded-full bg-[#F0F4F8] flex items-center justify-center mb-6">
+                        <i class="fas fa-heartbeat text-2xl text-[#2976B4]"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">الشفاء الذاتي</h3>
+                    <p class="text-gray-700">
+                        يتميز بتقنية الشفاء الذاتي التي تقلل من ظهور الخدوش وتعيد الزجاج إلى مظهره الأصلي تلقائيًا.
+                    </p>
+                </div>
+                
+                <!-- ميزة 5 -->
+                <div class="feature-card glass-morphism p-8 rounded-2xl transition duration-500">
+                    <div class="w-16 h-16 rounded-full bg-[#F0F4F8] flex items-center justify-center mb-6">
+                        <i class="fas fa-gem text-2xl text-[#2976B4]"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">متانة فائقة</h3>
+                    <p class="text-gray-700">
+                        سماكة استثنائية تزيد عن 200 ميكرون، ما يمثل زيادة بنسبة 60% مقارنةً بالأفلام التقليدية.
+                    </p>
+                </div>
+                
+                <!-- ميزة 6 -->
+                <div class="feature-card glass-morphism p-8 rounded-2xl transition duration-500">
+                    <div class="w-16 h-16 rounded-full bg-[#F0F4F8] flex items-center justify-center mb-6">
+                        <i class="fas fa-chart-line text-2xl text-[#2976B4]"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">يحافظ على القيمة</h3>
+                    <p class="text-gray-700">
+                        يحافظ على مظهر سيارتك الأصلي وقيمتها السوقية، ويقلل تكاليف الإصلاح والاستبدال الباهظة.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- محاكاة الزجاج الأمامي -->
+    <section id="simulation" class="py-20 bg-gradient-to-br from-[#F0F4F8] to-[#DDE3EA]">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 section-title">تجربة <span class="text-[#2976B4]">الزجاج الأمامي</span></h2>
+            
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <div class="bg-white rounded-2xl p-8 shadow-xl">
+                        <h3 class="text-2xl font-bold mb-6 text-[#1A3372]">قبل تركيب TOPSHIELD PRO</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <i class="fas fa-times-circle text-red-500 mt-1 mr-3"></i>
+                                <span>عرضة للخدوش والتشقق من الحصى والصخور</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-times-circle text-red-500 mt-1 mr-3"></i>
+                                <span>تأثر أنظمة مساعدة السائق (ADAS) بالضرر</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-times-circle text-red-500 mt-1 mr-3"></i>
+                                <span>تكاليف إصلاح واستبدال عالية</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-times-circle text-red-500 mt-1 mr-3"></i>
+                                <span>خطر الإصابات في الحوادث</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2">
+                    <div class="bg-gradient-to-br from-[#1A3372] to-[#2976B4] rounded-2xl p-8 shadow-xl text-white">
+                        <h3 class="text-2xl font-bold mb-6">بعد تركيب TOPSHIELD PRO</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-400 mt-1 mr-3"></i>
+                                <span>حماية فائقة ضد الصدمات والكسر</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-400 mt-1 mr-3"></i>
+                                <span>حماية لأنظمة مساعدة السائق (ADAS)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-400 mt-1 mr-3"></i>
+                                <span>توفير في تكاليف الإصلاح والاستبدال</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-400 mt-1 mr-3"></i>
+                                <span>زيادة السلامة للركاب</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-400 mt-1 mr-3"></i>
+                                <span>شفافية عالية لا تؤثر على الرؤية</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-16 text-center">
+                <h3 class="text-2xl font-bold mb-6 text-[#1A3372]">مقارنة الأداء</h3>
+                <div class="bg-white rounded-2xl p-6 max-w-4xl mx-auto shadow-lg">
+                    <div class="grid grid-cols-4 gap-4 text-center mb-6 font-bold">
+                        <div class="p-3 bg-[#F0F4F8] rounded-lg">الميزة</div>
+                        <div class="p-3 bg-[#F0F4F8] rounded-lg">الأفلام التقليدية</div>
+                        <div class="p-3 bg-[#F0F4F8] rounded-lg">TOPSHIELD PRO</div>
+                        <div class="p-3 bg-[#F0F4F8] rounded-lg">الفرق</div>
+                    </div>
+                    
+                    <div class="grid grid-cols-4 gap-4 text-center mb-4">
+                        <div class="p-3">السماكة</div>
+                        <div class="p-3">120 ميكرون</div>
+                        <div class="p-3 font-bold text-[#1A3372]">200 ميكرون</div>
+                        <div class="p-3 font-bold text-green-600">+60%</div>
+                    </div>
+                    
+                    <div class="grid grid-cols-4 gap-4 text-center mb-4">
+                        <div class="p-3">الحماية من الأشعة</div>
+                        <div class="p-3">85%</div>
+                        <div class="p-3 font-bold text-[#1A3372]">99%</div>
+                        <div class="p-3 font-bold text-green-600">+14%</div>
+                    </div>
+                    
+                    <div class="grid grid-cols-4 gap-4 text-center mb-4">
+                        <div class="p-3">مقاومة الصدمات</div>
+                        <div class="p-3">متوسطة</div>
+                        <div class="p-3 font-bold text-[#1A3372]">عالية جدًا</div>
+                        <div class="p-3">
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-4 gap-4 text-center">
+                        <div class="p-3">الشفاء الذاتي</div>
+                        <div class="p-3">
+                            <i class="fas fa-times text-red-500"></i>
+                        </div>
+                        <div class="p-3 font-bold text-[#1A3372]">
+                            <i class="fas fa-check text-green-500"></i>
+                        </div>
+                        <div class="p-3 font-bold text-green-600">خاصية حصرية</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم الضمان -->
+    <section id="warranty" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="inline-block p-3 bg-[#F0F4F8] rounded-full mb-8">
+                    <i class="fas fa-medal text-4xl text-[#F7C100]"></i>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">الضمان الذهبي من توبشيلد</h2>
+                <p class="text-xl text-gray-700 mb-10 max-w-2xl mx-auto">
+                    نقدم ضمانًا مصنعيًا شاملًا على فيلم كليرتيشيلد عالي الجودة المصنع بفخر في الولايات المتحدة الأمريكية، مما يعكس ثقتنا بجودة وأداء منتجاتنا العالي.
+                </p>
+                
+                <a href="#" class="gold-btn inline-block text-[#1A3372] font-bold py-4 px-12 rounded-full text-xl transition mb-16">
+                    <i class="fas fa-file-contract mr-3"></i>تفاصيل الضمان الكاملة
+                </a>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+                    <div class="bg-[#F0F4F8] p-6 rounded-2xl">
+                        <i class="fas fa-globe-americas text-4xl text-[#2976B4] mb-4"></i>
+                        <h3 class="text-xl font-bold mb-3">صنع في الولايات المتحدة</h3>
+                        <p>منتج عالي الجودة مصنع بأحدث التقنيات الأمريكية</p>
+                    </div>
+                    
+                    <div class="bg-[#F0F4F8] p-6 rounded-2xl">
+                        <i class="fas fa-calendar-check text-4xl text-[#2976B4] mb-4"></i>
+                        <h3 class="text-xl font-bold mb-3">ضمان طويل الأمد</h3>
+                        <p>ضمان مصنعي يشمل جميع عيوب التصنيع</p>
+                    </div>
+                    
+                    <div class="bg-[#F0F4F8] p-6 rounded-2xl">
+                        <i class="fas fa-headset text-4xl text-[#2976B4] mb-4"></i>
+                        <h3 class="text-xl font-bold mb-3">دعم فني متكامل</h3>
+                        <p>فريق دعم فني متاح على مدار الساعة</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- دعوة للعمل -->
+    <section class="py-20 hero-bg">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">جاهز لحماية سيارتك بشكل استثنائي؟</h2>
+            <p class="text-xl text-white opacity-90 mb-10 max-w-2xl mx-auto">
+                انضم إلى آلاف العملاء الراضين الذين اختاروا TOPSHIELD PRO لحماية سياراتهم والحفاظ على قيمتها
+            </p>
+            
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                <button class="gold-btn text-[#1A3372] font-bold py-4 px-12 rounded-full text-xl transition">
+                    <i class="fas fa-shopping-cart mr-3"></i>اطلب الآن
+                </button>
+                <button class="glass-morphism text-white font-bold py-4 px-12 rounded-full text-xl transition hover:bg-white/20">
+                    <i class="fas fa-map-marker-alt mr-3"></i>ابحث عن مركز تركيب
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- تذييل الصفحة -->
+    <footer class="bg-[#1A3372] text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-6">TOPSHIELD PRO</h3>
+                    <p class="opacity-80">
+                        الحل الأمثل لحماية الزجاج الأمامي والطلاء من التلف والخدوش، باستخدام أحدث التقنيات الأمريكية.
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-6">روابط سريعة</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="opacity-80 hover:opacity-100 transition">الرئيسية</a></li>
+                        <li><a href="#" class="opacity-80 hover:opacity-100 transition">منتجاتنا</a></li>
+                        <li><a href="#" class="opacity-80 hover:opacity-100 transition">مراكز التركيب</a></li>
+                        <li><a href="#" class="opacity-80 hover:opacity-100 transition">الضمان</a></li>
+                        <li><a href="#" class="opacity-80 hover:opacity-100 transition">اتصل بنا</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-6">تواصل معنا</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-3 opacity-80"></i>
+                            <span>+966 12 345 6789</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 opacity-80"></i>
+                            <span>info@topshield-pro.com</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-3 opacity-80"></i>
+                            <span>الرياض، المملكة العربية السعودية</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-6">تابعنا</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-12 h-12 rounded-full bg-[#2976B4] flex items-center justify-center hover:bg-[#56B1DD] transition">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 rounded-full bg-[#2976B4] flex items-center justify-center hover:bg-[#56B1DD] transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 rounded-full bg-[#2976B4] flex items-center justify-center hover:bg-[#56B1DD] transition">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 rounded-full bg-[#2976B4] flex items-center justify-center hover:bg-[#56B1DD] transition">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-[#2976B4] mt-12 pt-8 text-center opacity-80">
+                <p>© 2023 TOPSHIELD PRO. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // تهيئة ScrollReveal للرسوم المتحركة عند التمرير
+        ScrollReveal().reveal('.feature-card', {
+            delay: 200,
+            distance: '30px',
+            origin: 'bottom',
+            interval: 100,
+            easing: 'ease-in-out'
+        });
+        
+        ScrollReveal().reveal('.section-title', {
+            delay: 300,
+            distance: '20px',
+            origin: 'bottom'
+        });
+        
+        // محاكاة تأثيرات الزجاج الأمامي
+        const windshield = document.getElementById('windshield');
+        const impactBtn = document.getElementById('impactBtn');
+        const healBtn = document.getElementById('healBtn');
+        const protectionLayer = document.getElementById('protectionLayer');
+        
+        impactBtn.addEventListener('click', () => {
+            // إظهار طبقة الحماية
+            protectionLayer.style.display = 'block';
+            
+            // إنشاء تأثيرات الاصطدام
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const impact = document.createElement('div');
+                    impact.classList.add('impact');
+                    
+                    // وضع عشوائي للتأثيرات
+                    const leftPos = Math.random() * 80 + 10;
+                    const topPos = Math.random() * 60 + 20;
+                    
+                    impact.style.left = `${leftPos}%`;
+                    impact.style.top = `${topPos}%`;
+                    
+                    windshield.appendChild(impact);
+                    
+                    // إزالة التأثير بعد انتهاء التحريك
+                    setTimeout(() => {
+                        impact.remove();
+                    }, 500);
+                }, i * 300);
+            }
+        });
+        
+        healBtn.addEventListener('click', () => {
+            // إخفاء طبقة الحماية مع تأثير
+            protectionLayer.style.display = 'none';
+            
+            // إظهار تأثير الشفاء
+            const impacts = document.querySelectorAll('.impact');
+            impacts.forEach(impact => {
+                impact.classList.add('healed');
+                setTimeout(() => {
+                    impact.remove();
+                }, 2000);
+            });
+        });
+        
+        // التنقل السلس
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

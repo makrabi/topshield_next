@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>محاكاة تأثير الشمس - واقع معزز</title>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <style>
+        body { margin: 0; overflow: hidden; }
+        .ar-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            display: flex;
+            gap: 10px;
+        }
+        .ar-controls button {
+            padding: 10px 15px;
+            font-size: 16px;
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            border: 1px solid white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        /* يمكنك إضافة المزيد من تنسيقات CSS هنا لعناصر التحكم والإحصائيات */
+    </style>
+</head>
+<body style="margin : 0px; overflow: hidden;">
+    <div class="ar-controls">
+        <button id="startArBtn"><i class="fas fa-play"></i> بدء المحاكاة AR</button>
+        <button id="resetArBtn"><i class="fas fa-redo"></i> إعادة الضبط AR</button>
+        </div>
+
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;">
+        
+        <a-assets>
+            <a-asset-item id="tower-model" src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/DamagedHelmet/glTF/DamagedHelmet.gltf"></a-asset-item> 
+            </a-assets>
+
+        <a-marker preset="hiro">
+            <a-entity
+                id="ar-tower"
+                gltf-model="#tower-model"
+                position="0 0 0"
+                scale="0.5 0.5 0.5"
+                animation-mixer>
+            </a-entity>
+
+            <a-sphere id="ar-sun" position="0 2 -2" radius="0.3" color="yellow" emissive="yellow" emissiveIntensity="2"></a-sphere>
+            
+            <a-text id="ar-temp-display" value="الحرارة: 25°C" position="0 1.5 -1" align="center" color="white" width="2"></a-text>
+
+        </a-marker>
+
+        <a-entity camera></a-entity>
+    </a-scene>
+
+    <script>
+        // منطق JavaScript الخاص بالواقع المعزز سيأتي هنا
+        // مثال:
+        const startArBtn = document.getElementById('startArBtn');
+        const arTempDisplay = document.getElementById('ar-temp-display'); // هذا عنصر A-Frame
+        let currentArTemperature = 25;
+
+        startArBtn.addEventListener('click', () => {
+            // ابدأ منطق المحاكاة هنا، على سبيل المثال، تحديث درجة الحرارة
+            console.log("بدء محاكاة الواقع المعزز");
+            // مثال بسيط لتحديث درجة الحرارة في مشهد A-Frame
+            // ستحتاج إلى تكييف منطق المحاكاة الأصلي الخاص بك
+            setInterval(() => {
+                if (currentArTemperature < 45) {
+                    currentArTemperature += 1;
+                    // تحديث عنصر النص في A-Frame
+                    const tempTextElement = document.querySelector('#ar-temp-display');
+                    if (tempTextElement) {
+                        tempTextElement.setAttribute('value', `الحرارة: ${currentArTemperature}°C`);
+                    }
+                    // يمكنك أيضًا تغيير لون البرج هنا بناءً على الحرارة
+                    // const towerElement = document.querySelector('#ar-tower');
+                    // if (towerElement) {
+                    //    const heatRatio = (currentArTemperature - 25) / 20; // 0 to 1
+                    //    const newBlue = 1 - heatRatio * 0.5; // example: blue decreases
+                    //    towerElement.setAttribute('material', 'color', `rgb(200, 200, ${newBlue * 255})`);
+                    // }
+                }
+            }, 1000);
+        });
+
+        // يجب أيضًا إضافة وظائف لأزرار إعادة الضبط والمعلومات العلمية
+        // يمكنك استخدام الكثير من الكود الأصلي الخاص بك مع تعديلات طفيفة
+    </script>
+</body>
+</html>

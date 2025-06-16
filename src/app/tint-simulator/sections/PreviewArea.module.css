@@ -1,0 +1,46 @@
+/* الكود داخل ملف: src/app/tint-simulator/sections/PreviewArea.module.css */
+
+.previewContainer {
+  position: relative; /* مهم جدًا لوضع الطبقات فوق بعضها */
+  width: 100%;
+  max-width: 900px; /* يمكنك تعديل الحجم الأقصى */
+  margin: 1.5rem auto; /* توسيط أفقي مع مسافة علوية وسفلية */
+  background-color: #f0f2f5; /* لون خلفية بسيط للمعاينة */
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.carImage {
+  display: block; /* لإزالة أي مسافات إضافية تحت الصورة */
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.tintOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* للسماح بالتفاعل مع العناصر تحت هذه الطبقة إذا احتجت ذلك */
+
+  /* هذه الخاصية هي سر التظليل، حيث تلون القناع بلون الخلفية */
+  mix-blend-mode: multiply; /* يمكنك تجربة multiply, screen, overlay */
+}
+
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 900px;
+  margin: 1.5rem auto;
+  height: 400px; /* ارتفاع افتراضي */
+  background-color: #e9ecef;
+  border: 2px dashed #ced4da;
+  border-radius: 8px;
+  color: #6c757d;
+  font-size: 1.2rem;
+  font-weight: 500;
+}

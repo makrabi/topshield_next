@@ -1,0 +1,67 @@
+/* الكود داخل ملف: src/app/tint-simulator/sections/Reviews.module.css */
+
+.reviewsSection {
+  padding: 3rem 0;
+  background-color: #f8fafc; /* Tailwind gray-50 */
+}
+
+.title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #1e293b; /* Tailwind slate-800 */
+  margin-bottom: 2.5rem;
+}
+
+.reviewsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.reviewCard {
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.authorImage {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-left: 1rem;
+  border: 2px solid #e5e7eb;
+}
+
+.authorName {
+  font-weight: 600;
+  color: #111827;
+}
+
+.starRating {
+  color: #f59e0b; /* Tailwind amber-500 */
+}
+
+.starEmpty {
+  color: #d1d5db; /* Tailwind gray-300 */
+}
+
+.reviewText {
+  color: #4b5563; /* Tailwind gray-600 */
+  line-height: 1.6;
+  font-style: italic;
+  flex-grow: 1; /* لجعل النص يملأ المساحة المتبقية */
+  border-top: 1px solid #f3f4f6;
+  padding-top: 1rem;
+  margin-top: 1rem;
+}

@@ -1,0 +1,209 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+✅ =============================================================
+✅ تم إضافة تعريفات متغيرات الألوان الأساسية هنا
+✅ =============================================================
+*/
+:root {
+  --topshield-primary-navy: #0A2540;
+  --topshield-primary-blue: #007bff;
+  --topshield-accent-gold: #FFD700;
+  --topshield-accent-gold-darker: #d4a100;
+  --topshield-white: #ffffff;
+  --topshield-background-light: #f8f9fa;
+  --topshield-background-content: #ffffff;
+  --topshield-border-subtle: #dee2e6;
+  --topshield-text-dark: #212529;
+  --topshield-text-medium: #6c757d;
+  --topshield-text-light: #f8f9fa;
+  --topshield-text-main: #212529;
+  --topshield-dark-elevated: #343a40;
+}
+
+/* يمكنك إضافة تعريفات الوضع الليلي هنا إذا أردت */
+[data-theme="dark"] {
+  /* على سبيل المثال */
+  --topshield-background-light: #111827;
+  --topshield-background-content: #1f2937;
+  --topshield-border-subtle: #374151;
+  --topshield-text-main: #d1d5db;
+  --topshield-text-medium: #9ca3af;
+}
+
+/*
+  ✅ تم وضع كل الأنماط المخصصة الأصلية داخل طبقة المكونات
+*/
+@layer components {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Tajawal', sans-serif;
+  }
+
+  body {
+    background: linear-gradient(135deg, #0c1a3a 0%, #1a2b5e 100%);
+    min-height: 100vh;
+    color: #f5f6fa;
+    overflow-x: hidden;
+  }
+
+  .futuristic-header {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+  }
+
+  .header-content {
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease-out;
+  }
+
+  .nav-link {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #fbc531, transparent);
+    transition: width 0.4s ease;
+  }
+
+  .nav-link:hover::after {
+    width: 100%;
+  }
+
+  .mobile-menu {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transform-origin: top;
+    animation: slideDown 0.4s ease-out;
+  }
+
+  .glow-effect {
+    position: relative !important;
+    z-index: 100 !important;
+    opacity: 1 !important;
+    color: inherit !important;
+    visibility: visible !important;
+  }
+
+  .glow-effect * {
+    position: relative !important;
+    z-index: 110 !important;
+    opacity: 1 !important;
+    color: inherit !important;
+    visibility: visible !important;
+  }
+
+  .glow-effect::before {
+    content: '';
+    position: absolute;
+    top: -2px; left: -2px; right: -2px; bottom: -2px;
+    background: linear-gradient(45deg, #00a8ff, #fbc531, #00a8ff, #fbc531);
+    background-size: 400%;
+    border-radius: inherit;
+    z-index: 1 !important;
+    filter: blur(8px);
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transition: opacity 0.3s ease;
+    animation: glowing 3s linear infinite;
+  }
+
+  .glow-effect:hover::before {
+    opacity: 1 !important;
+  }
+
+  .glow-effect span,
+  .glow-effect svg,
+  .glow-effect i,
+  .glow-effect strong,
+  .glow-effect em,
+  .glow-effect img {
+    position: relative !important;
+    z-index: 120 !important;
+    opacity: 1 !important;
+    color: inherit !important;
+    visibility: visible !important;
+  }
+
+  .pulse {
+    animation: pulse 2s infinite;
+  }
+
+  .holographic-bg {
+    background: radial-gradient(circle at 20% 30%, rgba(25, 42, 86, 0.9) 0%, rgba(12, 26, 58, 0.9) 70%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .holographic-bg::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 200%; height: 200%;
+    background: linear-gradient(45deg,
+        rgba(0, 168, 255, 0.05) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(0, 168, 255, 0.05) 50%,
+        rgba(0, 168, 255, 0.05) 75%,
+        transparent 75%);
+    background-size: 4px 4px;
+    transform: rotate(30deg) translate(-25%, -25%);
+    animation: moveHologram 20s linear infinite;
+    opacity: 0.4;
+    z-index: -1;
+  }
+
+  .neon-text {
+    text-shadow: 0 0 5px rgba(251, 197, 49, 0.7),
+                 0 0 10px rgba(251, 197, 49, 0.5),
+                 0 0 15px rgba(251, 197, 49, 0.3);
+  }
+
+  .futuristic-header,
+  header,
+  .header,
+  .futuristic-header.active,
+  .header.active,
+  .futuristic-header.scrolled,
+  .header.scrolled,
+  .futuristic-header.orange,
+  .header.orange {
+    background: linear-gradient(to bottom, #2563eb0d, #192a56e6) !important;
+    background-color: #192a56 !important;
+    transition: none !important;
+  }
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes glowing {
+  0% { background-position: 0 0; }
+  50% { background-position: 400% 0; }
+  100% { background-position: 0 0; }
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(251, 197, 49, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(251, 197, 49, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(251, 197, 49, 0); }
+}
+
+@keyframes moveHologram {
+  from { transform: rotate(30deg) translate(-25%, -25%); }
+  to { transform: rotate(30deg) translate(-75%, -75%); }
+}

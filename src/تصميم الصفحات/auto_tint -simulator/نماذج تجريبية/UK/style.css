@@ -1,0 +1,246 @@
+/* --- إعدادات أساسية --- */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #f4f7f9;
+    color: #333;
+    margin: 0;
+    padding: 2rem;
+    direction: rtl;
+}
+
+/* --- حاوية المنتج الرئيسية --- */
+.product-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: auto;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.product-images, .product-details {
+    flex: 1;
+    min-width: 320px;
+}
+
+.product-images img {
+    max-width: 100%;
+    border-radius: 8px;
+    border: 1px solid #eee;
+}
+
+/* --- تفاصيل المنتج --- */
+.product-details h1 {
+    font-size: 2rem;
+    margin-top: 0;
+    line-height: 1.2;
+}
+
+.product-description {
+    line-height: 1.6;
+    color: #555;
+    font-size: 1rem;
+}
+
+/* --- منطقة التخصيص --- */
+.customization-area {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #eee;
+}
+.customization-area > label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.options-selectors {
+    display: grid;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.option-selector-btn {
+    width: 100%;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    text-align: right;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.option-selector-btn:hover {
+    border-color: #007bff;
+}
+.option-selector-btn .label {
+    font-weight: bold;
+    color: #333;
+}
+.option-selector-btn .value {
+    color: #007bff;
+    font-weight: 500;
+}
+
+/* --- الكمية والترقية --- */
+.quantity-selector, .upgrade-option {
+    margin-top: 1.5rem;
+}
+.quantity-input {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    width: fit-content;
+    border-radius: 6px;
+    overflow: hidden;
+}
+.quantity-input button {
+    background: #f1f3f5;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #555;
+}
+.quantity-input input {
+    width: 40px;
+    text-align: center;
+    border: none;
+    font-size: 1rem;
+    background-color: #fff;
+    color: #333;
+}
+.upgrade-option label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+/* --- السعر وزر الإضافة --- */
+.price-section {
+    margin: 2rem 0;
+}
+.price {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #333;
+}
+#add-to-basket-btn {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    background-color: #0d6efd;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+#add-to-basket-btn:hover {
+    background-color: #0b5ed7;
+}
+
+/* --- تصميم النافذة المنبثقة (Modal) --- */
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    z-index: 100;
+    width: 90%;
+    max-width: 600px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.modal.active {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-content h2 {
+    text-align: center;
+    margin-top: 0;
+}
+
+.close-modal-btn {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: transparent;
+    border: none;
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    color: #aaa;
+}
+.close-modal-btn:hover{
+    color: #333;
+}
+
+.shade-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+.shade-option {
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 1rem 0.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.shade-option:hover {
+    border-color: #0d6efd;
+    box-shadow: 0 2px 8px rgba(13, 110, 253, 0.2);
+}
+
+/* --- [إضافة جديدة] تنسيق أيقونات SVG --- */
+.shade-option svg {
+    width: 80px;
+    height: 60px;
+    margin-bottom: 0.5rem;
+}
+
+.shade-option span {
+    font-size: 0.9rem;
+    color: #333;
+    font-weight: 500;
+}
+
+/* طبقة التعتيم الخلفية */
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 99;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out;
+}
+#overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}

@@ -1,0 +1,84 @@
+/* الكود داخل ملف: src/app/tint-simulator/sections/FeatureTabs.module.css */
+
+.featureSection {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.featureTabs {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 2.5rem;
+}
+
+.featureTab {
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  font-weight: 600;
+  color: #6b7280;
+  transition: color 0.3s, border-color 0.3s;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -1px; /* لمحاذاة الخط السفلي بشكل صحيح */
+}
+
+.featureTab.active {
+  color: #0056b3; /* لون أزرق أغمق للنشط */
+  border-bottom-color: #0056b3;
+}
+
+.featureContent {
+  text-align: center;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.featureIcon {
+  font-size: 2.5rem;
+  color: #0056b3;
+  margin-bottom: 1rem;
+}
+
+.featureTitle {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.featureDescription {
+  max-width: 700px;
+  margin: 0 auto 2.5rem auto;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+.featureGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  text-align: right;
+}
+
+.featureCard {
+  background-color: #f9fafb;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.featureCard h4 {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.featureCard .icon {
+  font-size: 1.75rem;
+  color: #0056b3;
+  margin-bottom: 1rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

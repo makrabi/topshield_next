@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تسجيل ضمان ذكي (Smart Warranty Registration) - TOPSHIELD Pro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    :root {
+        --brand-navy: #002366;
+        --brand-navy-hover: #001A4D;
+        --brand-gold: #FFB300;
+        --brand-gold-hover: #EAA200;
+        --brand-text-primary: var(--brand-navy);
+        --brand-text-secondary: #5A677B;
+        --brand-light-bg: #F0F4F8;
+        --brand-white: #FFFFFF;
+        --brand-border: #D2D6DB;
+        --brand-input-bg: #FFFFFF;
+        --font-heading: 'Manrope', 'Inter', sans-serif;
+        --font-body: 'Inter', sans-serif;
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+        --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.07), 0 10px 10px -5px rgba(0,0,0,0.04);
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--brand-light-bg);
+      color: var(--brand-text-secondary);
+      padding: 0;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .page-wrapper {
+        padding: 1.5rem;
+    }
+
+    .page-header {
+        background: linear-gradient(135deg, var(--brand-navy) 0%, var(--brand-navy-hover) 100%);
+        color: var(--brand-white);
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        text-align: center;
+        border-radius: 10px;
+        box-shadow: var(--shadow-md);
+    }
+
+    .page-header h1 {
+        font-family: var(--font-heading);
+        font-size: 2rem;
+        margin: 0;
+        font-weight: 700;
+    }
+     .page-header h1 .en-title {
+        font-size: 0.6em;
+        display: block;
+        font-weight: 400;
+        opacity: 0.8;
+     }
+     .page-header i {
+        margin-left: 0.5rem;
+        vertical-align: middle;
+    }
+
+    .section {
+      background: var(--brand-white);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-lg);
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+      border: 1px solid var(--brand-border);
+    }
+
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      color: var(--brand-navy);
+      border-bottom: 2px solid var(--brand-gold);
+      padding-bottom: 0.6rem;
+      margin-top: 0;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      font-weight: 700;
+    }
+    .section-title i {
+        margin-left: 0.75rem;
+        font-size: 1.1rem;
+        color: var(--brand-gold);
+    }
+    .section-title .en-section-title {
+        font-size: 0.7em;
+        color: var(--brand-text-secondary);
+        margin-right: 8px;
+        font-weight: 500;
+    }
+    .sub-section-title {
+        font-family: var(--font-heading);
+        font-size: 1.1rem;
+        color: var(--brand-text-primary);
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+        padding-bottom: 0.4rem;
+        border-bottom: 1px solid var(--brand-border);
+    }
+    .sub-section-title .en-sub-title {
+        font-size:0.8em; color: var(--brand-text-secondary); margin-right: 5px; font-weight: 500;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Default to auto-fit */
+      gap: 1.25rem 1.5rem; /* row-gap column-gap */
+    }
+    .form-grid.compact-layout { /* لتطبيق التخطيط المدمج حيث يكون الليبل بجانب الحقل */
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 1rem 1.5rem;
+    }
+     .form-grid.grid-3-col { /* لفرض 3 أعمدة */
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+    @media (min-width: 992px) { /* للشاشات الكبيرة، نفرض 3 أعمدة إذا استخدم الكلاس */
+        .form-grid.grid-3-col-lg {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+
+    .form-grid .full-width {
+        grid-column: 1 / -1;
+    }
+
+    .form-group {
+        display: flex;
+        /* flex-direction: column; الافتراضي: الليبل فوق الحقل */
+        /* gap: 0.35rem; */
+        flex-direction: row; /* تغيير الاتجاه إلى أفقي بشكل افتراضي */
+        align-items: center; /* محاذاة العناصر عموديًا */
+        gap: 0.75rem; /* مسافة بين الـ label والـ input */
+        margin-bottom: 0.5rem; /* تقليل المسافة السفلية بين مجموعات الحقول */
+    }
+    /* .form-group.inline-layout { 
+        flex-direction: row;
+        align-items: center;
+        gap: 1rem;
+    } */
+
+    .form-group label {
+      font-weight: 500; /* أخف قليلاً */
+      color: var(--brand-text-primary);
+      font-size: 0.875rem; /* أصغر قليلاً */
+      flex-basis: 180px; /* عرض ثابت للـ label، يمكن تعديله */
+      flex-shrink: 0; 
+      text-align: left; /* ليتناسب مع الحقل بجانبه في RTL */
+      padding-left: 8px; 
+      margin-bottom: 0; /* إزالة الهامش السفلي */
+    }
+    .form-group label .en-label {
+        font-size: 0.85em; /* حجم متناسق */
+        color: var(--brand-text-secondary);
+        display: block;
+        font-weight: 400;
+        margin-top: 1px;
+        line-height: 1.3; /* تقليل ارتفاع السطر للترجمة */
+    }
+    .form-group.stacked-label { /* كلاس إضافي إذا أردنا الـ label فوق الحقل */
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem; /* تقليل المسافة */
+    }
+    .form-group.stacked-label label {
+        flex-basis: auto;
+        text-align: right; 
+        padding-left: 0;
+        margin-bottom: 0.2rem;
+    }
+
+
+    input[type="text"],
+    input[type="email"],
+    input[type="number"],
+    input[type="date"],
+    select,
+    textarea {
+      width: 100%; 
+      padding: 0.65rem 0.8rem; /* تقليل padding */
+      border-radius: 5px; /* حواف أقل دائرية */
+      border: 1px solid var(--brand-border);
+      font-size: 0.9rem; 
+      font-family: var(--font-body);
+      color: var(--brand-text-secondary);
+      background-color: var(--brand-input-bg);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .form-group input, .form-group select, .form-group textarea {
+        flex-grow: 1; 
+    }
+
+    textarea {
+        min-height: 60px; /* تقليل الارتفاع */
+        resize: vertical;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--brand-gold);
+      box-shadow: 0 0 0 3px rgba(255, 179, 0, 0.2); /* ظل أفتح */
+    }
+
+    ::placeholder { color: #B0BCC8; opacity: 1; } /* لون placeholder أفتح */
+    :-ms-input-placeholder { color: #B0BCC8; }
+    ::-ms-input-placeholder { color: #B0BCC8; }
+
+    .service-checkbox-container { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1rem; }
+    .service-checkbox-label { display: flex; align-items: center; padding: 0.6rem 1rem; border: 1px solid var(--brand-border); border-radius: 6px; cursor: pointer; transition: all 0.2s ease-in-out; background-color: var(--brand-white); box-shadow: var(--shadow-sm); flex-grow: 1; justify-content: center; font-size: 0.9rem; }
+    .service-checkbox-label:hover { border-color: var(--brand-gold); box-shadow: var(--shadow-md); }
+    .service-checkbox-label input[type="checkbox"] { display: none; }
+    .service-checkbox-label span { margin-right: 0.4rem; font-weight: 500; color: var(--brand-text-secondary); }
+    .service-checkbox-label i { font-family: "Font Awesome 5 Free"; font-weight: 900; content: "\f00c"; color: transparent; border: 2px solid var(--brand-border); width: 18px; height: 18px; border-radius: 3px; display: inline-flex; align-items: center; justify-content: center; margin-left: 0.5rem; transition: all 0.2s ease; }
+    .service-checkbox-label input[type="checkbox"]:checked + i { background-color: var(--brand-gold); border-color: var(--brand-gold); color: var(--brand-navy); }
+    .service-checkbox-label input[type="checkbox"]:checked ~ span { color: var(--brand-navy); font-weight: 600; }
+
+    .hidden-section, .conditional-fields { background-color: #fbfcfe; padding: 1.25rem; margin-top: 1.25rem; border-radius: 8px; border: 1px dashed #D1D5DB; opacity: 0; max-height: 0; overflow: hidden; transition: opacity 0.3s ease-out, max-height 0.3s ease-out, padding 0.3s ease-out, margin-top 0.3s ease-out, visibility 0s linear 0.3s; visibility: hidden; }
+    .hidden-section.visible, .conditional-fields.visible { opacity: 1; max-height: 2000px; visibility: visible; transition: opacity 0.3s ease-in, max-height 0.3s ease-in, padding 0.3s ease-in, margin-top 0.3s ease-in, visibility 0s linear 0s; }
+    .hidden-section h3, .conditional-fields h4 { font-family: var(--font-heading); font-size: 1.1rem; color: var(--brand-navy); margin-top: 0; margin-bottom: 1.25rem; border-bottom: 1px solid var(--brand-border); padding-bottom: 0.5rem; display: flex; align-items: center; }
+    .hidden-section h3 i, .conditional-fields h4 i { margin-left: 0.5rem; color: var(--brand-gold); }
+    .conditional-fields h4 { font-size: 1rem; border-bottom: none; margin-bottom: 0.75rem; }
+    .conditional-fields h4 .en-sub-title { font-size:0.8em; color: var(--brand-text-secondary); margin-right: 5px; font-weight: 500;}
+
+
+    .product-selection-table { width: 100%; border-collapse: collapse; margin-top: 0.75rem; }
+    .product-selection-table th, .product-selection-table td { text-align: right; padding: 0.6rem; border-bottom: 1px solid var(--brand-border); vertical-align: middle; font-size: 0.9rem; }
+    .product-selection-table th { background-color: var(--brand-light-bg); font-family: var(--font-heading); color: var(--brand-text-secondary); }
+    .product-selection-table td:nth-child(1) { width: 30%; } .product-selection-table td:nth-child(2) { width: 45%; } .product-selection-table td:nth-child(3) { width: 25%; }
+    .product-selection-table label { font-weight: 400; margin-bottom: 0; font-size: 0.95rem; display: flex; align-items: center; }
+    .product-selection-table label .en-label { font-size: 0.8em; color: var(--brand-text-secondary); display: inline; margin-right: 3px;}
+    .product-selection-table input[type="checkbox"] { margin-left: 0.4rem; transform: scale(1); accent-color: var(--brand-gold); }
+    .product-selection-table select, .product-selection-table input[type="text"].vlt-input { padding: 0.5rem 0.7rem; font-size: 0.9rem; border-radius: 5px; }
+    .product-selection-table input[type="text"].vlt-input { max-width: 70px; text-align: center; }
+
+    .gemini-button { background-color: var(--brand-navy); color: var(--brand-white); padding: 0.4rem 0.8rem; border: none; border-radius: 5px; cursor: pointer; font-size: 0.85rem; margin-top: 0.5rem; display: inline-flex; align-items: center; }
+    .gemini-button:hover { background-color: var(--brand-navy-hover); }
+    .gemini-button i { margin-left: 0.4rem; }
+    .gemini-button .en-text { font-size: 0.8em; opacity: 0.9; margin-right: 4px;}
+    .loading-spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(0,0,0,.1); border-radius: 50%; border-top-color: var(--brand-gold); animation: spin 1s ease-in-out infinite; margin-left: 6px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .hidden { display: none; }
+    .gemini-suggestion-box { font-size: 0.85em; color: var(--brand-text-secondary); background-color: #e6f0fA; border: 1px solid #c0d5e8; border-radius: 5px; padding: 8px; margin-top: 8px; white-space: pre-wrap; }
+
+    .submit-button-container { margin-top: 2rem; padding-top: 1.25rem; border-top: 1px solid var(--brand-border); text-align: center; }
+    .button { padding: 0.75rem 2rem; border: none; border-radius: 6px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: background-color 0.2s ease, transform 0.1s ease; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; }
+    .button i { margin-right: 0.5rem; }
+    .button:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .button-primary { background-color: var(--brand-gold); color: var(--brand-navy); box-shadow: var(--shadow-sm); }
+    .button-primary:hover { background-color: var(--brand-gold-hover); box-shadow: var(--shadow-md); }
+    .button .en-text { font-size: 0.8em; opacity: 0.9; margin-right: 4px;}
+
+    .page-footer { text-align: center; padding: 2rem 1rem; margin-top: 1.5rem; font-size: 0.85rem; color: var(--brand-text-secondary); }
+    .page-footer .en-text { font-size: 0.9em; display: block; opacity: 0.8;}
+
+
+    @media (max-width: 991px) { 
+        .form-grid.compact-layout, .form-grid.grid-3-col, .form-grid.grid-3-col-lg {
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); /* عمودين على الشاشات المتوسطة */
+        }
+    }
+
+    @media (max-width: 768px) {
+        .page-wrapper { padding: 0.75rem; }
+        .page-header { padding: 1.25rem 1rem; margin-bottom: 1.25rem;}
+        .page-header h1 { font-size: 1.5rem; }
+        .section { padding: 1.25rem; margin-bottom: 1.25rem; }
+        .section-title { font-size: 1.25rem; margin-bottom: 1.25rem;}
+        .section-title i { font-size: 1.1rem; margin-left: 0.4rem;}
+        .form-grid, .form-grid.compact-layout, .form-grid.grid-3-col, .form-grid.grid-3-col-lg { grid-template-columns: 1fr; gap: 1rem; } 
+        .form-group, .form-group.inline-layout { /* العودة للتخطيط المكدس على الشاشات الصغيرة */
+            flex-direction: column; 
+            align-items: flex-start;
+            gap: 0.25rem;
+        }
+        .form-group label, .form-group.inline-layout label { 
+            text-align: right; 
+            padding-left: 0;
+            flex-basis: auto;
+            margin-bottom: 0.2rem;
+        }
+        .service-checkbox-container { flex-direction: column; }
+        .service-checkbox-label { justify-content: flex-start; }
+        .product-selection-table { display: block; width: 100%; }
+        .product-selection-table thead { display: none; }
+        .product-selection-table tbody, .product-selection-table tr, .product-selection-table td { display: block; width: 100% !important; text-align: right; padding-left: 0; padding-right: 0; }
+        .product-selection-table td { padding-bottom: 0.5rem; padding-top: 0.25rem; border-bottom: none; }
+        .product-selection-table tr { margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--brand-border); }
+        .product-selection-table td::before { content: attr(data-label); font-weight: bold; display: block; margin-bottom: 0.25rem; color: var(--brand-text-primary); }
+        .product-selection-table input[type="text"].vlt-input { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrapper">
+  <header class="page-header">
+    <h1><i class="fas fa-shield-check"></i> تسجيل ضمان ذكي <span class="en-title">(Smart Warranty Registration)</span></h1>
+  </header>
+
+  <main>
+    <form id="warrantyForm" onsubmit="submitWarrantyForm(event)">
+      <div class="section">
+        <h2 class="section-title"><i class="fas fa-user-tie"></i>بيانات العميل <span class="en-section-title">(Customer Information)</span></h2>
+        
+        <div class="form-grid compact-layout"> <div class="form-group stacked-label full-width"> <label for="customerTypeSelect">نوع العميل <span class="en-label">(Customer Type)</span></label>
+                <select id="customerTypeSelect" name="customerType" onchange="toggleCustomerFields(this.value)">
+                    <option value="individual" selected>فرد (Individual)</option>
+                    <option value="company">منشأة (Company/Entity)</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="individualCustomerFields" class="form-grid compact-layout" style="margin-top:1.5rem;">
+            <div class="form-group inline-layout">
+                <label for="individualFullName">الاسم الكامل <span class="en-label">(Full Name)</span></label>
+                <input type="text" id="individualFullName" name="individualFullName" placeholder="الاسم كما في الهوية (Name as per ID)" required>
+            </div>
+            <div class="form-group inline-layout">
+                <label for="individualIdNumber">رقم الهوية <span class="en-label">(ID Number)</span></label>
+                <input type="text" id="individualIdNumber" name="individualIdNumber" placeholder="رقم الهوية الوطنية أو الإقامة (National ID / Iqama)">
+            </div>
+            <div class="form-group inline-layout">
+                <label for="individualMobile">رقم الجوال <span class="en-label">(Mobile Number)</span></label>
+                <input type="text" id="individualMobile" name="individualMobile" placeholder="05xxxxxxxx" required>
+            </div>
+            <div class="form-group inline-layout">
+                <label for="individualEmail">البريد الإلكتروني <span class="en-label">(Email)</span></label>
+                <input type="email" id="individualEmail" name="individualEmail" placeholder="example@domain.com">
+            </div>
+            <div class="form-group inline-layout full-width"> <label for="individualAddressStreet">عنوان السكن: الشارع / الحي <span class="en-label">(Residential Address: Street / District)</span></label>
+                <input type="text" id="individualAddressStreet" name="individualAddressStreet" placeholder="مثال: شارع الأمير محمد، حي العزيزية">
+            </div>
+            <div class="form-group inline-layout">
+                <label for="individualAddressCity">المدينة <span class="en-label">(City)</span></label>
+                <input type="text" id="individualAddressCity" name="individualAddressCity" placeholder="مثال: الدمام">
+            </div>
+            <div class="form-group inline-layout">
+                <label for="individualAddressPostalCode">الرمز البريدي <span class="en-label">(Postal Code)</span></label>
+                <input type="text" id="individualAddressPostalCode" name="individualAddressPostalCode" placeholder="مثال: 12345">
+            </div>
+            <div class="form-group stacked-label"> <label for="individualHowDidYouHear">كيف تعرفت علينا؟ <span class="en-label">(How did you hear about us?)</span></label>
+                <select id="individualHowDidYouHear" name="individualHowDidYouHear" onchange="toggleConditionalSourceFields(this.value)">
+                    <option value="">-- اختر (Select) --</option>
+                    <option value="social_media">وسائل التواصل الاجتماعي (Social Media)</option>
+                    <option value="friend_referral">توصية من صديق (Friend Referral)</option>
+                    <option value="previous_customer">عميل سابق (Previous Customer)</option>
+                    <option value="google_search">بحث جوجل (Google Search)</option>
+                    <option value="advertisement">إعلان (Advertisement)</option>
+                    <option value="other_source">أخرى (Other)</option>
+                </select>
+            </div>
+            <div id="individualFriendReferralFields" class="conditional-fields full-width">
+                <h4 class="sub-section-title"><i class="fas fa-user-friends"></i> بيانات الصديق الموصي <span class="en-sub-title">(Referring Friend Details)</span></h4>
+                <div class="form-grid compact-layout">
+                    <div class="form-group inline-layout">
+                        <label for="individualReferralName">اسم الصديق <span class="en-label">(Friend's Name)</span></label>
+                        <input type="text" id="individualReferralName" name="individualReferralName" placeholder="اسم الصديق الكامل">
+                    </div>
+                    <div class="form-group inline-layout">
+                        <label for="individualReferralMobile">رقم جوال الصديق <span class="en-label">(Friend's Mobile)</span></label>
+                        <input type="text" id="individualReferralMobile" name="individualReferralMobile" placeholder="05xxxxxxxx">
+                    </div>
+                </div>
+            </div>
+             <div id="individualPreviousCustomerFields" class="conditional-fields full-width">
+                <h4 class="sub-section-title"><i class="fas fa-history"></i> بيانات العميل السابق <span class="en-sub-title">(Previous Customer Details)</span></h4>
+                <div class="form-grid compact-layout">
+                    <div class="form-group inline-layout">
+                        <label for="prevCustomerName">اسم العميل السابق <span class="en-label">(Previous Customer Name)</span></label>
+                        <input type="text" id="prevCustomerName" name="prevCustomerName" placeholder="اسم العميل المسجل سابقًا">
+                    </div>
+                    <div class="form-group inline-layout">
+                        <label for="prevCustomerMobile">رقم جوال العميل السابق <span class="en-label">(Previous Customer Mobile)</span></label>
+                        <input type="text" id="prevCustomerMobile" name="prevCustomerMobile" placeholder="05xxxxxxxx">
+                    </div>
+                </div>
+            </div>
+            <div id="individualAdvertisementFields" class="conditional-fields full-width">
+                <h4 class="sub-section-title"><i class="fas fa-bullhorn"></i> تفاصيل الإعلان <span class="en-sub-title">(Advertisement Details)</span></h4>
+                <div class="form-grid compact-layout">
+                    <div class="form-group inline-layout">
+                        <label for="adSourceIndividual">مصدر الإعلان <span class="en-label">(Advertisement Source)</span></label>
+                        <input type="text" id="adSourceIndividual" name="adSourceIndividual" placeholder="مثال: انستجرام، جوجل">
+                    </div>
+                    <div class="form-group inline-layout">
+                        <label for="adCodeIndividual">كود الإعلان/الحملة <span class="en-label">(Ad/Campaign Code)</span></label>
+                        <input type="text" id="adCodeIndividual" name="adCodeIndividual" placeholder="الكود إذا وجد">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="companyCustomerFields" class="hidden-section"> 
+             <h3 class="sub-section-title"><i class="fas fa-building"></i>بيانات المنشأة <span class="en-sub-title">(Entity Information)</span></h3>
+             <div class="form-grid compact-layout">
+                <div class="form-group inline-layout">
+                    <label for="companyName">الاسم التجاري <span class="en-label">(Trade Name)</span></label>
+                    <input type="text" id="companyName" name="companyName" placeholder="اسم الشركة/المؤسسة الرسمي">
+                </div>
+                <div class="form-group inline-layout">
+                    <label for="companyUnifiedNumber">الرقم الموحد <span class="en-label">(Unified National No.)</span></label>
+                    <input type="text" id="companyUnifiedNumber" name="companyUnifiedNumber" placeholder="70xxxxxxxx">
+                </div>
+                <div class="form-group inline-layout">
+                    <label for="companyTaxNumber">الرقم الضريبي <span class="en-label">(Tax ID)</span></label>
+                    <input type="text" id="companyTaxNumber" name="companyTaxNumber" placeholder="الرقم الضريبي (VAT)">
+                </div>
+                <div class="form-group inline-layout">
+                    <label for="companyPhone">هاتف المنشأة <span class="en-label">(Company Phone)</span></label>
+                    <input type="text" id="companyPhone" name="companyPhone" placeholder="01xxxxxxx">
+                </div>
+            </div>
+            <h4 class="sub-section-title" style="font-size: 1.1rem; margin-top:1.5rem;">العنوان الوطني للمنشأة <span class="en-sub-title">(National Address)</span></h4>
+            <div class="form-grid grid-3-col compact-layout"> <div class="form-group inline-layout">
+                    <label for="companyAddrBuildingNo">رقم المبنى <span class="en-label">(Building No.)</span></label>
+                    <input type="text" id="companyAddrBuildingNo" name="companyAddrBuildingNo" placeholder="1234">
+                </div>
+                <div class="form-group inline-layout">
+                    <label for="companyAddrStreet">الشارع <span class="en-label">(Street)</span></label>
+                    <input type="text" id="companyAddrStreet" name="companyAddrStreet" placeholder="اسم الشارع">
+                </div>
+                <div class="form-group inline-layout">
+                    <label for="companyAddrSubNo">الرقم الفرعي <span class="en-label">(Additional No.)</span></label>
+                    <input type="text" id="companyAddrSubNo" name="companyAddrSubNo" placeholder="7890">
+                </div>
+                <div class="form-group inline-layout">
+                    <label for="companyAddrDistrict">الحي <span class="en-label">(District)</span></label>
+                    <input type="text" id="companyAddrDistrict" name="companyAddrDistrict" placeholder="اسم الحي">
+                </div>
+                <div class="form-group inline-layout">
+                    <label for="companyAddrCity">المدينة <span class="en-label">(City)</span></label>
+                    <input type="text" id="companyAddrCity" name="companyAddrCity" placeholder="الرياض">
+                </div>
+                <div class="form-group inline-layout">
+                    <label for="companyAddrPostalCode">الرمز البريدي <span class="en-label">(Postal Code)</span></label>
+                    <input type="text" id="companyAddrPostalCode" name="companyAddrPostalCode" placeholder="54321">
+                </div>
+            </div>
+            <h4 class="sub-section-title" style="font-size: 1.1rem; margin-top:1.5rem;">بيانات المفوض بالتعامل <span class="en-sub-title">(Authorized Person Details)</span></h4>
+            <div class="form-grid compact-layout">
+                <div class="form-group inline-layout">
+                    <label for="companyAuthPersonName">اسم المفوض <span class="en-label">(Full Name)</span></label>
+                    <input type="text" id="companyAuthPersonName" name="companyAuthPersonName" placeholder="اسم ممثل الشركة">
+                </div>
+                 <div class="form-group inline-layout">
+                    <label for="companyAuthPersonPosition">المنصب <span class="en-label">(Position)</span></label>
+                    <input type="text" id="companyAuthPersonPosition" name="companyAuthPersonPosition" placeholder="مثال: مدير المشتريات">
+                </div>
+                <div class="form-group inline-layout">
+                    <label for="companyAuthPersonMobile">جوال المفوض <span class="en-label">(Mobile)</span></label>
+                    <input type="text" id="companyAuthPersonMobile" name="companyAuthPersonMobile" placeholder="05xxxxxxxx">
+                </div>
+                <div class="form-group inline-layout">
+                    <label for="companyAuthPersonEmail">بريد المفوض <span class="en-label">(Email)</span></label>
+                    <input type="email" id="companyAuthPersonEmail" name="companyAuthPersonEmail" placeholder="delegate@company.com">
+                </div>
+            </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title"><i class="fas fa-car-alt"></i>بيانات المركبة <span class="en-section-title">(Vehicle Information)</span></h2>
+        <div class="form-grid grid-3-col-lg compact-layout"> <div class="form-group inline-layout">
+            <label for="vehicleType">نوع المركبة <span class="en-label">(Vehicle Type)</span></label>
+            <select id="vehicleType" name="vehicleType">
+                <option value="suv">جيب (SUV)</option>
+                <option value="sedan">سيدان (Sedan)</option>
+                <option value="coupe">رياضية/كوبيه (Sport/Coupe)</option>
+                <option value="truck">شاحنة بيك أب (Truck/Pickup)</option>
+                <option value="van">فان/حافلة صغيرة (Van/Minibus)</option>
+                <option value="motorcycle">دراجة نارية (Motorcycle)</option>
+                <option value="boat">قارب/يخت (Boat/Yacht)</option>
+                <option value="other_vehicle">أخرى (Other)</option>
+            </select>
+          </div>
+          <div class="form-group inline-layout">
+            <label for="vehicleMake">ماركة المركبة <span class="en-label">(Make)</span></label>
+            <input type="text" id="vehicleMake" name="vehicleMake" placeholder="مثال: تويوتا">
+          </div>
+           <div class="form-group inline-layout">
+            <label for="vehicleModel">الطراز <span class="en-label">(Model)</span></label>
+            <input type="text" id="vehicleModel" name="vehicleModel" placeholder="مثال: كامري">
+          </div>
+          <div class="form-group inline-layout">
+            <label for="plateNumber">رقم اللوحة <span class="en-label">(Plate No.)</span></label>
+            <input type="text" id="plateNumber" name="plateNumber" placeholder="أ ب ج 1234">
+          </div>
+          <div class="form-group inline-layout">
+            <label for="vehicleYear">سنة الصنع <span class="en-label">(Year)</span></label>
+            <input type="number" id="vehicleYear" name="vehicleYear" placeholder="2024" min="1900" max="2099">
+          </div>
+          <div class="form-group inline-layout">
+            <label for="exteriorColor">اللون <span class="en-label">(Color)</span></label>
+            <input type="text" id="exteriorColor" name="exteriorColor" placeholder="مثال: أبيض لؤلؤي">
+          </div>
+          <div class="form-group inline-layout">
+            <label for="vin">رقم الهيكل <span class="en-label">(VIN)</span></label>
+            <input type="text" id="vin" name="vin" placeholder="17 حرفًا ورقمًا" maxlength="17">
+          </div>
+          <div class="form-group inline-layout">
+            <label for="mileage">عداد الكيلومترات <span class="en-label">(Current Mileage)</span></label>
+            <input type="number" id="mileage" name="mileage" placeholder="15000">
+          </div>
+          <div class="form-group inline-layout">
+            <label for="filmRollSerial">الرقم التسلسلي للفيلم <span class="en-label">(Film Roll Serial)</span></label>
+            <input type="text" id="filmRollSerial" name="filmRollSerial" placeholder="الرقم التسلسلي للفيلم">
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title"><i class="fas fa-concierge-bell"></i>الخدمات المقدمة <span class="en-section-title">(Services Provided)</span></h2>
+        <div class="service-checkbox-container">
+          <label class="service-checkbox-label">
+            <input type="checkbox" id="chkTint" name="services" value="tint" onclick="toggleServiceSection('tintSection', this.checked); updateWarrantyDuration();"><i></i><span>تظليل حراري <span class="en-label" style="margin:0 0 0 3px; display:inline;">(Window Tinting)</span></span>
+          </label>
+          <label class="service-checkbox-label">
+            <input type="checkbox" id="chkPPF" name="services" value="ppf" onclick="toggleServiceSection('ppfSection', this.checked)"><i></i><span>حماية الطلاء <span class="en-label" style="margin:0 0 0 3px; display:inline;">(PPF)</span></span>
+          </label>
+          <label class="service-checkbox-label">
+            <input type="checkbox" id="chkGlass" name="services" value="glass" onclick="toggleServiceSection('glassSection', this.checked)"><i></i><span>حماية الزجاج الأمامي <span class="en-label" style="margin:0 0 0 3px; display:inline;">(Windshield Protection)</span></span>
+          </label>
+        </div>
+      </div>
+
+      <div id="tintSection" class="hidden-section">
+        <h3 class="sub-section-title"><i class="fas fa-sun"></i> تفاصيل التظليل الحراري <span class="en-sub-title">(Window Tinting Details)</span></h3>
+        <div class="form-group stacked-label"> <label for="tintInstallationDate">تاريخ تركيب التظليل <span class="en-label">(Installation Date)</span></label>
+            <input type="date" id="tintInstallationDate" name="tintInstallationDate">
+        </div>
+        <h4 class="sub-section-title" style="font-size: 1.1rem; margin-top:1.5rem; border-bottom:none; padding-bottom:0.2rem;">اختيار المنتجات <span class="en-sub-title">(Product Selection)</span>:</h4>
+        <table class="product-selection-table">
+            <thead>
+                <tr>
+                    <th>النافذة المظللة <span class="en-label" style="font-weight:normal;">(Window Tinted)</span></th>
+                    <th>المنتج المُركب <span class="en-label" style="font-weight:normal;">(Product Installed)</span></th>
+                    <th>VLT %</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td data-label="النافذة"><label for="tintFrontSidesChk"><input type="checkbox" id="tintFrontSidesChk" name="tint_window_front_sides"> الجوانب الأمامية <span class="en-label">(Front Sides)</span></label></td>
+                    <td data-label="المنتج">
+                        <select name="tint_product_front_sides" class="film-product-select">
+                            <option value="">-- اختر الفيلم (Choose Film) --</option>
+                            <option value="Royal Gold">Royal Gold</option>
+                            <option value="UCS">UCS</option>
+                            <option value="Prefect">Prefect</option>
+                            <option value="CIR">CIR</option>
+                            <option value="Prestige">Prestige</option>
+                            <option value="Wincos">Wincos</option>
+                            <option value="Black Pearl Nano-Ceramic">Black Pearl Nano-Ceramic</option>
+                            <option value="Charcoal">Charcoal</option>
+                            <option value="Other">آخر (يذكر في الملاحظات) (Other)</option>
+                        </select>
+                    </td>
+                    <td data-label="VLT %"><input type="text" name="tint_vlt_front_sides" class="vlt-input" placeholder="35"></td>
+                </tr>
+                <tr>
+                    <td data-label="النافذة"><label for="tintRearSidesChk"><input type="checkbox" id="tintRearSidesChk" name="tint_window_rear_sides"> الجوانب الخلفية <span class="en-label">(Rear Sides)</span></label></td>
+                    <td data-label="المنتج">
+                        <select name="tint_product_rear_sides" class="film-product-select">
+                            <option value="">-- اختر الفيلم (Choose Film) --</option>
+                            <option value="Royal Gold">Royal Gold</option>
+                            <option value="UCS">UCS</option>
+                            <option value="Prefect">Prefect</option>
+                            <option value="CIR">CIR</option>
+                            <option value="Prestige">Prestige</option>
+                            <option value="Wincos">Wincos</option>
+                            <option value="Black Pearl Nano-Ceramic">Black Pearl Nano-Ceramic</option>
+                            <option value="Other">آخر (يذكر في الملاحظات) (Other)</option>
+                        </select>
+                    </td>
+                    <td data-label="VLT %"><input type="text" name="tint_vlt_rear_sides" class="vlt-input" placeholder="20"></td>
+                </tr>
+                <tr>
+                    <td data-label="النافذة"><label for="tintBackWindowChk"><input type="checkbox" id="tintBackWindowChk" name="tint_window_back"> الزجاج الخلفي <span class="en-label">(Back Window)</span></label></td>
+                    <td data-label="المنتج">
+                        <select name="tint_product_back_window" class="film-product-select">
+                            <option value="">-- اختر الفيلم (Choose Film) --</option>
+                            <option value="Royal Gold">Royal Gold</option>
+                            <option value="UCS">UCS</option>
+                            <option value="Prefect">Prefect</option>
+                            <option value="CIR">CIR</option>
+                            <option value="Prestige">Prestige</option>
+                            <option value="Other">آخر (يذكر في الملاحظات) (Other)</option>
+                        </select>
+                    </td>
+                    <td data-label="VLT %"><input type="text" name="tint_vlt_back_window" class="vlt-input" placeholder="05"></td>
+                </tr>
+                <tr>
+                    <td data-label="النافذة"><label for="tintWindshieldStripChk"><input type="checkbox" id="tintWindshieldStripChk" name="tint_window_strip"> شريط الزجاج الأمامي <span class="en-label">(Windshield Strip)</span></label></td>
+                    <td data-label="المنتج">
+                        <select name="tint_product_strip" class="film-product-select">
+                            <option value="">-- اختر النوع (Choose Type) --</option>
+                            <option value="black_strip">أسود (Black)</option>
+                            <option value="clear_strip">شفاف (Clear)</option>
+                            <option value="Royal Gold Strip">Royal Gold Strip</option>
+                            <option value="Other">آخر (يذكر في الملاحظات) (Other)</option>
+                        </select>
+                    </td>
+                    <td data-label="VLT %"><input type="text" name="tint_vlt_strip" class="vlt-input" placeholder="N/A"></td>
+                </tr>
+                 <tr>
+                    <td data-label="النافذة"><label for="tintSunroofChk"><input type="checkbox" id="tintSunroofChk" name="tint_window_sunroof"> فتحة السقف <span class="en-label">(Sunroof)</span></label></td>
+                    <td data-label="المنتج">
+                        <select name="tint_product_sunroof" class="film-product-select">
+                            <option value="">-- اختر الفيلم (Choose Film) --</option>
+                            <option value="Royal Gold">Royal Gold</option>
+                            <option value="UCS">UCS</option>
+                            <option value="Prefect">Prefect</option>
+                            <option value="CIR">CIR</option>
+                            <option value="Prestige">Prestige</option>
+                            <option value="Panoramic Shield">Panoramic Shield</option>
+                            <option value="Other">آخر (يذكر في الملاحظات) (Other)</option>
+                        </select>
+                    </td>
+                    <td data-label="VLT %"><input type="text" name="tint_vlt_sunroof" class="vlt-input" placeholder="50"></td>
+                </tr>
+                <tr>
+                    <td data-label="النافذة"><label for="tintOtherSpecifyChk"><input type="checkbox" id="tintOtherSpecifyChk" name="tint_window_other"> أخرى (حدد) <span class="en-label">(Other - specify)</span></label></td>
+                    <td data-label="المنتج"><input type="text" name="tint_product_other_specify" placeholder="اسم النافذة والفيلم (Window & Film Name)" class="film-product-select"></td>
+                    <td data-label="VLT %"><input type="text" name="tint_vlt_other" class="vlt-input" placeholder="VLT"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="form-group stacked-label" style="margin-top: 1.5rem;">
+            <label for="tintNotes">ملاحظات إضافية على التظليل <span class="en-label">(Additional Tinting Notes)</span></label>
+            <textarea id="tintNotes" name="tintNotes" rows="3" placeholder="أي تفاصيل أو طلبات خاصة بالتظليل... (Any special details or requests...)"></textarea>
+        </div>
+         <button type="button" class="gemini-button" onclick="suggestServiceNotes('tint')"><i class="fas fa-magic"></i> ✨ اقتراح ملاحظات للتظليل <span class="en-text">(Suggest Notes)</span></button>
+         <div class="loading-spinner hidden" id="loadingTintNotes"></div>
+         <div class="gemini-suggestion-box" id="tintNotesSuggestion"></div>
+      </div>
+
+      <div id="ppfSection" class="hidden-section">
+        <h3 class="sub-section-title"><i class="fas fa-paint-roller"></i> تفاصيل حماية الطلاء (PPF) <span class="en-sub-title">(PPF Details)</span></h3>
+        <div class="form-group stacked-label">
+            <label for="ppfInstallationDate">تاريخ تركيب حماية الطلاء <span class="en-label">(Installation Date)</span></label>
+            <input type="date" id="ppfInstallationDate" name="ppfInstallationDate">
+        </div>
+        <div class="form-group stacked-label">
+            <label for="ppfType">نوع تغطية PPF <span class="en-label">(PPF Coverage Type)</span></label>
+            <select id="ppfType" name="ppfType">
+                <option value="full_car">كامل السيارة (Full Car)</option>
+                <option value="front_end">الواجهة الأمامية (Front End)</option>
+                <option value="partial_front">مقدمة السيارة (Partial Front)</option>
+                <option value="custom_parts">أجزاء مختارة (Custom Parts)</option>
+            </select>
+        </div>
+        <div class="form-group stacked-label">
+            <label for="ppfFilmType">نوع فيلم PPF المستخدم <span class="en-label">(PPF Film Type Used)</span></label>
+            <input type="text" id="ppfFilmType" name="ppfFilmType" placeholder="مثال: TOPSHIELD Ultimate Plus">
+        </div>
+        <div class="form-group stacked-label">
+            <label for="ppfNotes">ملاحظات الأجزاء المختارة أو طلبات خاصة <span class="en-label">(Notes for Custom Parts)</span></label>
+            <textarea id="ppfNotes" name="ppfNotes" rows="3" placeholder="مثال: حماية مقابض الأبواب..."></textarea>
+        </div>
+        <button type="button" class="gemini-button" onclick="suggestServiceNotes('ppf')"><i class="fas fa-magic"></i> ✨ اقتراح ملاحظات لـ PPF <span class="en-text">(Suggest Notes)</span></button>
+        <div class="loading-spinner hidden" id="loadingPpfNotes"></div>
+        <div class="gemini-suggestion-box" id="ppfNotesSuggestion"></div>
+      </div>
+
+      <div id="glassSection" class="hidden-section">
+        <h3 class="sub-section-title"><i class="fas fa-shield-virus"></i> تفاصيل حماية الزجاج الأمامي <span class="en-sub-title">(Windshield Protection Details)</span></h3>
+         <div class="form-group stacked-label">
+            <label for="glassFilmInstallationDate">تاريخ تركيب حماية الزجاج <span class="en-label">(Installation Date)</span></label>
+            <input type="date" id="glassFilmInstallationDate" name="glassFilmInstallationDate">
+        </div>
+         <div class="form-group stacked-label">
+            <label for="glassFilmType">نوع فيلم حماية الزجاج <span class="en-label">(Windshield Film Type)</span></label>
+            <select id="glassFilmType" name="glassFilmType">
+                <option value="TOPSHIELD ClearPlex">TOPSHIELD ClearPlex</option>
+                <option value="TOPSHIELD Windshield Armor">TOPSHIELD Windshield Armor</option>
+                <option value="Other">آخر (Other)</option>
+            </select>
+        </div>
+        <div class="form-group stacked-label">
+            <label for="glassFilmNotes">ملاحظات إضافية <span class="en-label">(Additional Notes)</span></label>
+            <textarea id="glassFilmNotes" name="glassFilmNotes" rows="3" placeholder="أي تفاصيل أو طلبات خاصة..."></textarea>
+        </div>
+        <button type="button" class="gemini-button" onclick="suggestServiceNotes('glass')"><i class="fas fa-magic"></i> ✨ اقتراح ملاحظات للزجاج <span class="en-text">(Suggest Notes)</span></button>
+        <div class="loading-spinner hidden" id="loadingGlassNotes"></div>
+        <div class="gemini-suggestion-box" id="glassNotesSuggestion"></div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title"><i class="fas fa-calendar-check"></i>معلومات الضمان <span class="en-section-title">(Warranty Information)</span></h2>
+        <div class="form-grid compact-layout"> 
+            <div class="form-group inline-layout">
+                <label for="startDate">تاريخ بدء الضمان <span class="en-label">(Warranty Start Date)</span></label>
+                <input type="date" id="startDate" name="startDate" required>
+            </div>
+            <div class="form-group inline-layout">
+                <label for="duration">مدة الضمان <span class="en-label">(Warranty Duration)</span></label>
+                <select id="duration" name="duration" required>
+                <option value="">-- اختر المدة (Select Duration) --</option>
+                <option value="1">سنة واحدة (1 Year)</option>
+                <option value="2">سنتان (2 Years)</option>
+                <option value="3">3 سنوات (3 Years)</option>
+                <option value="5">5 سنوات (5 Years)</option>
+                <option value="7">7 سنوات (7 Years)</option>
+                <option value="10">10 سنوات (10 Years)</option>
+                <option value="lifetime">مدى الحياة (بشروط) (Lifetime)</option>
+                </select>
+            </div>
+             <div class="form-group inline-layout">
+                <label for="invoiceNumber">رقم الفاتورة <span class="en-label">(Invoice Number)</span></label>
+                <input type="text" id="invoiceNumber" name="invoiceNumber" placeholder="رقم الفاتورة الخاصة بالخدمة">
+            </div>
+            <div class="form-group inline-layout">
+                <label for="installerName">اسم مركز التركيب/الفني <span class="en-label">(Installer Name/Center)</span></label>
+                <input type="text" id="installerName" name="installerName" placeholder="اسم المركز أو الفني">
+            </div>
+        </div>
+      </div>
+
+      <div class="submit-button-container">
+        <button type="button" class="button gemini-button" style="background-color: var(--brand-navy); color: var(--brand-white); margin-bottom: 1rem;" onclick="generateWarrantySummary()"><i class="fas fa-file-alt"></i> ✨ إنشاء ملخص شامل <span class="en-text">(Generate Summary)</span></button>
+        <div class="loading-spinner hidden" id="loadingSummary"></div>
+        <div class="gemini-suggestion-box" id="warrantySummaryOutput" style="text-align: right; margin-bottom: 1.5rem; background-color: #f0f8ff;"></div>
+        
+        <button type="submit" class="button button-primary"><i class="fas fa-save"></i> تسجيل الضمان <span class="en-text">(Register Warranty)</span></button>
+      </div>
+    </form>
+  </main>
+
+  <footer class="page-footer">
+    <p>&copy; <span id="year"></span> TOPSHIELD PROFESSIONAL PROTECTION FILM. جميع الحقوق محفوظة <span class="en-text">(All rights reserved)</span>.</p>
+  </footer>
+</div>
+  <script>
+    // --- نفس كود JavaScript السابق مع تعديلات طفيفة على toggleCustomerFields ---
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const filmToWarrantyMap = {
+        "Royal Gold": "10", "UCS": "10", "Royal Gold Strip": "10",
+        "Prefect": "7", "CIR": "7", "Prestige": "7"
+    };
+    const tintFilmSelects = document.querySelectorAll('#tintSection .film-product-select');
+    const warrantyDurationSelect = document.getElementById('duration');
+
+    function updateWarrantyDuration() {
+        const chkTint = document.getElementById('chkTint');
+        if (!chkTint || !chkTint.checked || !warrantyDurationSelect) return;
+
+        let maxWarranty = 0;
+        let specificFilmSelected = false;
+        tintFilmSelects.forEach(select => {
+            const filmWarranty = parseInt(filmToWarrantyMap[select.value] || "0");
+            if (filmWarranty > 0) specificFilmSelected = true;
+            if (filmWarranty > maxWarranty) maxWarranty = filmWarranty;
+        });
+        if (specificFilmSelected) warrantyDurationSelect.value = maxWarranty.toString();
+    }
+
+    if (tintFilmSelects.length > 0 && warrantyDurationSelect) {
+        tintFilmSelects.forEach(select => select.addEventListener('change', updateWarrantyDuration));
+    }
+
+    function toggleServiceSection(id, isChecked) { 
+      const section = document.getElementById(id);
+      if (section) {
+        if (isChecked) {
+          // section.style.display = 'block'; // يتم التحكم به عبر .visible
+          setTimeout(() => section.classList.add('visible'), 10);
+        } else {
+          section.classList.remove('visible');
+          // setTimeout(() => { if (!section.classList.contains('visible')) section.style.display = 'none'; }, 400); // display:none سيتم التحكم به عبر CSS
+        }
+      }
+      if (id === 'tintSection') updateWarrantyDuration();
+    }
+    
+    const individualCustomerFieldsContainer = document.getElementById('individualCustomerFields');
+    const companyCustomerFieldsContainer = document.getElementById('companyCustomerFields');
+    // تحديث قائمة الحقول المطلوبة بناءً على النموذج الجديد
+    const individualRequiredFields = ['individualFullName', 'individualMobile']; 
+    const companyRequiredFields = ['companyName', 'companyUnifiedNumber', 'companyTaxNumber', 'companyPhone', 'companyNationalAddress', 'companyAuthPersonName', 'companyAuthPersonMobile'];
+
+    function setFieldsRequired(container, fieldsArray, isRequired) {
+        if (!container) return;
+        fieldsArray.forEach(fieldName => {
+            const field = container.querySelector(`[name="${fieldName}"]`);
+            if (field) {
+                if (isRequired) field.setAttribute('required', 'required');
+                else field.removeAttribute('required');
+            }
+        });
+    }
+
+    function toggleCustomerFields(customerType) {
+        const individualReferralFields = document.getElementById('individualFriendReferralFields');
+        const individualPreviousCustomerFields = document.getElementById('individualPreviousCustomerFields');
+        const individualAdvertisementFields = document.getElementById('individualAdvertisementFields');
+        const individualHowDidYouHear = document.getElementById('individualHowDidYouHear');
+
+
+        if (customerType === 'company') {
+            if(individualCustomerFieldsContainer) {
+                individualCustomerFieldsContainer.classList.remove('visible'); 
+            }
+            if(individualReferralFields) { 
+                individualReferralFields.classList.remove('visible');
+            }
+            if(individualPreviousCustomerFields) {
+                individualPreviousCustomerFields.classList.remove('visible');
+            }
+            if(individualAdvertisementFields) {
+                individualAdvertisementFields.classList.remove('visible');
+            }
+
+            if(companyCustomerFieldsContainer) {
+                setTimeout(() => companyCustomerFieldsContainer.classList.add('visible'), 10);
+            }
+            setFieldsRequired(individualCustomerFieldsContainer, individualRequiredFields, false);
+            setFieldsRequired(companyCustomerFieldsContainer, companyRequiredFields, true);
+            const companyNameInput = document.getElementById('companyName');
+            if (companyNameInput) companyNameInput.focus(); 
+
+        } else { // individual
+            if(companyCustomerFieldsContainer) {
+                companyCustomerFieldsContainer.classList.remove('visible');
+            }
+            if(individualCustomerFieldsContainer){
+                 setTimeout(() => individualCustomerFieldsContainer.classList.add('visible'),10); 
+            }
+            setFieldsRequired(individualCustomerFieldsContainer, individualRequiredFields, true);
+            setFieldsRequired(companyCustomerFieldsContainer, companyRequiredFields, false);
+            const individualFullNameInput = document.getElementById('individualFullName');
+            if (individualFullNameInput) individualFullNameInput.focus();
+            if (individualHowDidYouHear) toggleConditionalSourceFields(individualHowDidYouHear.value);
+        }
+    }
+
+    function toggleConditionalSourceFields(sourceValue) {
+        const friendReferralFields = document.getElementById('individualFriendReferralFields');
+        const prevCustomerFields = document.getElementById('individualPreviousCustomerFields');
+        const adFields = document.getElementById('individualAdvertisementFields');
+
+        const referralNameInput = document.getElementById('individualReferralName');
+        const referralMobileInput = document.getElementById('individualReferralMobile');
+        const prevCustNameInput = document.getElementById('prevCustomerName');
+        const prevCustMobileInput = document.getElementById('prevCustomerMobile');
+        const adSourceInput = document.getElementById('adSourceIndividual');
+        const adCodeInput = document.getElementById('adCodeIndividual');
+
+        [friendReferralFields, prevCustomerFields, adFields].forEach(el => {
+            if (el) el.classList.remove('visible');
+        });
+        [referralNameInput, referralMobileInput, prevCustNameInput, prevCustMobileInput, adSourceInput, adCodeInput].forEach(input => {
+            if (input) input.removeAttribute('required');
+        });
+
+        if (sourceValue === 'friend_referral') {
+            if (friendReferralFields) setTimeout(() => friendReferralFields.classList.add('visible'), 10);
+            if (referralNameInput) referralNameInput.setAttribute('required', 'required');
+            if (referralMobileInput) referralMobileInput.setAttribute('required', 'required');
+        } else if (sourceValue === 'previous_customer') {
+            if (prevCustomerFields) setTimeout(() => prevCustomerFields.classList.add('visible'), 10);
+             if (prevCustNameInput) prevCustNameInput.setAttribute('required', 'required');
+        } else if (sourceValue === 'advertisement') {
+            if (adFields) setTimeout(() => adFields.classList.add('visible'), 10);
+            if (adSourceInput) adSourceInput.setAttribute('required', 'required');
+        }
+    }
+
+
+    async function callGeminiAPI(prompt, outputElementId, loadingElementId) {
+        const outputElement = document.getElementById(outputElementId);
+        const loadingElement = document.getElementById(loadingElementId);
+        if (!outputElement || !loadingElement) return;
+
+        loadingElement.classList.remove('hidden');
+        outputElement.textContent = 'جاري إنشاء الاقتراح... (Generating suggestion...)';
+        outputElement.style.backgroundColor = "#e9f5ff"; 
+
+        try {
+            let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+            const payload = { contents: chatHistory };
+            const apiKey = ""; 
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+            
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(`API Error: ${response.status} ${response.statusText} - ${errorData.error?.message || 'Unknown error'}`);
+            }
+
+            const result = await response.json();
+
+            if (result.candidates && result.candidates.length > 0 &&
+                result.candidates[0].content && result.candidates[0].content.parts &&
+                result.candidates[0].content.parts.length > 0) {
+                const text = result.candidates[0].content.parts[0].text;
+                outputElement.textContent = text;
+            } else {
+                outputElement.textContent = "لم يتم العثور على اقتراحات. حاول مرة أخرى. (No suggestions found. Please try again.)";
+                outputElement.style.backgroundColor = "#ffebee"; 
+            }
+        } catch (error) {
+            console.error('Error calling Gemini API:', error);
+            outputElement.textContent = `حدث خطأ أثناء الاتصال بالـ AI: ${error.message} (Error connecting to AI: ${error.message})`;
+            outputElement.style.backgroundColor = "#ffebee"; 
+        } finally {
+            loadingElement.classList.add('hidden');
+        }
+    }
+
+    function suggestServiceNotes(serviceType) {
+        let prompt = "";
+        let outputId = "";
+        let loadingId = "";
+        const vehicleType = document.getElementById('vehicleType')?.value || 'مركبة';
+        const vehicleModel = document.getElementById('vehicleModel')?.value || 'غير محدد';
+
+        if (serviceType === 'tint') {
+            const selectedFilms = Array.from(document.querySelectorAll('#tintSection .film-product-select'))
+                                    .map(sel => sel.value)
+                                    .filter(val => val && val !== "Other" && val !== "black_strip" && val !== "clear_strip")
+                                    .join(', ');
+            const currentNotes = document.getElementById('tintNotes')?.value || "";
+            prompt = `أنا عميل أرغب في خدمة تظليل حراري لـ ${vehicleType} طراز ${vehicleModel}. الأفلام التي قد أختارها هي: ${selectedFilms || 'لم أحدد بعد'}. ملاحظاتي الأولية هي: "${currentNotes}". ما هي الملاحظات الإضافية الهامة أو الطلبات الخاصة الشائعة التي قد أحتاج لتضمينها لضمان أفضل خدمة وجودة للتظليل الحراري؟ قدم 3-4 اقتراحات موجزة باللغة العربية مع ترجمة إنجليزية لكل اقتراح.`;
+            outputId = "tintNotesSuggestion";
+            loadingId = "loadingTintNotes";
+        } else if (serviceType === 'ppf') {
+            const ppfType = document.getElementById('ppfType')?.value || "";
+            const ppfFilm = document.getElementById('ppfFilmType')?.value || "";
+            const currentNotes = document.getElementById('ppfNotes')?.value || "";
+            prompt = `أنا عميل أرغب في خدمة حماية الطلاء PPF لـ ${vehicleType} طراز ${vehicleModel}. نوع التغطية المبدئي هو "${ppfType}" ونوع الفيلم "${ppfFilm}". ملاحظاتي الأولية هي: "${currentNotes}". ما هي الملاحظات الإضافية أو الأجزاء التي قد أنسى طلب حمايتها أو طلبات خاصة شائعة لهذه الخدمة؟ قدم 3-4 اقتراحات موجزة باللغة العربية مع ترجمة إنجليزية لكل اقتراح.`;
+            outputId = "ppfNotesSuggestion";
+            loadingId = "loadingPpfNotes";
+        } else if (serviceType === 'glass') {
+            const glassFilm = document.getElementById('glassFilmType')?.value || "";
+            const currentNotes = document.getElementById('glassFilmNotes')?.value || "";
+            prompt = `أنا عميل أرغب في خدمة حماية الزجاج الأمامي لـ ${vehicleType} طراز ${vehicleModel} باستخدام فيلم "${glassFilm}". ملاحظاتي الأولية هي: "${currentNotes}". ما هي الملاحظات الإضافية أو الاعتبارات الهامة التي يجب أن أذكرها عند طلب هذه الخدمة؟ قدم 3-4 اقتراحات موجزة باللغة العربية مع ترجمة إنجليزية لكل اقتراح.`;
+            outputId = "glassNotesSuggestion";
+            loadingId = "loadingGlassNotes";
+        }
+
+        if (prompt) {
+            callGeminiAPI(prompt, outputId, loadingId);
+        }
+    }
+
+    function generateWarrantySummary() {
+        const formData = new FormData(document.getElementById('warrantyForm'));
+        let customerDetails = `نوع العميل: ${formData.get('customerType') === 'individual' ? 'فرد' : 'منشأة'}\n`;
+        if (formData.get('customerType') === 'individual') {
+            customerDetails += `الاسم: ${formData.get('individualFullName') || 'غير متوفر'}\n`;
+            customerDetails += `رقم الهوية: ${formData.get('individualIdNumber') || 'غير متوفر'}\n`;
+            customerDetails += `الجوال: ${formData.get('individualMobile') || 'غير متوفر'}\n`;
+            customerDetails += `البريد الإلكتروني: ${formData.get('individualEmail') || 'غير متوفر'}\n`;
+            customerDetails += `عنوان السكن: ${formData.get('individualAddressStreet') || 'غير متوفر'}\n`;
+            customerDetails += `المدينة: ${formData.get('individualAddressCity') || 'غير متوفر'}\n`;
+            customerDetails += `الرمز البريدي: ${formData.get('individualAddressPostalCode') || 'غير متوفر'}\n`;
+            const howHeard = formData.get('individualHowDidYouHear');
+            customerDetails += `كيف تعرف علينا: ${howHeard || 'غير متوفر'}\n`;
+            if (howHeard === 'friend_referral') {
+                customerDetails += `  اسم الصديق الموصي: ${formData.get('individualReferralName') || 'غير متوفر'}\n`;
+                customerDetails += `  جوال الصديق الموصي: ${formData.get('individualReferralMobile') || 'غير متوفر'}\n`;
+            } else if (howHeard === 'previous_customer') {
+                customerDetails += `  اسم العميل السابق: ${formData.get('prevCustomerName') || 'غير متوفر'}\n`;
+                customerDetails += `  جوال العميل السابق: ${formData.get('prevCustomerMobile') || 'غير متوفر'}\n`;
+            } else if (howHeard === 'advertisement') {
+                customerDetails += `  مصدر الإعلان: ${formData.get('adSourceIndividual') || 'غير متوفر'}\n`;
+                customerDetails += `  كود الإعلان: ${formData.get('adCodeIndividual') || 'غير متوفر'}\n`;
+            }
+        } else { 
+            customerDetails += `اسم المنشأة: ${formData.get('companyName') || 'غير متوفر'}\n`;
+            customerDetails += `الرقم الموحد: ${formData.get('companyUnifiedNumber') || 'غير متوفر'}\n`;
+            customerDetails += `الرقم الضريبي: ${formData.get('companyTaxNumber') || 'غير متوفر'}\n`;
+            customerDetails += `هاتف المنشأة: ${formData.get('companyPhone') || 'غير متوفر'}\n`;
+            customerDetails += `العنوان الوطني: مبنى ${formData.get('companyAddrBuildingNo') || '-'}، شارع ${formData.get('companyAddrStreet') || '-'}، فرعي ${formData.get('companyAddrSubNo') || '-'}، حي ${formData.get('companyAddrDistrict') || '-'}، مدينة ${formData.get('companyAddrCity') || '-'}، رمز بريدي ${formData.get('companyAddrPostalCode') || '-'}\n`;
+            customerDetails += `اسم المفوض: ${formData.get('companyAuthPersonName') || 'غير متوفر'}\n`;
+            customerDetails += `منصب المفوض: ${formData.get('companyAuthPersonPosition') || 'غير متوفر'}\n`;
+            customerDetails += `جوال المفوض: ${formData.get('companyAuthPersonMobile') || 'غير متوفر'}\n`;
+            customerDetails += `بريد المفوض: ${formData.get('companyAuthPersonEmail') || 'غير متوفر'}\n`;
+        }
+
+        const vehicleDetails = `بيانات المركبة:\nنوع المركبة: ${formData.get('vehicleType') || 'غير محدد'}\nسنة الصنع: ${formData.get('vehicleYear') || 'غير متوفر'}\nالشركة المصنعة: ${formData.get('vehicleMake') || 'غير متوفر'}\nالطراز: ${formData.get('vehicleModel') || 'غير متوفر'}\nرقم اللوحة: ${formData.get('plateNumber') || 'غير متوفر'}\nاللون: ${formData.get('exteriorColor') || 'غير متوفر'}\nرقم الهيكل: ${formData.get('vin') || 'غير متوفر'}\nعداد الكيلومترات: ${formData.get('mileage') || 'غير متوفر'}\nالرقم التسلسلي للفيلم: ${formData.get('filmRollSerial') || 'غير متوفر'}\n`;
+
+        let servicesDetails = "الخدمات المقدمة:\n";
+        if (document.getElementById('chkTint').checked) {
+            servicesDetails += "- تظليل حراري:\n";
+            document.querySelectorAll('#tintSection .film-product-select').forEach(sel => {
+                if(sel.value) {
+                     const row = sel.closest('tr');
+                     const windowLabel = row.querySelector('td:first-child label')?.textContent.split('(')[0].trim() || sel.name; 
+                     servicesDetails += `  - ${windowLabel}: ${sel.value}\n`;
+                }
+            });
+            if(formData.get('tintNotes')) servicesDetails += `  ملاحظات التظليل: ${formData.get('tintNotes')}\n`;
+        }
+         if (document.getElementById('chkPPF').checked) {
+            servicesDetails += `- حماية الطلاء PPF:\n  نوع التغطية: ${formData.get('ppfType') || 'غير محدد'}\n  نوع الفيلم: ${formData.get('ppfFilmType') || 'غير محدد'}\n`;
+            if(formData.get('ppfNotes')) servicesDetails += `  ملاحظات PPF: ${formData.get('ppfNotes')}\n`;
+        }
+        if (document.getElementById('chkGlass').checked) {
+            servicesDetails += `- حماية الزجاج الأمامي:\n  نوع الفيلم: ${formData.get('glassFilmType') || 'غير محدد'}\n`;
+            if(formData.get('glassFilmNotes')) servicesDetails += `  ملاحظات حماية الزجاج: ${formData.get('glassFilmNotes')}\n`;
+        }
+        if (servicesDetails === "الخدمات المقدمة:\n") servicesDetails = "لم يتم اختيار خدمات.\n";
+
+        const warrantyDetails = `معلومات الضمان:\nتاريخ البدء: ${formData.get('startDate') || 'غير محدد'}\nمدة الضمان: ${formData.get('duration') ? formData.get('duration') + ' سنوات' : 'غير محدد'}\nرقم الفاتورة: ${formData.get('invoiceNumber') || 'غير متوفر'}\nمركز التركيب: ${formData.get('installerName') || 'غير متوفر'}\n`;
+
+        const fullPrompt = `الرجاء إنشاء ملخص شامل وواضح باللغة العربية لتسجيل الضمان بناءً على البيانات التالية. يجب أن يكون الملخص سهل القراءة للعميل ويؤكد على أهم النقاط. استخدم تنسيقًا جيدًا مع عناوين فرعية إذا أمكن:\n\nبيانات العميل:\n${customerDetails}\n${vehicleDetails}\n${servicesDetails}\n${warrantyDetails}`;
+        
+        callGeminiAPI(fullPrompt, 'warrantySummaryOutput', 'loadingSummary');
+    }
+
+
+    function submitWarrantyForm(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        let dataString = "البيانات التي سيتم إرسالها:\n";
+        const customerType = formData.get('customerType');
+        dataString += `نوع العميل: ${customerType === 'individual' ? 'فرد' : 'منشأة'}\n`;
+
+        for (let [key, value] of formData.entries()) {
+            if (value && key !== 'customerType') { 
+                const fieldElement = event.target.elements[key];
+                let shouldInclude = false;
+                if (customerType === 'individual') {
+                    if (document.getElementById('individualCustomerFields').contains(fieldElement) || 
+                        (!document.getElementById('companyCustomerFields').contains(fieldElement) && !fieldElement.closest('.hidden-section:not(.visible)') && !fieldElement.closest('.conditional-fields:not(.visible)'))) {
+                        shouldInclude = true;
+                    }
+                } else if (customerType === 'company') {
+                     if (document.getElementById('companyCustomerFields').contains(fieldElement) || 
+                        (!document.getElementById('individualCustomerFields').contains(fieldElement) && !fieldElement.closest('.hidden-section:not(.visible)'))) {
+                        shouldInclude = true;
+                    }
+                }
+                if (!document.getElementById('individualCustomerFields').contains(fieldElement) && !document.getElementById('companyCustomerFields').contains(fieldElement)) {
+                    shouldInclude = true;
+                }
+
+
+                if (shouldInclude) {
+                    const labelElement = document.querySelector(`label[for="${key}"]`);
+                    const labelText = labelElement ? labelElement.childNodes[0].nodeValue.trim() : key; 
+                    dataString += `${labelText}: ${value}\n`;
+                }
+            }
+        }
+        const services = [];
+        document.querySelectorAll('input[name="services"]:checked').forEach(chk => {
+            const spanText = chk.nextElementSibling && chk.nextElementSibling.nextElementSibling ? chk.nextElementSibling.nextElementSibling.textContent.split('(')[0].trim() : chk.parentElement.textContent.split('(')[0].trim();
+            services.push(spanText);
+        });
+
+        if(services.length > 0) {
+            dataString += `الخدمات المختارة: ${services.join(', ')}\n`;
+        }
+        
+        const summaryFromAI = document.getElementById('warrantySummaryOutput').textContent;
+        if (summaryFromAI && summaryFromAI !== "لم يتم العثور على اقتراحات. حاول مرة أخرى." && !summaryFromAI.startsWith("حدث خطأ")) {
+            dataString += "\n--- ملخص من الذكاء الاصطناعي ---\n" + summaryFromAI;
+        }
+
+
+        alert("تم إرسال بيانات تسجيل الضمان بنجاح (محاكاة)!\n\n" + dataString);
+        event.target.reset();
+        ['tintSection', 'ppfSection', 'glassSection', 'companyCustomerFields', 'individualFriendReferralFields', 'individualPreviousCustomerFields', 'individualAdvertisementFields'].forEach(id => {
+            const section = document.getElementById(id);
+            if (section) {
+                section.classList.remove('visible');
+                section.style.display = 'none'; 
+            }
+        });
+         document.querySelectorAll('input[name="services"]').forEach(chk => chk.checked = false);
+         if (warrantyDurationSelect) updateWarrantyDuration(); 
+         document.getElementById('customerTypeSelect').value = 'individual'; 
+         toggleCustomerFields('individual'); 
+         document.getElementById('warrantySummaryOutput').textContent = '';
+         document.getElementById('tintNotesSuggestion').textContent = '';
+         document.getElementById('ppfNotesSuggestion').textContent = '';
+         document.getElementById('glassNotesSuggestion').textContent = '';
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        const chkTint = document.getElementById('chkTint');
+        if (chkTint && chkTint.checked) {
+            updateWarrantyDuration();
+        }
+        document.querySelectorAll('.product-selection-table td').forEach(td => {
+            const th = td.closest('table').querySelector(`th:nth-child(${td.cellIndex + 1})`);
+            if (th) {
+                td.setAttribute('data-label', th.textContent.trim());
+            }
+        });
+        const defaultCustomerType = document.getElementById('customerTypeSelect').value;
+        toggleCustomerFields(defaultCustomerType); 
+
+        const howDidYouHearSelect = document.getElementById('individualHowDidYouHear');
+        if (howDidYouHearSelect) {
+            toggleConditionalSourceFields(howDidYouHearSelect.value); // تم تغيير اسم الدالة
+        }
+    });
+
+  </script>
+</body>
+</html>

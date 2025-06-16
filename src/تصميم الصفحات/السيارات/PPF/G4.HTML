@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>توب شيلد - حماية تجسد الكمال</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Cairo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- GSAP for Advanced Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <style>
+        :root {
+            /* ألوان الشعار والهوية الرسمية */
+            --topshield-primary-navy: #1A3372;
+            --topshield-primary-blue: #2976B4;
+            --topshield-glass-blue: #56B1DD;
+            --topshield-glass-blue-light: #89C5E8;
+            --topshield-accent-gold: #F7C100;
+            --topshield-accent-gold-darker: #C2971E;
+            --topshield-white: #FFFFFF;
+            
+            /* ألوان الواجهة المعتمدة */
+            --topshield-background-light: #F0F4F8;
+            --topshield-background-content: #FFFFFF;
+            --topshield-text-dark: #1A3372;
+            --topshield-text-medium: #2976B4;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--topshield-background-light); /* تم تطبيق لون الخلفية الصحيح هنا */
+            color: var(--topshield-text-dark);
+            overflow-x: hidden;
+        }
+
+        .hero-section {
+            background-color: var(--topshield-primary-navy);
+            background-image: url('https://images.unsplash.com/photo-1617461732383-275b28bf1523?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+        }
+
+        #hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            z-index: 2;
+        }
+
+        .gold-btn {
+            background-color: var(--topshield-accent-gold);
+            color: var(--topshield-primary-navy);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(247, 193, 0, 0.3);
+        }
+        .gold-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 30px rgba(247, 193, 0, 0.4);
+            background-color: var(--topshield-accent-gold-darker);
+            color: var(--topshield-white);
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: var(--topshield-accent-gold);
+            margin: 1rem auto 0;
+            border-radius: 2px;
+        }
+        
+        /* Solution Section Tabs */
+        .solution-tabs {
+            border-bottom: 2px solid #DDE3EA;
+        }
+        .tab-button {
+            transition: all 0.3s ease;
+            border-bottom: 4px solid transparent;
+            padding-bottom: 1rem;
+            color: var(--topshield-text-medium);
+        }
+        .tab-button.active {
+            color: var(--topshield-primary-navy);
+            border-bottom-color: var(--topshield-accent-gold);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: grid;
+            gap: 2rem;
+            align-items: center;
+        }
+        .spec-table .spec-row {
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            border-bottom: 1px solid #DDE3EA;
+        }
+         .spec-table .spec-row:last-child {
+            border-bottom: none;
+         }
+    </style>
+</head>
+
+<body>
+
+    <!-- =================================== -->
+    <!--          HERO SECTION               -->
+    <!-- =================================== -->
+    <section class="hero-section h-screen w-full flex items-center justify-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-black/50 z-0"></div>
+        <canvas id="hero-canvas"></canvas>
+        <div class="hero-content container mx-auto px-4 text-center text-white relative">
+            <h1 class="text-4xl md:text-6xl lg:text-8xl font-black leading-tight mb-4">
+                حماية تتحدى الرمال
+            </h1>
+            <p class="text-xl md:text-2xl max-w-3xl mx-auto opacity-90 mb-10">
+                في بيئة تتحدى صلابة الفولاذ، نقدم درعًا بصريًا فائق الدقة، مصمم ليحافظ على جمال سيارتك وقيمتها في مواجهة أقسى الظروف.
+            </p>
+            <a href="#the-solution" class="gold-btn font-bold py-4 px-12 rounded-full text-lg">
+                اكتشف الحل الأمثل
+            </a>
+        </div>
+    </section>
+
+    <!-- =================================== -->
+    <!--      THE PROBLEM SECTION            -->
+    <!-- =================================== -->
+    <section class="py-24 bg-topshield-background-content">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="text-right">
+                    <span class="text-topshield-primary-blue font-bold">التحدي</span>
+                    <h2 class="text-4xl md:text-5xl font-black mt-2 mb-6">عدوّك الصامت: السفع الرملي</h2>
+                    <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                        كل رحلة، وكل عاصفة رملية، تترك بصمتها على سيارتك. آلاف الجسيمات الدقيقة تعمل كمبرد كاشط، يطفئ بريق الطلاء تدريجيًا ويترك خدوشًا دقيقة على الزجاج. هذا التآكل المستمر ليس مجرد ضرر سطحي، بل هو انخفاض ملموس في قيمة وجمال استثمارك.
+                    </p>
+                    <ul class="space-y-3 text-lg text-gray-700">
+                        <li class="flex items-center"><i class="fas fa-check-circle text-topshield-primary-blue ml-3"></i><span>فقدان اللمعان والعمق اللوني للطلاء.</span></li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-topshield-primary-blue ml-3"></i><span>ظهور خدوش دائرية تقلل من وضوح الرؤية.</span></li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-topshield-primary-blue ml-3"></i><span>انخفاض قيمة السيارة عند إعادة البيع.</span></li>
+                    </ul>
+                </div>
+                <div>
+                     <img src="https://images.unsplash.com/photo-1541348263662-e3191590ae99?q=80&w=2070&auto=format&fit=crop" 
+                          onerror="this.onerror=null;this.src='https://placehold.co/600x450/F0F4F8/1A3372?text=تأثير+الرمال';"
+                          alt="تأثير السفع الرملي على طلاء السيارة" class="rounded-2xl shadow-2xl">
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =================================== -->
+    <!--      SOLUTION SECTION (TABS)        -->
+    <!-- =================================== -->
+    <section id="the-solution" class="py-24">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                 <span class="text-topshield-primary-blue font-bold">الحل المتكامل</span>
+                <h2 class="section-title text-4xl md:text-5xl font-black mt-2">قوة توب شيلد الهندسية</h2>
+            </div>
+            
+            <div class="solution-tabs flex justify-center space-x-4 sm:space-x-8 mb-12">
+                <button class="tab-button active" data-tab="protection">
+                    <i class="fas fa-shield-alt mr-2 hidden sm:inline"></i><span class="font-bold text-lg">الدرع الواقي</span>
+                </button>
+                <button class="tab-button" data-tab="healing">
+                    <i class="fas fa-magic-wand-sparkles mr-2 hidden sm:inline"></i><span class="font-bold text-lg">الشفاء الذاتي</span>
+                </button>
+                <button class="tab-button" data-tab="clarity">
+                    <i class="fas fa-eye mr-2 hidden sm:inline"></i><span class="font-bold text-lg">النقاء البصري</span>
+                </button>
+            </div>
+
+            <div>
+                <!-- Protection Tab -->
+                <div class="tab-content active lg:grid-cols-12" id="protection">
+                    <div class="lg:col-span-5">
+                        <img src="https://images.unsplash.com/photo-1599544957922-3d8f8a13a444?q=80&w=1964&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/800x600/1A3372/F0F4F8?text=مقاومة+الرمال';" alt="سيارة محمية من الرمال" class="rounded-2xl shadow-xl w-full h-full object-cover">
+                    </div>
+                    <div class="lg:col-span-7 bg-topshield-background-content p-12 rounded-2xl">
+                        <h3 class="text-3xl font-bold mb-4 text-topshield-primary-navy">درع مرن ضد الصدمات</h3>
+                        <p class="text-lg text-gray-700 leading-relaxed">
+                            تتكون أفلام توب شيلد من طبقة يوريثان حرارية متينة بسماكة تتجاوز 200 ميكرون. هذه الطبقة ليست صلبة، بل مرنة، مما يسمح لها بامتصاص وتوزيع طاقة الصدمات الناتجة عن الحصى والرمال المتطايرة بسرعات عالية، مانعة إياها من الوصول إلى الطلاء الأصلي.
+                        </p>
+                    </div>
+                </div>
+                <!-- Healing Tab -->
+                <div class="tab-content lg:grid-cols-12" id="healing">
+                     <div class="lg:col-span-5">
+                        <img src="https://images.unsplash.com/photo-1605639142202-a3b5e4ff5a7f?q=80&w=1974&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/800x600/1A3372/F0F4F8?text=شفاء+ذاتي';" alt="طلاء سيارة لامع" class="rounded-2xl shadow-xl w-full h-full object-cover">
+                    </div>
+                    <div class="lg:col-span-7 bg-topshield-background-content p-12 rounded-2xl">
+                        <h3 class="text-3xl font-bold mb-4 text-topshield-primary-navy">تقنية البوليمر ذات الذاكرة</h3>
+                        <p class="text-lg text-gray-700 leading-relaxed">
+                           الطبقة العلوية للفيلم مزودة ببوليمرات ذات ذاكرة شكل. عند تعرضها للحرارة (من أشعة الشمس أو الماء الساخن)، تعود هذه البوليمرات إلى حالتها الأصلية الملساء، مما يؤدي إلى تلاشي الخدوش السطحية الدقيقة وكأنها لم تكن موجودة.
+                        </p>
+                    </div>
+                </div>
+                <!-- Clarity Tab -->
+                <div class="tab-content lg:grid-cols-12" id="clarity">
+                     <div class="lg:col-span-5">
+                        <img src="https://images.unsplash.com/photo-1553440569-b50672b14e8c?q=80&w=2070&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/800x600/1A3372/F0F4F8?text=وضوح+بصري';" alt="زجاج سيارة أمامي واضح" class="rounded-2xl shadow-xl w-full h-full object-cover">
+                    </div>
+                    <div class="lg:col-span-7 bg-topshield-background-content p-12 rounded-2xl">
+                        <h3 class="text-3xl font-bold mb-4 text-topshield-primary-navy">وضوح بصري فائق</h3>
+                        <p class="text-lg text-gray-700 leading-relaxed">
+                           نستخدم مادة لاصقة فائقة الوضوح ومواد خام نقية لضمان عدم وجود أي تشويه بصري أو "قشر برتقال". بالإضافة إلى ذلك، تحتوي الطبقة على مثبطات للأشعة فوق البنفسجية تحجب 99% من الأشعة الضارة، مما يحمي المقصورة من البهتان ويحافظ على الطلاء الأصلي تحت الفيلم.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =================================== -->
+    <!--      SPECIFICATIONS SECTION         -->
+    <!-- =================================== -->
+    <section id="specifications" class="py-24 bg-topshield-background-content">
+        <div class="container mx-auto px-4">
+             <div class="text-center mb-12">
+                 <span class="text-topshield-primary-blue font-bold">المواصفات الفنية</span>
+                <h2 class="section-title text-4xl md:text-5xl font-black mt-2">الأرقام تتحدث عن نفسها</h2>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div>
+                     <img src="https://images.pexels.com/photos/9661266/pexels-photo-9661266.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
+                          onerror="this.onerror=null;this.src='https://placehold.co/600x750/F0F4F8/1A3372?text=TOPSHIELD';"
+                          alt="تطبيق فيلم الحماية توب شيلد" class="rounded-2xl shadow-2xl h-full w-full object-cover">
+                </div>
+                 <div class="bg-topshield-background-light p-10 rounded-2xl spec-table">
+                    <div class="spec-row py-4">
+                        <span class="font-bold text-lg">المادة</span>
+                        <span class="text-gray-700 text-lg">يوريثان حراري متقدم (Advanced TPU)</span>
+                    </div>
+                    <div class="spec-row py-4">
+                        <span class="font-bold text-lg">السماكة</span>
+                        <span class="text-gray-700 text-lg">215 ميكرون (+/- 5%)</span>
+                    </div>
+                    <div class="spec-row py-4">
+                        <span class="font-bold text-lg">تقنية الطبقة العلوية</span>
+                        <span class="text-gray-700 text-lg">بوليمر ذاتي الشفاء ومقاوم للبقع</span>
+                    </div>
+                     <div class="spec-row py-4">
+                        <span class="font-bold text-lg">عزل الأشعة فوق البنفسجية</span>
+                        <span class="text-gray-700 text-lg">99%</span>
+                    </div>
+                    <div class="spec-row py-4">
+                        <span class="font-bold text-lg">مقاومة الشد</span>
+                        <span class="text-gray-700 text-lg">5500 psi</span>
+                    </div>
+                     <div class="spec-row py-4">
+                        <span class="font-bold text-lg">اللمسة النهائية</span>
+                        <span class="text-gray-700 text-lg">عالية اللمعان (Ultra-High Gloss)</span>
+                    </div>
+                    <div class="spec-row pt-4">
+                        <span class="font-bold text-lg">الضمان</span>
+                        <span class="text-gray-700 text-lg">ضمان محدود لمدة 10 سنوات</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =================================== -->
+    <!--         CTA SECTION (PROMISE)       -->
+    <!-- =================================== -->
+    <section class="py-24 text-center">
+        <div class="container mx-auto px-4">
+            <i class="fas fa-award text-6xl text-topshield-accent-gold mb-6"></i>
+            <h2 class="text-4xl md:text-5xl font-black text-topshield-primary-navy">استثمار مضمون. جمال يتجدد.</h2>
+            <p class="text-lg mt-4 mb-10 max-w-3xl mx-auto text-gray-600">
+               نفخر بتقديم ضمان مصنعي طويل الأمد يغطي الاصفرار، التشقق، والتقشر. اختيارك لتوب شيلد هو قرار بالاستثمار في الحفاظ على قيمة سيارتك ومظهرها المثالي لسنوات قادمة.
+            </p>
+            <a href="#" class="gold-btn font-bold py-4 px-12 rounded-full text-lg">
+                اطلب عرض سعر الآن
+            </a>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            gsap.registerPlugin(ScrollTrigger);
+
+            const canvas = document.getElementById('hero-canvas');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                let particles = [];
+                const particleCount = 200;
+                class Particle {
+                    constructor() {
+                        this.x = Math.random() * canvas.width;
+                        this.y = Math.random() * canvas.height;
+                        this.size = Math.random() * 2 + 1;
+                        this.speedX = (Math.random() * 3 - 1.5);
+                        this.speedY = (Math.random() * 3 - 1.5);
+                        this.color = `rgba(137, 197, 232, ${Math.random() * 0.8})`; // --topshield-glass-blue-light
+                    }
+                    update() {
+                        this.x += this.speedX;
+                        this.y += this.speedY;
+                        if (this.size > 0.2) this.size -= 0.03;
+                        if (this.size <= 0.2) {
+                            this.x = Math.random() * canvas.width;
+                            this.y = Math.random() * canvas.height;
+                            this.size = Math.random() * 2 + 1;
+                        }
+                    }
+                    draw() {
+                        ctx.fillStyle = this.color;
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+                function initParticles() {
+                    particles = [];
+                    for (let i = 0; i < particleCount; i++) {
+                        particles.push(new Particle());
+                    }
+                }
+                initParticles();
+                function animateParticles() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    for (let i = 0; i < particles.length; i++) {
+                        particles[i].update();
+                        particles[i].draw();
+                    }
+                    requestAnimationFrame(animateParticles);
+                }
+                animateParticles();
+                window.addEventListener('resize', () => {
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                    initParticles();
+                });
+            }
+
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const tabId = button.dataset.tab;
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    tabContents.forEach(content => {
+                        if (content.id === tabId) {
+                            content.classList.add('active');
+                            gsap.from(content.children, {
+                                opacity: 0,
+                                y: 30,
+                                duration: 0.5,
+                                stagger: 0.1,
+                                ease: 'power2.out'
+                            });
+                        } else {
+                            content.classList.remove('active');
+                        }
+                    });
+                });
+            });
+
+            const animateUp = (element) => {
+                 gsap.from(element, {
+                    scrollTrigger: {
+                        trigger: element,
+                        start: 'top 85%',
+                        toggleActions: 'play none none none'
+                    },
+                    opacity: 0,
+                    y: 50,
+                    duration: 0.8,
+                    stagger: 0.2,
+                    ease: 'power3.out'
+                });
+            }
+            gsap.utils.toArray('section h2, section p, section ul, section a, .tab-button, .spec-table').forEach(el => {
+                if(!el.closest('.tab-content')) {
+                    animateUp(el);
+                }
+            });
+             gsap.utils.toArray('section img, .tab-content').forEach(el => {
+                 animateUp(el);
+             });
+        });
+    </script>
+</body>
+</html>

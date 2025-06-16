@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOPSHIELD - محاكي التظليل المطور</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #F0F2F5; /* خلفية الصفحة الرئيسية - رمادي فاتح جداً ومحايد */
+        }
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ts-blue': '#102E6A', // اللون الأزرق الرئيسي للعلامة التجارية
+                        'ts-blue-dark': '#0A2351', // درجة أغمق من الأزرق الرئيسي
+                        'ts-blue-light': '#4A6FA5', // درجة أفتح من الأزرق الرئيسي
+                        'ts-gold': '#FFC107', // اللون الذهبي للتمييز
+                        'ts-gold-light': '#FFF8E1', // درجة فاتحة من الذهبي للخلفيات
+                        'ts-gray': { // درجات الرمادي
+                            50: '#F9FAFB',  // فاتح جداً
+                            100: '#F3F4F6', // فاتح
+                            200: '#E5E7EB', // متوسط الفاتح
+                            300: '#D1D5DB', // متوسط
+                            400: '#9CA3AF', // متوسط الغامق
+                            500: '#6B7280', // غامق
+                            600: '#4B5563', // أغمق
+                            700: '#374151', // أغمق جداً
+                            800: '#1F2937', // أسود ناعم
+                            900: '#111827', // أسود
+                        },
+                        'accent': '#007BFF', // لون تمييز إضافي (أزرق ساطع)
+                        'accent-hover': '#0056b3',
+                    }
+                }
+            }
+        }
+
+        /* تحسينات جمالية عامة */
+        .selected-vehicle {
+            border-color: tailwind.theme.colors['ts-gold'] !important;
+            background-color: tailwind.theme.colors['ts-gold-light'] !important;
+            box-shadow: 0 6px 12px rgba(255, 193, 7, 0.3);
+            transform: translateY(-3px) scale(1.03);
+        }
+        .selected-vehicle img {
+            filter: none;
+            opacity: 1;
+        }
+        .selected-vehicle .vehicle-name {
+            color: tailwind.theme.colors['ts-blue-dark'];
+            font-weight: 700;
+        }
+
+        .selected-tint {
+            border-color: tailwind.theme.colors['ts-blue'] !important; 
+            background-color: tailwind.theme.colors['ts-blue-light'] !important; 
+            box-shadow: 0 4px 10px rgba(16, 46, 106, 0.3);
+            transform: translateY(-2px) scale(1.03);
+        }
+        .selected-tint .tint-square {
+             border-color: tailwind.theme.colors['ts-blue-dark'] !important;
+        }
+        .selected-tint .tint-value {
+            color: tailwind.theme.colors.white !important; /* نص أبيض على خلفية زرقاء */
+            font-weight: 700;
+        }
+
+        .vlt-description-display.visible {
+            opacity: 1;
+            max-height: 120px; 
+            margin-top: 0.5rem; 
+            padding: 0.625rem 1rem; /* p-2.5 px-4 */
+            font-size: 0.8rem; /* زيادة طفيفة لحجم الخط */
+            background-color: tailwind.theme.colors['ts-gray'][100]; 
+            border-radius: 0.5rem; /* rounded-lg */
+            color: tailwind.theme.colors['ts-gray'][700];
+            border-left: 4px solid tailwind.theme.colors['ts-blue']; /* شريط تمييز أزرق */
+        }
+
+        .btn-next {
+            background-color: tailwind.theme.colors['ts-blue'];
+            color: white;
+            font-weight: bold;
+            padding: 0.875rem 1.5rem; /* py-3.5 px-6 */
+            border-radius: 0.5rem; /* rounded-lg */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .btn-next:hover:not(:disabled) {
+            background-color: tailwind.theme.colors['ts-blue-dark'];
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(16, 46, 106, 0.25);
+        }
+        .btn-next:disabled {
+            background-color: tailwind.theme.colors['ts-gray'][300];
+            color: tailwind.theme.colors['ts-gray'][500];
+            cursor: not-allowed;
+        }
+        .btn-next .arrow-icon {
+            transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+        html[dir="rtl"] .btn-next:hover:not(:disabled) .arrow-icon {
+            transform: translateX(6px);
+        }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        #alert-message-container {
+            position: fixed; top: 20px; left: 50%;
+            transform: translateX(-50%); z-index: 1000;
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+        .alert-message {
+            padding: 1rem 1.5rem; border-radius: 0.5rem; 
+            font-weight: 600; font-size: 0.9rem; 
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); 
+        }
+        .alert-error {
+            background-color: #FFF1F2; color: #E11D48; border: 1px solid #FECDD3; 
+        }
+         .alert-success { 
+            background-color: #F0FDF4; color: #16A34A; border: 1px solid #BBF7D0; 
+        }
+
+        .tint-button .tint-square { 
+            width: 40px; 
+            height: 32px; 
+            margin-bottom: 0.375rem; /* mb-1.5 */
+            border-radius: 0.375rem; 
+            border: 1px solid tailwind.theme.colors['ts-gray'][300]; 
+            background-clip: padding-box; 
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .tint-button:hover .tint-square {
+            transform: scale(1.1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .controls-area {
+            max-height: calc(100vh - 4rem - 2rem); /* header (4rem) + main py (1rem*2 = 2rem) */
+            padding: 1.25rem; /* p-5 */
+        }
+        .control-section > h3 { /* ترويسة الأقسام */
+            color: tailwind.theme.colors['ts-blue-dark'];
+            border-bottom-width: 3px; /* خط سفلي أسمك */
+            border-color: tailwind.theme.colors['ts-blue'];
+            padding-bottom: 0.75rem; /* pb-3 */
+            margin-bottom: 1.25rem; /* mb-5 */
+            font-size: 1.25rem; /* text-xl */
+            font-weight: 700; /* bold */
+        }
+        .glass-tint-section h4 { /* عناوين أنواع الزجاج */
+            color: tailwind.theme.colors['ts-gray'][800];
+            font-size: 0.95rem; /* Slightly larger */
+            font-weight: 600; /* semibold */
+        }
+        .glass-tint-section h4 .glass-icon { /* أيقونات الزجاج */
+            color: tailwind.theme.colors['ts-blue-light'];
+            font-size: 1rem; /* text-base */
+            margin-left: 0.625rem; /* ml-2.5 */
+        }
+        .vlt-select {
+            border-color: tailwind.theme.colors['ts-gray'][300];
+            border-radius: 0.5rem; /* rounded-lg */
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            font-size: 0.875rem; /* text-sm */
+            padding: 0.625rem 0.75rem; /* p-2.5 px-3 */
+            color: tailwind.theme.colors['ts-gray'][700];
+        }
+        .vlt-select:focus {
+            border-color: tailwind.theme.colors['ts-blue'];
+            box-shadow: 0 0 0 3px rgba(16, 46, 106, 0.2); 
+            outline: none;
+        }
+        .vehicle-option, .tint-button {
+            border-radius: 0.75rem; /* rounded-xl */
+            transition: all 0.25s ease-in-out;
+        }
+        .vehicle-option:hover, .tint-button:hover {
+             transform: translateY(-2px);
+             box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+        }
+    </style>
+</head>
+<body class="bg-ts-gray-50 text-ts-gray-800">
+    <div id="alert-message-container" class="opacity-0 transform -translate-y-10"></div>
+
+    <div class="simulator-container flex flex-col min-h-screen">
+        <header class="bg-ts-blue text-white shadow-lg sticky top-0 z-50 h-16">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-full">
+                    <a href="#" class="logo-link">
+                        <img src="https://assets.stickpng.com/images/580b57fcd9996e24bc43c521.png" alt="شعار Topshield" class="header-logo h-9 sm:h-10 object-contain">
+                    </a>
+                    <nav class="hidden md:flex space-x-reverse space-x-4">
+                        <a href="#" class="hover:text-ts-gold transition-colors duration-200 px-3 py-2 rounded-md text-sm font-semibold">الصفحة الرئيسية</a>
+                        <a href="#" class="hover:text-ts-gold transition-colors duration-200 px-3 py-2 rounded-md text-sm font-semibold">عنا</a>
+                        <a href="#" class="text-ts-gold font-bold border-b-2 border-ts-gold px-3 py-2 text-sm">العازل الحراري للسيارات</a>
+                        <a href="#" class="hover:text-ts-gold transition-colors duration-200 px-3 py-2 rounded-md text-sm font-semibold">أفلام حماية الطلاء</a>
+                        <a href="#" class="hover:text-ts-gold transition-colors duration-200 px-3 py-2 rounded-md text-sm font-semibold">افلام الحماية الملونة</a>
+                    </nav>
+                    <div class="md:hidden">
+                        <button id="mobile-menu-button" class="text-white hover:text-ts-gold focus:outline-none">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div id="mobile-menu" class="md:hidden hidden bg-ts-blue-dark shadow-xl">
+                <a href="#" class="block hover:bg-ts-blue-light px-4 py-3 text-sm font-semibold text-center">الصفحة الرئيسية</a>
+                <a href="#" class="block hover:bg-ts-blue-light px-4 py-3 text-sm font-semibold text-center">عنا</a>
+                <a href="#" class="block bg-ts-blue text-ts-gold font-bold px-4 py-3 text-sm text-center">العازل الحراري للسيارات</a>
+                <a href="#" class="block hover:bg-ts-blue-light px-4 py-3 text-sm font-semibold text-center">أفلام حماية الطلاء</a>
+                <a href="#" class="block hover:bg-ts-blue-light px-4 py-3 text-sm font-semibold text-center">افلام الحماية الملونة</a>
+            </div>
+        </header>
+
+        <main class="simulator-body container mx-auto p-4 lg:px-8 lg:py-5 flex flex-col lg:flex-row gap-6 flex-grow">
+            <aside class="controls-area lg:w-5/12 xl:w-4/12 bg-white rounded-2xl shadow-2xl order-2 lg:order-1 overflow-y-auto no-scrollbar">
+                <section class="control-section"> 
+                    <h3 class="text-lg font-bold">1. اختر نوع المركبة</h3> 
+                    <div class="vehicle-type-options grid grid-cols-4 gap-2.5 mt-3"> 
+                        <div class="vehicle-option flex flex-col items-center p-2.5 border-2 border-ts-gray-200 hover:border-ts-gold bg-ts-gray-100 hover:bg-ts-gold-light group" data-car-name="رياضية" data-preview-image="https://placehold.co/800x500/e0e0e0/333?text=سيارة+رياضية&font=cairo" onclick="selectCar('رياضية', this.dataset.previewImage, this)">
+                            <img loading="lazy" src="https://placehold.co/70x45/cccccc/555555?text=رياضية&font=cairo" alt="رياضية" class="w-16 h-10 object-contain mb-1.5 filter grayscale opacity-70 group-hover:opacity-100 group-hover:filter-none" onerror="this.src='https://placehold.co/70x45/e9ecef/212529?text=رياضية&font=cairo'; this.onerror=null;">
+                            <span class="vehicle-name text-xs font-semibold text-ts-gray-700 group-hover:text-ts-blue-dark">رياضية</span>
+                        </div>
+                        <div class="vehicle-option flex flex-col items-center p-2.5 border-2 border-ts-gray-200 hover:border-ts-gold bg-ts-gray-100 hover:bg-ts-gold-light group" data-car-name="سيدان" data-preview-image="https://placehold.co/800x500/e0e0e0/333?text=سيارة+سيدان&font=cairo" onclick="selectCar('سيدان', this.dataset.previewImage, this)">
+                            <img loading="lazy" src="https://placehold.co/70x45/cccccc/555555?text=سيدان&font=cairo" alt="سيدان" class="w-16 h-10 object-contain mb-1.5 filter grayscale opacity-70 group-hover:opacity-100 group-hover:filter-none" onerror="this.src='https://placehold.co/70x45/e9ecef/212529?text=سيدان&font=cairo'; this.onerror=null;">
+                            <span class="vehicle-name text-xs font-semibold text-ts-gray-700 group-hover:text-ts-blue-dark">سيدان</span>
+                        </div>
+                        <div class="vehicle-option flex flex-col items-center p-2.5 border-2 border-ts-gray-200 hover:border-ts-gold bg-ts-gray-100 hover:bg-ts-gold-light group" data-car-name="عائلية/دفع رباعي" data-preview-image="https://placehold.co/800x500/e0e0e0/333?text=SUV&font=cairo" onclick="selectCar('عائلية/دفع رباعي', this.dataset.previewImage, this)">
+                            <img loading="lazy" src="https://placehold.co/70x45/cccccc/555555?text=SUV&font=cairo" alt="عائلية/دفع رباعي" class="w-16 h-10 object-contain mb-1.5 filter grayscale opacity-70 group-hover:opacity-100 group-hover:filter-none" onerror="this.src='https://placehold.co/70x45/e9ecef/212529?text=SUV&font=cairo'; this.onerror=null;">
+                            <span class="vehicle-name text-xs font-semibold text-ts-gray-700 group-hover:text-ts-blue-dark">عائلية/دفع رباعي</span>
+                        </div>
+                        <div class="vehicle-option flex flex-col items-center p-2.5 border-2 border-ts-gray-200 hover:border-ts-gold bg-ts-gray-100 hover:bg-ts-gold-light group" data-car-name="شاحنة" data-preview-image="https://placehold.co/800x500/e0e0e0/333?text=شاحنة&font=cairo" onclick="selectCar('شاحنة', this.dataset.previewImage, this)">
+                            <img loading="lazy" src="https://placehold.co/70x45/cccccc/555555?text=شاحنة&font=cairo" alt="شاحنة" class="w-16 h-10 object-contain mb-1.5 filter grayscale opacity-70 group-hover:opacity-100 group-hover:filter-none" onerror="this.src='https://placehold.co/70x45/e9ecef/212529?text=شاحنة&font=cairo'; this.onerror=null;">
+                            <span class="vehicle-name text-xs font-semibold text-ts-gray-700 group-hover:text-ts-blue-dark">شاحنة</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="control-section"> 
+                    <h3 class="text-lg font-bold">2. اختر المظهر العام <span class="text-base font-normal text-ts-gray-500">(VLT)</span></h3> 
+                    <p id="tintLabel" class="text-sm text-ts-gray-600 mt-2 mb-2.5 text-center"></p> 
+                    <div class="tint-percentage-options flex flex-row flex-nowrap gap-2 overflow-x-auto py-2 no-scrollbar"> 
+                        <div class="tint-button flex flex-col items-center p-2 border-2 border-ts-gray-200 hover:border-ts-blue bg-ts-gray-100 group" data-vlt="0.05" onclick="selectTint(0.05, this)">
+                            <div class="tint-square" style="background-color: rgba(0,0,0,0.95);"></div><span class="tint-value text-xs text-ts-gray-700 group-hover:text-ts-blue-dark">5%</span>
+                        </div>
+                        <div class="tint-button flex flex-col items-center p-2 border-2 border-ts-gray-200 hover:border-ts-blue bg-ts-gray-100 group" data-vlt="0.15" onclick="selectTint(0.15, this)">
+                            <div class="tint-square" style="background-color: rgba(0,0,0,0.85);"></div><span class="tint-value text-xs text-ts-gray-700 group-hover:text-ts-blue-dark">15%</span>
+                        </div>
+                         <div class="tint-button flex flex-col items-center p-2 border-2 border-ts-gray-200 hover:border-ts-blue bg-ts-gray-100 group" data-vlt="0.25" onclick="selectTint(0.25, this)">
+                            <div class="tint-square" style="background-color: rgba(0,0,0,0.75);"></div><span class="tint-value text-xs text-ts-gray-700 group-hover:text-ts-blue-dark">25%</span>
+                        </div>
+                        <div class="tint-button flex flex-col items-center p-2 border-2 border-ts-gray-200 hover:border-ts-blue bg-ts-gray-100 group" data-vlt="0.35" onclick="selectTint(0.35, this)">
+                            <div class="tint-square" style="background-color: rgba(0,0,0,0.65);"></div><span class="tint-value text-xs text-ts-gray-700 group-hover:text-ts-blue-dark">35%</span>
+                        </div>
+                        <div class="tint-button flex flex-col items-center p-2 border-2 border-ts-gray-200 hover:border-ts-blue bg-ts-gray-100 group" data-vlt="0.50" onclick="selectTint(0.50, this)">
+                            <div class="tint-square" style="background-color: rgba(0,0,0,0.50);"></div><span class="tint-value text-xs text-ts-gray-700 group-hover:text-ts-blue-dark">50%</span>
+                        </div>
+                        <div class="tint-button flex flex-col items-center p-2 border-2 border-ts-gray-200 hover:border-ts-blue bg-ts-gray-100 group" data-vlt="0.70" onclick="selectTint(0.70, this)">
+                            <div class="tint-square" style="background-color: rgba(0,0,0,0.30);"></div><span class="tint-value text-xs text-ts-gray-700 group-hover:text-ts-blue-dark">70%</span>
+                        </div>
+                        <div class="tint-button flex flex-col items-center p-2 border-2 border-ts-gray-200 hover:border-ts-blue bg-ts-gray-100 group" data-vlt="0.80" onclick="selectTint(0.80, this)">
+                            <div class="tint-square" style="background-color: rgba(0,0,0,0.20);"></div><span class="tint-value text-xs text-ts-gray-700 group-hover:text-ts-blue-dark">80%</span>
+                        </div>
+                        <div class="tint-button flex flex-col items-center p-2 border-2 border-ts-gray-200 hover:border-ts-blue bg-ts-gray-100 group" data-vlt="1.00" onclick="selectTint(1.00, this)">
+                            <div class="tint-square" style="background-color: rgba(0,0,0,0.0);"></div><span class="tint-value text-xs text-ts-gray-700 group-hover:text-ts-blue-dark">بدون</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="control-section detailed-tint-selection"> 
+                    <h3 class="text-lg font-bold">3. اختر درجة التظليل المفضلة لديك <span class="text-base font-normal text-ts-gray-500">(لكل زجاج)</span></h3> 
+                    
+                    <div class="glass-tint-section mt-3 mb-2 pb-2 border-b border-ts-gray-200" id="windshield-section"> 
+                        <div class="flex justify-between items-center mb-1.5"> 
+                            <h4 class="flex items-center whitespace-nowrap"><i class="fas fa-window-maximize fa-fw glass-icon"></i>الزجاج الامامي*</h4>
+                            <select class="vlt-select w-full mr-3" id="windshield_vlt" name="windshield_vlt"> 
+                                <option value="" data-description="" selected>اختر درجة</option>
+                                <option value="0.80" data-description="شفاف تمامًا – غير ملحوظ تقريبًا (مطابق للأنظمة)">80%</option>
+                                <option value="0.70" data-description="شفاف. بالكاد يٌلاحظ (مطابق للأنظمة)">70%</option>
+                            </select>
+                        </div>
+                        <div class="vlt-description-display" id="windshield_vlt_desc"></div>
+                    </div>
+
+                    <div class="glass-tint-section mb-2 pb-2 border-b border-ts-gray-200" id="front-doors-section">
+                        <div class="flex justify-between items-center mb-1.5">
+                             <h4 class="flex items-center whitespace-nowrap"><i class="fas fa-car-side fa-fw glass-icon"></i>زجاج البابين الأماميين</h4>
+                            <select class="vlt-select w-full mr-3" id="front_doors_vlt" name="front_doors_vlt">
+                                <option value="" data-description="" selected>اختر درجة</option>
+                                <option value="0.80" data-description="شفاف غير ملحوظ تقريبًا (مطابق للأنظمة)">80%</option>
+                                <option value="0.70" data-description="شفاف بالكاد يٌلاحظ (مطابق للأنظمة)">70%</option>
+                                <option value="0.50" data-description="تعتيم خفيف توازن أنيق (مطابق للأنظمة)">50%</option>
+                                <option value="0.35" data-description="تعتيم متوسط لمسة جمالية راقية (مطابق للأنظمة)">35%</option>
+                                <option value="0.25" data-description="تعتيم عالي خصوصية وأناقة ملفتة">25%</option>
+                                <option value="0.15" data-description="تعتيم شديد خصوصية عالية جذابة بدون كتم">15%</option>
+                                <option value="0.05" data-description="تعتيم تام حجب كامل للرؤية من الخارج للداخل">5%</option>
+                            </select>
+                        </div>
+                        <div class="vlt-description-display" id="front_doors_vlt_desc"></div>
+                    </div>
+                    
+                    <div class="glass-tint-section mb-2 pb-2 border-b border-ts-gray-200" id="rear-doors-section">
+                        <div class="flex justify-between items-center mb-1.5">
+                            <h4 class="flex items-center whitespace-nowrap"><i class="fas fa-car-side fa-fw glass-icon" style="transform: scaleX(-1);"></i>زجاج البابين الخلفيين*</h4>
+                            <select class="vlt-select w-full mr-3" id="rear_doors_vlt" name="rear_doors_vlt">
+                                <option value="" data-description="" selected>اختر درجة</option>
+                                <option value="0.80" data-description="شفاف تمامًا – غير ملحوظ تقريبًا (مطابق للأنظمة)">80%</option>
+                                <option value="0.70" data-description="شفاف. بالكاد يٌلاحظ (مطابق للأنظمة)">70%</option>
+                                <option value="0.50" data-description="تعتيم خفيف. توازن أنيق (مطابق للأنظمة)">50%</option>
+                                <option value="0.35" data-description="تعتيم متوسط أنيق. لمسة جمالية راقية (مطابق للأنظمة)">35%</option>
+                                <option value="0.25" data-description="تعتيم عالي. خصوصية وأناقة ملفتة (مطابق للأنظمة)">25%</option>
+                                <option value="0.15" data-description="تعتيم شديد. خصوصية عالية جذابة بدون كتم">15%</option>
+                                <option value="0.05" data-description="تعتيم تام. حجب كامل للرؤية من الخارج للداخل">5%</option>
+                            </select>
+                        </div>
+                        <div class="vlt-description-display" id="rear_doors_vlt_desc"></div>
+                    </div>
+
+                    <div class="glass-tint-section mb-2 pb-2 border-b border-ts-gray-200 hidden" id="rear-quarter-glass-section">
+                        <div class="flex justify-between items-center mb-1.5">
+                            <h4 class="flex items-center whitespace-nowrap"><i class="fas fa-vector-square fa-fw glass-icon"></i>زجاج الجوانب الخلفية*</h4>
+                            <select class="vlt-select w-full mr-3" id="rear_quarter_vlt" name="rear_quarter_vlt">
+                                <option value="" data-description="" selected>اختر درجة</option>
+                                <option value="0.80" data-description="شفاف تمامًا – غير ملحوظ تقريبًا (مطابق للأنظمة)">80%</option>
+                                <option value="0.70" data-description="شفاف. بالكاد يٌلاحظ (مطابق للأنظمة)">70%</option>
+                                <option value="0.50" data-description="تعتيم خفيف. توازن أنيق (مطابق للأنظمة)">50%</option>
+                                <option value="0.35" data-description="تعتيم متوسط أنيق. لمسة جمالية راقية (مطابق للأنظمة)">35%</option>
+                                <option value="0.25" data-description="تعتيم عالي. خصوصية وأناقة ملفتة (مطابق للأنظمة)">25%</option>
+                                <option value="0.15" data-description="تعتيم شديد. خصوصية عالية جذابة بدون كتم">15%</option>
+                                <option value="0.05" data-description="تعتيم تام. حجب كامل للرؤية من الخارج للداخل">5%</option>
+                            </select>
+                        </div>
+                        <div class="vlt-description-display" id="rear_quarter_vlt_desc"></div>
+                    </div>
+
+                    <div class="glass-tint-section mb-2 pb-2 border-b border-ts-gray-200" id="rear-window-section">
+                        <div class="flex justify-between items-center mb-1.5">
+                             <h4 class="flex items-center whitespace-nowrap"><i class="fas fa-window-minimize fa-fw glass-icon"></i>الزجاج الخلفي*</h4>
+                            <select class="vlt-select w-full mr-3" id="rear_window_vlt" name="rear_window_vlt">
+                                <option value="" data-description="" selected>اختر درجة</option>
+                                <option value="0.80" data-description="شفاف تمامًا – غير ملحوظ تقريبًا (مطابق للأنظمة)">80%</option>
+                                <option value="0.70" data-description="شفاف. بالكاد يٌلاحظ (مطابق للأنظمة)">70%</option>
+                                <option value="0.50" data-description="تعتيم خفيف. توازن أنيق (مطابق للأنظمة)">50%</option>
+                                <option value="0.35" data-description="تعتيم متوسط أنيق. لمسة جمالية راقية (مطابق للأنظمة)">35%</option>
+                                <option value="0.25" data-description="تعتيم عالي. خصوصية وأناقة ملفتة">25%</option>
+                                <option value="0.15" data-description="تعتيم شديد. خصوصية عالية جذابة بدون كتم">15%</option>
+                                <option value="0.05" data-description="تعتيم تام. حجب كامل للرؤية من الخارج للداخل">5%</option>
+                            </select>
+                        </div>
+                        <div class="vlt-description-display" id="rear_window_vlt_desc"></div>
+                    </div>
+
+                    <div class="glass-tint-section" id="sunroof-section"> 
+                        <div class="flex justify-between items-center mb-1.5">
+                            <h4 class="flex items-center whitespace-nowrap"><i class="far fa-sun fa-fw glass-icon"></i>فتحة السقف</h4>
+                             <div class="w-full mr-3"> 
+                                <label for="sunroof_type" class="block text-xs font-medium text-ts-gray-500 sr-only">نوع فتحة السقف:</label> 
+                                <select id="sunroof_type" name="sunroof_type" class="sunroof-type-select vlt-select w-full"> 
+                                    <option value="none" data-description="" selected>بدون فتحة سقف</option>
+                                    <option value="normal" data-description="فتحة سقف بحجم عادي">عادية</option>
+                                    <option value="panoramic" data-description="فتحة سقف بانورامية واسعة">بانورامية</option>
+                                </select>
+                             </div>
+                        </div>
+                        <div class="vlt-description-display" id="sunroof_type_desc"></div>
+                        
+                        <p class="sunroof-note text-xs text-ts-gray-500 mt-1.5 mb-2"><small> </small></p> 
+                        
+                        <div id="sunroof_tint_options_wrapper" class="hidden mt-2">
+                             <div class="flex justify-between items-center mb-1.5">
+                                <label for="sunroof_vlt" class="text-sm font-semibold flex items-center whitespace-nowrap">تظليل فتحة السقف:</label>
+                                <select class="vlt-select w-full mr-3" id="sunroof_vlt" name="sunroof_vlt">
+                                    <option value="" data-description="" selected>اختر درجة</option>
+                                    <option value="0.80" data-description="شفاف تمامًا لفتحة السقف">80%</option>
+                                    <option value="0.70" data-description="شفاف لفتحة السقف">70%</option>
+                                    <option value="0.50" data-description="تعتيم خفيف لفتحة السقف">50%</option>
+                                    <option value="0.35" data-description="تعتيم متوسط لفتحة السقف">35%</option>
+                                    <option value="0.25" data-description="تعتيم عالي لفتحة السقف">25%</option>
+                                    <option value="0.15" data-description="تعتيم شديد لفتحة السقف">15%</option>
+                                    <option value="0.05" data-description="تعتيم تام لفتحة السقف">5%</option>
+                                </select>
+                            </div>
+                            <div class="vlt-description-display" id="sunroof_vlt_desc"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="controls-footer mt-auto pt-5 text-center"> 
+                    <button id="nextButton" class="btn-next w-full" onclick="goToNext()" disabled> 
+                        <span class="ml-2 text-sm">استمر في التخصيص</span><i class="fas fa-arrow-left arrow-icon text-sm"></i> 
+                    </button>
+                </div>
+            </aside>
+
+            <div class="simulation-preview-area lg:w-7/12 xl:w-8/12 bg-gradient-to-br from-ts-gray-800 to-ts-gray-900 rounded-2xl shadow-2xl flex items-center justify-center p-5 md:p-6 relative order-1 lg:order-2 min-h-[380px] sm:min-h-[480px] lg:min-h-[550px]">
+                <img loading="lazy" id="previewImage" src="https://placehold.co/800x500/e0e0e0/333?text=اختر+سيارة+للمعاينة&font=cairo" alt="معاينة السيارة المختارة" class="max-w-full max-h-[calc(100vh-14rem)] h-auto object-contain rounded-xl shadow-2xl z-10">
+                <div id="tint-overlay" class="absolute inset-0 bg-black/5 rounded-xl z-20 pointer-events-none transition-colors duration-300 ease-in-out" style="background-color: rgba(0,0,0,0.05);"></div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        let selectedCarInfo = {
+            name: null,
+            image: null,
+            tintVLT: 0.05, 
+            detailedTints: {}
+        };
+
+        const previewImage = document.getElementById('previewImage');
+        const tintOverlay = document.getElementById('tint-overlay');
+        const tintLabel = document.getElementById('tintLabel');
+        const nextButton = document.getElementById('nextButton');
+        const alertContainer = document.getElementById('alert-message-container');
+
+        function showTemporaryAlert(message, type = 'error') { 
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert-message alert-${type}`; 
+            alertDiv.textContent = message;
+            
+            alertContainer.innerHTML = ''; 
+            alertContainer.appendChild(alertDiv);
+            alertContainer.classList.remove('opacity-0', '-translate-y-10');
+            alertContainer.classList.add('opacity-100', 'translate-y-0');
+
+            setTimeout(() => {
+                alertContainer.classList.remove('opacity-100', 'translate-y-0');
+                alertContainer.classList.add('opacity-0', '-translate-y-10');
+                setTimeout(() => alertContainer.innerHTML = '', 300);
+            }, 3000);
+        }
+
+
+        function applyGeneralTintToPreview(vlt) {
+            if (tintOverlay) {
+                const overlayOpacity = 1 - vlt;
+                tintOverlay.style.backgroundColor = `rgba(0, 0, 0, ${overlayOpacity.toFixed(2)})`;
+            }
+            if (tintLabel) {
+                if (vlt === 1) {
+                    tintLabel.textContent = `التظليل العام المختار: بدون`;
+                } else {
+                    tintLabel.textContent = `التظليل العام المختار: ${Math.round(vlt * 100)}% VLT`;
+                }
+            }
+        }
+
+        function selectTint(vlt, element) {
+            selectedCarInfo.tintVLT = vlt;
+            applyGeneralTintToPreview(vlt);
+
+            document.querySelectorAll('.tint-button').forEach(el => el.classList.remove('selected-tint'));
+            if (element) {
+                element.classList.add('selected-tint');
+            }
+            localStorage.setItem('selectedTintVLT', selectedCarInfo.tintVLT);
+        }
+
+        function selectCar(carName, imagePath, element) {
+            previewImage.src = imagePath;
+            previewImage.alt = "معاينة " + carName;
+
+            selectedCarInfo.name = carName;
+            selectedCarInfo.image = imagePath;
+            
+            document.querySelectorAll('.vehicle-option').forEach(el => el.classList.remove('selected-vehicle'));
+            if (element) { 
+                element.classList.add('selected-vehicle');
+            }
+
+            localStorage.setItem('selectedCarName', selectedCarInfo.name);
+            localStorage.setItem('selectedCarPreviewImage', selectedCarInfo.image);
+            
+            nextButton.disabled = false;
+
+            const rearQuarterGlassSection = document.getElementById('rear-quarter-glass-section');
+            if (rearQuarterGlassSection) {
+                if (carName === 'عائلية/دفع رباعي') {
+                    rearQuarterGlassSection.classList.remove('hidden');
+                } else {
+                    rearQuarterGlassSection.classList.add('hidden');
+                    const rearQuarterVltSelect = document.getElementById('rear_quarter_vlt');
+                    const rearQuarterDescDisplay = document.getElementById('rear_quarter_vlt_desc');
+                    if (rearQuarterVltSelect) { rearQuarterVltSelect.value = ""; }
+                    if (rearQuarterDescDisplay) { rearQuarterDescDisplay.textContent = ''; rearQuarterDescDisplay.classList.remove('visible');}
+                    if (selectedCarInfo.detailedTints) { delete selectedCarInfo.detailedTints['rear_quarter_vlt']; }
+                    localStorage.removeItem('rear_quarter_vlt'); 
+                }
+            }
+        }
+
+        function goToNext() {
+            if (!selectedCarInfo.name) {
+                showTemporaryAlert("الرجاء اختيار فئة السيارة أولاً."); 
+                return;
+            }
+            console.log("Selected Car Info before navigating:", JSON.stringify(selectedCarInfo, null, 2));
+            showTemporaryAlert(`تم اختيار ${selectedCarInfo.name}. جاهز للانتقال (الوجهة: customization.html)`, 'success');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const storedCarName = localStorage.getItem('selectedCarName');
+            const storedCarImage = localStorage.getItem('selectedCarPreviewImage');
+            const storedGeneralTintVLT = localStorage.getItem('selectedTintVLT');
+            
+            let initialCarName = null;
+            let initialCarImage = "https://placehold.co/800x500/e0e0e0/333?text=اختر+سيارة+للمعاينة&font=cairo";
+            let initialGeneralTintVLT = 0.05; 
+
+            if (storedCarName && storedCarImage) {
+                initialCarName = storedCarName;
+                initialCarImage = storedCarImage;
+                selectedCarInfo.name = initialCarName;
+                selectedCarInfo.image = initialCarImage;
+                nextButton.disabled = false;
+                const carButtonToSelect = document.querySelector(`.vehicle-option[data-car-name="${initialCarName}"]`);
+                if (carButtonToSelect) {
+                    selectCar(initialCarName, initialCarImage, carButtonToSelect); 
+                }
+
+            } else {
+                nextButton.disabled = true;
+            }
+
+            if (storedGeneralTintVLT !== null) {
+                const parsedVLT = parseFloat(storedGeneralTintVLT);
+                const validVLTs = [0.05, 0.15, 0.25, 0.35, 0.50, 0.70, 0.80, 1.00];
+                if (validVLTs.includes(parsedVLT)) {
+                    initialGeneralTintVLT = parsedVLT;
+                }
+            }
+
+            previewImage.src = initialCarImage;
+            previewImage.alt = initialCarName ? "معاينة " + initialCarName : "اختر سيارة للمعاينة";
+
+            let generalTintButtonToSelect = document.querySelector(`.tint-button[data-vlt="${initialGeneralTintVLT.toFixed(2)}"]`);
+             if (!generalTintButtonToSelect) { 
+                generalTintButtonToSelect = document.querySelector(`.tint-button[data-vlt="${initialGeneralTintVLT}"]`);
+            }
+            if (generalTintButtonToSelect) {
+                selectTint(initialGeneralTintVLT, generalTintButtonToSelect);
+            } else {
+                const defaultTintButton = document.querySelector('.tint-button[data-vlt="0.05"]');
+                if(defaultTintButton) selectTint(0.05, defaultTintButton);
+            }
+            
+            const rearQuarterGlassSection = document.getElementById('rear-quarter-glass-section');
+            function updateRearQuarterGlassVisibility(selectedCarName) {
+                if (rearQuarterGlassSection) {
+                    if (selectedCarName === 'عائلية/دفع رباعي') {
+                        rearQuarterGlassSection.classList.remove('hidden');
+                    } else {
+                        rearQuarterGlassSection.classList.add('hidden');
+                    }
+                }
+            }
+            updateRearQuarterGlassVisibility(initialCarName);
+
+            const detailedTintSelects = document.querySelectorAll('.detailed-tint-selection .vlt-select');
+            detailedTintSelects.forEach(selectElement => {
+                const descriptionDisplayElementId = selectElement.id + '_desc';
+                const descriptionDisplayElement = document.getElementById(descriptionDisplayElementId);
+
+                function updateDescriptionDisplay(currentSelect) {
+                    if (descriptionDisplayElement) {
+                        const selectedOption = currentSelect.options[currentSelect.selectedIndex];
+                        const description = selectedOption ? selectedOption.dataset.description : "";
+                        if (description && currentSelect.value !== "") {
+                            descriptionDisplayElement.textContent = description;
+                            descriptionDisplayElement.classList.add('visible');
+                        } else {
+                            descriptionDisplayElement.textContent = '';
+                            descriptionDisplayElement.classList.remove('visible');
+                        }
+                    }
+                }
+
+                const storedDetailedValue = localStorage.getItem(selectElement.id);
+                if(storedDetailedValue) {
+                    selectElement.value = storedDetailedValue;
+                    if (selectElement.id !== 'sunroof_type') { 
+                       selectedCarInfo.detailedTints[selectElement.id] = storedDetailedValue;
+                    }
+                }
+                updateDescriptionDisplay(selectElement); 
+
+                selectElement.addEventListener('change', function() {
+                    updateDescriptionDisplay(this);
+                    
+                    if (this.id !== 'sunroof_type') {
+                        selectedCarInfo.detailedTints[this.id] = this.value;
+                        localStorage.setItem(this.id, this.value);
+                    } else { 
+                        localStorage.setItem(this.id, this.value);
+                        if(this.id === 'sunroof_type') updateSunroofControls();
+                    }
+                });
+            });
+
+            const sunroofTypeSelect = document.getElementById('sunroof_type');
+            const sunroofVltWrapper = document.getElementById('sunroof_tint_options_wrapper');
+            const sunroofVltSelect = document.getElementById('sunroof_vlt');
+            
+            function updateSunroofControls() {
+                if(!sunroofTypeSelect || !sunroofVltWrapper || !sunroofVltSelect) return;
+
+                const sunroofVltDescDisplay = document.getElementById('sunroof_vlt_desc'); 
+
+                if (sunroofTypeSelect.value === 'none') {
+                    sunroofVltWrapper.classList.add('hidden');
+                    sunroofVltSelect.value = ""; 
+                    if(sunroofVltDescDisplay) { sunroofVltDescDisplay.textContent = ''; sunroofVltDescDisplay.classList.remove('visible');}
+                    if (selectedCarInfo.detailedTints) delete selectedCarInfo.detailedTints[sunroofVltSelect.id]; 
+                    localStorage.removeItem(sunroofVltSelect.id);
+                } else {
+                    sunroofVltWrapper.classList.remove('hidden');
+                    const storedSunroofVLT = localStorage.getItem(sunroofVltSelect.id);
+                    if (storedSunroofVLT) {
+                        sunroofVltSelect.value = storedSunroofVLT;
+                        selectedCarInfo.detailedTints[sunroofVltSelect.id] = storedSunroofVLT;
+                    }
+                    if (sunroofVltSelect.options[sunroofVltSelect.selectedIndex] && sunroofVltDescDisplay) {
+                        const selectedSunroofOption = sunroofVltSelect.options[sunroofVltSelect.selectedIndex];
+                        const description = selectedSunroofOption.dataset.description;
+                         if (description && sunroofVltSelect.value !== "") {
+                            sunroofVltDescDisplay.textContent = description;
+                            sunroofVltDescDisplay.classList.add('visible');
+                        } else {
+                            sunroofVltDescDisplay.textContent = '';
+                            sunroofVltDescDisplay.classList.remove('visible');
+                        }
+                    }
+                }
+            }
+            
+            if (sunroofTypeSelect) {
+                const storedSunroofType = localStorage.getItem('sunroof_type');
+                if(storedSunroofType) {
+                    sunroofTypeSelect.value = storedSunroofType;
+                }
+                updateSunroofControls(); 
+            }
+
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

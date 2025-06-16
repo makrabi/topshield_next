@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>محاكي تظليل السيارات – TOPSHIELD</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Cairo', 'sans-serif'] },
+          colors: {
+            'ts-blue': '#102E6A',
+            'ts-blue-dark': '#0A2351',
+            'ts-blue-light': '#4A6FA5',
+            'ts-gold': '#FFC107',
+            'ts-gold-light': '#FFF8E1',
+            'ts-gray': {
+              50:'#F9FAFB',100:'#F3F4F6',200:'#E5E7EB',300:'#D1D5DB',
+              400:'#9CA3AF',500:'#6B7280',600:'#4B5563',700:'#374151',
+              800:'#1F2937',900:'#111827'
+            }
+          },
+          boxShadow:{ card:'0 5px 15px rgba(0,0,0,.08)', selected:'0 0 0 3px rgba(255,193,7,.6)', 'selected-blue':'0 0 0 3px rgba(16,46,106,.5)'}
+        }
+      }
+    };
+  </script>
+
+  <style>
+    body{background:theme('colors.ts-gray.100');font-family:'Cairo',sans-serif;}
+
+    /* معاينة السيارة */
+    #viewer{position:relative;width:100%;padding-top:56%;}
+    #viewer img,#tintLayer{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;}
+    #tintLayer{background:rgba(0,0,0,0);mix-blend-mode:multiply;pointer-events:none;z-index:20;display:none;}
+    #frameImg{pointer-events:none;z-index:30;}
+  </style>
+</head>
+<body class="text-ts-gray-700 antialiased text-sm">
+
+<header class="bg-ts-blue text-white h-14 flex items-center shadow-md sticky top-0 z-50">
+  <div class="container mx-auto px-4 flex justify-between w-full">
+    <span class="font-bold hidden sm:block">TOPSHIELD</span>
+    <h1 class="font-bold text-base sm:text-lg">محاكي تظليل السيارات</h1>
+  </div>
+</header>
+
+<main class="container mx-auto p-4 lg:p-8 grid lg:grid-cols-12 gap-6">
+  <!-- لوحة التحكم -->
+  <aside class="lg:col-span-4 space-y-6">
+    <section class="bg-white rounded-xl shadow p-4 space-y-3">
+      <h2 class="font-bold text-ts-blue text-lg">① اختر السيارة</h2>
+      <div id="carButtons" class="flex flex-wrap gap-3"></div>
+    </section>
+    <section class="bg-white rounded-xl shadow p-4 space-y-3">
+      <h2 class="font-bold text-ts-blue text-lg">② اختر درجة التظليل</h2>
+      <div id="tintButtons" class="flex flex-wrap gap-2"></div>
+    </section>
+  </aside>
+
+  <!-- المعاينة -->
+  <section class="lg:col-span-8 bg-white rounded-xl shadow p-4">
+    <div id="viewer" class="mb-4">
+      <div id="placeholder" class="absolute inset-0 flex flex-col items-center justify-center text-ts-gray-400">
+        <i class="fas fa-car-side fa-3x mb-2"></i>
+        <span class="font-semibold">اختر سيارة لبدء المحاكاة</span>
+      </div>
+      <img id="baseImg"  src="" alt="Base"  style="display:none;z-index:10;">
+      <div id="tintLayer"></div>
+      <img id="frameImg" src="" alt="Frame" style="display:none;">
+    </div>
+  </section>
+</main>
+
+<!-- أيقونات Font‑Awesome -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js"></script>
+
+<script>
+/* بيانات السيارات */
+const cars={
+  sedan:{
+    name:'سيدان',
+    base:'images/sedan_base.png',   // ← الملف الذي يضم الزجاج الأبيض
+    frame:'images/sedan_frame.png', // ← الملف ذو نوافذ شفافة
+    icon:'icons/sedan_selector_icon.png'
+  },
+  // يمكن إضافة سيارات أخرى هنا بنفس البنية عند جاهزية ملفاتها
+};
+
+/* درجات التظليل */
+const tints=[
+  {name:'5%', vlt:0.05}, {name:'20%',vlt:0.20}, {name:'35%',vlt:0.35},
+  {name:'50%',vlt:0.50}, {name:'70%',vlt:0.70}, {name:'شفاف',vlt:1.0}
+];
+
+/* عناصر DOM */
+const carWrap = document.getElementById('carButtons');
+const tintWrap= document.getElementById('tintButtons');
+const baseImg = document.getElementById('baseImg');
+const frameImg= document.getElementById('frameImg');
+const tintLayer=document.getElementById('tintLayer');
+const placeholder=document.getElementById('placeholder');
+
+let currentCar=null,currentVLT=1;
+
+/* توليد أزرار السيارات */
+Object.entries(cars).forEach(([key,val])=>{
+  const btn=document.createElement('button');
+  btn.className='w-24 h-20 rounded-md border-2 border-ts-gray-300 bg-white flex flex-col items-center justify-center text-xs font-bold hover:border-ts-gold transition';
+  btn.innerHTML=`<img src="${val.icon}" class="w-10 h-10 object-contain mb-1" alt="${val.name}"><span>${val.name}</span>`;
+  btn.onclick=()=>selectCar(key,btn);
+  carWrap.appendChild(btn);
+});
+
+/* توليد أزرار التظليل */
+tints.forEach(t=>{
+  const btn=document.createElement('button');
+  btn.className='w-14 h-14 rounded-md border-2 border-ts-gray-300 flex items-center justify-center text-xs font-bold transition btn-tint';
+  btn.dataset.vlt=t.vlt;
+  btn.textContent=t.name;
+  btn.onclick=()=>selectTint(t.vlt,btn);
+  tintWrap.appendChild(btn);
+});
+
+/* اختيار سيارة */
+function selectCar(key,button){
+  currentCar=cars[key];
+  [...carWrap.children].forEach(b=>b.classList.remove('ring-4','ring-ts-gold'));
+  button.classList.add('ring-4','ring-ts-gold');
+
+  baseImg.src = currentCar.base;
+  frameImg.src= currentCar.frame;
+
+  baseImg.style.display='block';
+  frameImg.style.display='block';
+  tintLayer.style.display='block';
+  placeholder.style.display='none';
+  applyTint();
+}
+
+/* اختيار تظليل */
+function selectTint(vlt,button){
+  currentVLT=vlt;
+  [...tintWrap.children].forEach(b=>b.classList.remove('ring-4','ring-ts-blue'));
+  button.classList.add('ring-4','ring-ts-blue');
+  applyTint();
+}
+
+/* تطبيق التظليل */
+function applyTint(){
+  const opacity=(1-currentVLT).toFixed(2);
+  tintLayer.style.background=`rgba(0,0,0,${opacity})`;
+}
+
+/* بدء افتراضي */
+window.addEventListener('DOMContentLoaded',()=>{
+  carWrap.firstElementChild?.click(); // أول سيارة
+  tintWrap.children[2]?.click();      // 35%
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+/* ✅ CSS لملف: src/app/[locale]/register/register.module.css */
+
+.registerPageWrapper {
+  min-height: 100vh;
+  background-image: url('/images/categories/topshield-register.jpg'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.registerFormContainer {
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 550px; 
+}
+
+.mainTitle {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+  font-weight: 600;
+}
+
+.inputGroup {
+  margin-bottom: 15px; 
+}
+
+.inputGroup label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #444;
+}
+
+.requiredStar {
+  color: red;
+  margin-right: 3px;
+}
+
+.inputGroup input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 15px;
+}
+
+.inputGroup input:focus {
+  border-color: #0070f3;
+  box-shadow: 0 0 0 2px rgba(0, 112, 243, 0.2);
+  outline: none;
+}
+
+.submitButton {
+  width: 100%;
+  padding: 14px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 500;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  margin-top: 10px;
+}
+
+.submitButton:disabled {
+  background-color: #aec6cf;
+  cursor: not-allowed;
+}
+
+.submitButton:hover:not(:disabled) {
+  background-color: #1e7e34;
+  box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+}
+
+.errorMessage {
+  color: #dc3545;
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 15px;
+  padding: 10px;
+  background-color: #f8d7da;
+  border-radius: 5px;
+}
+
+.successMessage {
+  color: #155724;
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 15px;
+  padding: 10px;
+  background-color: #d4edda;
+  border-radius: 5px;
+}

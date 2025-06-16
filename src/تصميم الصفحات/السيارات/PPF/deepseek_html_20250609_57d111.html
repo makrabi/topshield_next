@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>توبشيلد برو - حماية تتحدى الرمال</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Brand Colors */
+        :root {
+            --topshield-primary-navy: #1A3372;
+            --topshield-primary-blue: #2976B4;
+            --topshield-glass-blue: #56B1DD;
+            --topshield-glass-blue-light: #89C5E8;
+            --topshield-accent-gold: #F7C100;
+            --topshield-accent-gold-darker: #C2971E;
+            --topshield-white: #FFFFFF;
+            
+            --topshield-background-light: #F0F4F8;
+            --topshield-border-subtle: #DDE3EA;
+            --topshield-text-light: #94A3B8;
+            --topshield-overlay-dark: rgba(0, 0, 0, 0.5);
+            
+            --topshield-background-content: #FFFFFF;
+            --topshield-text-dark: #1A3372;
+            --topshield-text-medium: #2976B4;
+            --topshield-text-main: #56B1DD;
+            --topshield-dark-elevated: #1F2937;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #0d1a3a 0%, #1a3372 100%);
+            color: var(--topshield-white);
+            line-height: 1.8;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Particle Background */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -2;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: rgba(26, 51, 114, 0.85);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(247, 193, 0, 0.2);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--topshield-primary-blue) 0%, var(--topshield-glass-blue) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--topshield-white);
+            font-size: 1.5rem;
+            margin-left: 15px;
+            box-shadow: 0 0 20px rgba(86, 177, 221, 0.5);
+        }
+
+        .logo-text {
+            color: var(--topshield-white);
+            font-weight: 700;
+            font-size: 1.8rem;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, var(--topshield-white), var(--topshield-glass-blue-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo-text span {
+            color: var(--topshield-accent-gold);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav li {
+            margin: 0 15px;
+        }
+
+        nav a {
+            color: var(--topshield-white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 5px 0;
+            font-size: 1.1rem;
+        }
+
+        nav a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: var(--topshield-accent-gold);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover:after {
+            width: 100%;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, var(--topshield-accent-gold) 0%, var(--topshield-accent-gold-darker) 100%);
+            color: var(--topshield-primary-navy);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(247, 193, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .cta-button:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 0%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: all 0.4s ease;
+            z-index: -1;
+        }
+
+        .cta-button:hover:before {
+            width: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(247, 193, 0, 0.5);
+        }
+
+        .cta-button i {
+            margin-left: 8px;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5%;
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            color: var(--topshield-white);
+            margin-bottom: 20px;
+            line-height: 1.15;
+            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(to right, var(--topshield-white), var(--topshield-glass-blue-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textGlow 3s infinite alternate;
+        }
+
+        @keyframes textGlow {
+            0% { text-shadow: 0 0 10px rgba(86, 177, 221, 0.5); }
+            100% { text-shadow: 0 0 25px rgba(86, 177, 221, 0.8), 0 0 35px rgba(86, 177, 221, 0.6); }
+        }
+
+        .hero h1 span {
+            color: var(--topshield-accent-gold);
+            display: block;
+            background: linear-gradient(to right, var(--topshield-accent-gold), var(--topshield-accent-gold-darker));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: var(--topshield-glass-blue-light);
+            max-width: 800px;
+            margin: 0 auto 40px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .hero-buttons .cta-button {
+            font-size: 1.2rem;
+            padding: 15px 40px;
+        }
+
+        .secondary-button {
+            background: transparent;
+            color: var(--topshield-white);
+            border: 2px solid var(--topshield-glass-blue);
+        }
+
+        .secondary-button:hover {
+            background: rgba(86, 177, 221, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .floating-car {
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 1000px;
+            height: 300px;
+            background: url('https://i.ibb.co/6sHwvx1/car.png') center bottom no-repeat;
+            background-size: contain;
+            z-index: 1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateX(-50%) translateY(0px); }
+            50% { transform: translateX(-50%) translateY(-20px); }
+            100% { transform: translateX(-50%) translateY(0px); }
+        }
+
+        /* Features Section */
+        .features {
+            padding: 150px 5% 100px;
+            background: rgba(15, 25, 55, 0.7);
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 2;
+            border-radius: 50px 50px 0 0;
+            margin-top: -50px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-title h2 {
+            font-size: 3rem;
+            color: var(--topshield-white);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 50%;
+            transform: translateX(50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, var(--topshield-accent-gold), var(--topshield-glass-blue));
+            border-radius: 2px;
+            animation: linePulse 2s infinite alternate;
+        }
+
+        @keyframes linePulse {
+            0% { width: 100px; }
+            100% { width: 200px; }
+        }
+
+        .section-title p {
+            color: var(--topshield-glass-blue-light);
+            max-width: 700px;
+            margin: 20px auto 0;
+            font-size: 1.3rem;
+            line-height: 1.7;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: rgba(26, 51, 114, 0.25);
+            border-radius: 25px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(86, 177, 221, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25), 0 0 30px rgba(86, 177, 221, 0.3);
+            border: 1px solid rgba(86, 177, 221, 0.5);
+        }
+
+        .feature-icon {
+            height: 220px;
+            background: linear-gradient(135deg, rgba(41, 118, 180, 0.2) 0%, rgba(86, 177, 221, 0.2) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--topshield-white);
+            font-size: 4.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-icon::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(30deg);
+            animation: shine 3s infinite linear;
+        }
+
+        @keyframes shine {
+            0% { transform: rotate(30deg) translateX(-100%); }
+            100% { transform: rotate(30deg) translateX(100%); }
+        }
+
+        .feature-icon i {
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 0 20px rgba(86, 177, 221, 0.7);
+        }
+
+        .feature-content {
+            padding: 30px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .feature-content h3 {
+            font-size: 1.8rem;
+            color: var(--topshield-white);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .feature-content h3 i {
+            color: var(--topshield-accent-gold);
+            margin-left: 10px;
+            font-size: 1.5rem;
+        }
+
+        .feature-content p {
+            color: var(--topshield-glass-blue-light);
+            margin-bottom: 25px;
+            flex-grow: 1;
+            line-height: 1.8;
+        }
+
+        .feature-badge {
+            background: linear-gradient(to right, var(--topshield-accent-gold), var(--topshield-accent-gold-darker));
+            color: var(--topshield-primary-navy);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+            display: inline-block;
+            align-self: flex-start;
+            box-shadow: 0 4px 15px rgba(247, 193, 0, 0.3);
+        }
+
+        /* Warranty Section */
+        .warranty {
+            background: linear-gradient(rgba(26, 51, 114, 0.9), rgba(15, 25, 55, 0.9)), url('https://images.unsplash.com/photo-1511919884226-fd3cad34687c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') center/cover;
+            padding: 150px 5% 100px;
+            color: var(--topshield-white);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .warranty::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(86, 177, 221, 0.2) 0%, transparent 70%);
+            animation: pulse 4s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.2; }
+            100% { transform: scale(1.2); opacity: 0.4; }
+        }
+
+        .warranty-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .warranty h2 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, var(--topshield-white), var(--topshield-accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .warranty p {
+            font-size: 1.5rem;
+            margin-bottom: 60px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: var(--topshield-glass-blue-light);
+            line-height: 1.8;
+        }
+
+        .years-badge {
+            background: linear-gradient(135deg, var(--topshield-accent-gold) 0%, var(--topshield-accent-gold-darker) 100%);
+            color: var(--topshield-primary-navy);
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 60px;
+            font-weight: 800;
+            font-size: 5rem;
+            line-height: 1;
+            box-shadow: 0 0 0 20px rgba(247, 193, 0, 0.2);
+            animation: badgeFloat 3s infinite ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .years-badge::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: rotate(30deg);
+            animation: shine 4s infinite linear;
+        }
+
+        .years-badge span {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        @keyframes badgeFloat {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0); }
+        }
+
+        /* Call to Action */
+        .cta-section {
+            padding: 150px 5% 100px;
+            background: linear-gradient(135deg, #0d1a3a 0%, #1a3372 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, rgba(26, 51, 114, 0.8) 0%, rgba(41, 118, 180, 0.8) 100%);
+            border-radius: 40px;
+            padding: 80px 60px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(86, 177, 221, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .cta-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(86, 177, 221, 0.1), transparent);
+            transform: rotate(30deg);
+            animation: shine 6s infinite linear;
+        }
+
+        .cta-container h2 {
+            font-size: 3rem;
+            color: var(--topshield-white);
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-container p {
+            font-size: 1.5rem;
+            color: var(--topshield-glass-blue-light);
+            margin-bottom: 50px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-container .cta-button {
+            font-size: 1.3rem;
+            padding: 20px 50px;
+            background: linear-gradient(135deg, var(--topshield-accent-gold) 0%, var(--topshield-accent-gold-darker) 100%);
+            color: var(--topshield-primary-navy);
+            font-weight: 700;
+            z-index: 2;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(247, 193, 0, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(15, 25, 55, 0.95);
+            color: var(--topshield-white);
+            padding: 100px 5% 30px;
+            position: relative;
+            border-top: 1px solid rgba(86, 177, 221, 0.2);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+            color: var(--topshield-white);
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(to right, var(--topshield-accent-gold), var(--topshield-glass-blue));
+        }
+
+        .footer-column p {
+            color: var(--topshield-glass-blue-light);
+            margin-bottom: 25px;
+            line-height: 1.8;
+        }
+
+        .contact-info {
+            list-style: none;
+        }
+
+        .contact-info li {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .contact-info i {
+            color: var(--topshield-accent-gold);
+            margin-left: 15px;
+            font-size: 1.3rem;
+            margin-top: 5px;
+            min-width: 25px;
+            text-align: center;
+        }
+
+        .contact-info span {
+            color: var(--topshield-glass-blue-light);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(86, 177, 221, 0.1);
+            color: var(--topshield-white);
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(86, 177, 221, 0.3);
+        }
+
+        .social-links a:hover {
+            background: var(--topshield-accent-gold);
+            color: var(--topshield-primary-navy);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(247, 193, 0, 0.3);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 60px;
+            margin-top: 60px;
+            border-top: 1px solid rgba(86, 177, 221, 0.2);
+            color: var(--topshield-glass-blue-light);
+            font-size: 1rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .hero h1 {
+                font-size: 3.8rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 3.2rem;
+            }
+            
+            .hero p {
+                font-size: 1.3rem;
+            }
+            
+            .feature-card {
+                max-width: 100%;
+            }
+            
+            .section-title h2 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 15px;
+            }
+            
+            .logo {
+                margin-bottom: 15px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                margin-bottom: 15px;
+            }
+            
+            nav li {
+                margin: 8px 12px;
+            }
+            
+            .hero {
+                text-align: center;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+            
+            .warranty h2 {
+                font-size: 2.8rem;
+            }
+            
+            .years-badge {
+                width: 180px;
+                height: 180px;
+                font-size: 4rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .cta-container {
+                padding: 50px 20px;
+            }
+            
+            .cta-container h2 {
+                font-size: 2.2rem;
+            }
+            
+            .cta-container p {
+                font-size: 1.2rem;
+            }
+            
+            .feature-icon {
+                height: 180px;
+                font-size: 3.5rem;
+            }
+            
+            .feature-content h3 {
+                font-size: 1.6rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .delay-1 {
+            animation-delay: 0.1s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.2s;
+        }
+
+        .delay-3 {
+            animation-delay: 0.3s;
+        }
+
+        .delay-4 {
+            animation-delay: 0.4s;
+        }
+
+        .delay-5 {
+            animation-delay: 0.5s;
+        }
+    </style>
+</head>
+<body>
+    <!-- Particle Background -->
+    <div id="particles-js"></div>
+    
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <div class="logo-icon"><i class="fas fa-shield-alt"></i></div>
+            <div class="logo-text">توبشيلد <span>برو</span></div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#features">المزايا</a></li>
+                <li><a href="#warranty">الضمان</a></li>
+                <li><a href="#about">عنّا</a></li>
+                <li><a href="#contact">تواصل معنا</a></li>
+            </ul>
+        </nav>
+        <button class="cta-button">اطلب الآن <i class="fas fa-arrow-left"></i></button>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="animate">توبشيلد برو <span>حماية تتحدى الزمن</span></h1>
+            <p class="animate delay-1">اكتشف الجيل الجديد من حماية السيارات مع فيلم توبشيلد برو® "TOPSHIELD Pro" - التكنولوجيا المتطورة التي تمنح طلاء سيارتك حماية لا مثيل لها. تصميم مبتكر ببراءة اختراع أمريكية يضمن لك حماية فائقة تدوم لسنوات.</p>
+            <div class="hero-buttons">
+                <button class="cta-button animate delay-2">اكتشف التقنية <i class="fas fa-microscope"></i></button>
+                <button class="cta-button secondary-button animate delay-3">طلب تركيب فوري <i class="fas fa-bolt"></i></button>
+            </div>
+        </div>
+        <div class="floating-car"></div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-title">
+            <h2 class="animate">التكنولوجيا المتطورة وراء توبشيلد برو</h2>
+            <p class="animate delay-1">حماية استثنائية تعيد تعريف معايير الجودة والكفاءة</p>
+        </div>
+        
+        <div class="features-grid">
+            <!-- Feature 1 -->
+            <div class="feature-card animate">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-virus"></i>
+                </div>
+                <div class="feature-content">
+                    <h3><i class="fas fa-atom"></i> حماية نانوية متقدمة</h3>
+                    <p>طبقة حماية نانوية متعددة المستويات تشكل درعًا غير مرئي ضد الخدوش والحصى والعوامل الجوية القاسية. تكنولوجيا متطورة تحافظ على طلاء سيارتك في حالة المصنع لسنوات طويلة.</p>
+                    <div class="feature-badge">حماية شاملة 360°</div>
+                </div>
+            </div>
+            
+            <!-- Feature 2 -->
+            <div class="feature-card animate delay-1">
+                <div class="feature-icon">
+                    <i class="fas fa-sync-alt"></i>
+                </div>
+                <div class="feature-content">
+                    <h3><i class="fas fa-magic"></i> إصلاح ذاتي فوري</h3>
+                    <p>تقنية الإصلاح الذاتي المتطورة تعيد الخدوش الصغيرة إلى حالتها الأصلية تلقائيًا باستخدام حرارة الشمس أو المحرك. لا داعي للقلق بعد الآن من الخدوش اليومية.</p>
+                    <div class="feature-badge">تكنولوجيا ذاتية الشفاء</div>
+                </div>
+            </div>
+            
+            <!-- Feature 3 -->
+            <div class="feature-card animate delay-2">
+                <div class="feature-icon">
+                    <i class="fas fa-infinity"></i>
+                </div>
+                <div class="feature-content">
+                    <h3><i class="fas fa-gem"></i> متانة فائقة للزمن</h3>
+                    <p>تصميم فريد مقاوم للعوامل الزمنية يضمن بقاء الفيلم شفافًا ولماعًا لمدة تزيد عن 12 سنة دون تغير في اللون أو فقدان للخصائص الواقية.</p>
+                    <div class="feature-badge">أداء دائم</div>
+                </div>
+            </div>
+            
+            <!-- Feature 4 -->
+            <div class="feature-card animate delay-3">
+                <div class="feature-icon">
+                    <i class="fas fa-tint-slash"></i>
+                </div>
+                <div class="feature-content">
+                    <h3><i class="fas fa-flask"></i> مقاومة كيميائية متكاملة</h3>
+                    <p>طبقة سطحية فائقة النعومة تمنع التصاق الأوساخ والملوثات الكيميائية وتسهل عملية التنظيف. حماية متقدمة ضد البقع والتصبغات الناتجة عن الأحماض والمواد الكيميائية.</p>
+                    <div class="feature-badge">سطح مضاد للالتصاق</div>
+                </div>
+            </div>
+            
+            <!-- Feature 5 -->
+            <div class="feature-card animate delay-4">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="feature-content">
+                    <h3><i class="fas fa-coins"></i> استثمار يحفظ القيمة</h3>
+                    <p>زيادة القيمة السوقية لسيارتك بنسبة تصل إلى 20% بالمقارنة مع السيارات غير المحمية. ضمان بقاء سيارتك بمظهر وكفاءة المصنع لسنوات طويلة.</p>
+                    <div class="feature-badge">عائد استثماري ممتاز</div>
+                </div>
+            </div>
+            
+            <!-- Feature 6 -->
+            <div class="feature-card animate delay-5">
+                <div class="feature-icon">
+                    <i class="fas fa-award"></i>
+                </div>
+                <div class="feature-content">
+                    <h3><i class="fas fa-shield-alt"></i> ضمان شامل 12 سنة</h3>
+                    <p>أول ضمان في العالم يشمل التشققات، الفقاعات، والاصفرار لمدة 12 سنة. ثقتنا في منتجنا تمنحك راحة البال التي تستحقها.</p>
+                    <div class="feature-badge">ضمان غير مسبوق</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Warranty Section -->
+    <section class="warranty" id="warranty">
+        <div class="warranty-content">
+            <div class="years-badge">
+                12
+                <span>سنة</span>
+            </div>
+            <h2 class="animate">ضمان أداء <span>غير مسبوق</span></h2>
+            <p class="animate delay-1">أول ضمان في صناعة حماية السيارات يغطي جميع جوانب الأداء لمدة 12 سنة. تغطية شاملة ضد التشققات، الفقاعات، الاصفرار، وفقدان الخصائص الواقية.</p>
+            <button class="cta-button animate delay-2">احصل على الضمان الآن <i class="fas fa-file-contract"></i></button>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section">
+        <div class="cta-container">
+            <h2 class="animate">جاهز لتجربة حماية المستقبل؟</h2>
+            <p class="animate delay-1">انضم إلى أكثر من 50,000 عميل راضٍ عن حماية توبشيلد برو. احجز موعدك اليوم واستفد من العرض الخاص لأول 100 عميل.</p>
+            <button class="cta-button animate delay-2">احجز موعدًا فوريًا <i class="fas fa-calendar-check"></i></button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>توبشيلد برو</h3>
+                <p>ريادة عالمية في تكنولوجيا حماية السيارات منذ 2010. نقدم حلولاً مبتكرة تجمع بين الحماية الفائقة والجماليات العصرية لسيارتك.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>مراكز الخدمة</h3>
+                <ul class="contact-info">
+                    <li><i class="fas fa-map-marker-alt"></i> <span>الرياض - طريق الملك فهد</span></li>
+                    <li><i class="fas fa-map-marker-alt"></i> <span>جدة - شارع الأمير سلطان</span></li>
+                    <li><i class="fas fa-map-marker-alt"></i> <span>الدمام - حي العليا</span></li>
+                    <li><i class="fas fa-map-marker-alt"></i> <span>أبوظبي - منطقة المصفح</span></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>تواصل معنا</h3>
+                <ul class="contact-info">
+                    <li><i class="fas fa-phone-alt"></i> <span>+966 11 123 4567</span></li>
+                    <li><i class="fas fa-envelope"></i> <span>info@topshield-pro.com</span></li>
+                    <li><i class="fas fa-clock"></i> <span>الأحد - الخميس: 8 ص - 10 م</span></li>
+                    <li><i class="fas fa-clock"></i> <span>الجمعة - السبت: 4 م - 10 م</span></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>© 2023 توبشيلد برو. جميع الحقوق محفوظة. TOPSHIELD Pro® هي علامة تجارية مسجلة.</p>
+            <p>تصميم المستقبل - إبداع لا يعرف الحدود</p>
+        </div>
+    </footer>
+
+    <!-- Particle JS -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Initialize particles
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: "#56B1DD" },
+                shape: { type: "circle" },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#56B1DD",
+                    opacity: 0.2,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: "none",
+                    random: true,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "repulse" },
+                    onclick: { enable: true, mode: "push" },
+                    resize: true
+                }
+            }
+        });
+
+        // Animation on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const animateElements = document.querySelectorAll('.animate');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            animateElements.forEach(el => {
+                el.style.opacity = 0;
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                observer.observe(el);
+            });
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

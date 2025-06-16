@@ -1,0 +1,84 @@
+/* src/styles/tokens.css */
+/* 💠 نظام التصميم الذكي لـ TOPSHIELD - متطابق مع هوية الشعار الرسمية */
+
+:root {
+  /* 🎨 الألوان (قيم مستخرجة من الشعار نفسه) */
+  --topshield-primary-navy: #1A3372;        /* أزرق داكن - كلمة الشعار */
+  --topshield-primary-blue: #2976B4;        /* أزرق متوسط */
+  --topshield-accent-gold: #F7C100;         /* ذهبي أساسي */
+  --topshield-accent-gold-darker: #C2971E;  /* ذهبي غامق (للظل) */
+  --topshield-glass-blue: #56B1DD;          /* أزرق زجاجي - الكرة الأرضية */
+  --topshield-glass-blue-light: #89C5E8;    /* أزرق فاتح جداً - لمعات */
+  --topshield-background-light: #F9FAFB;    /* خلفية فاتحة جداً */
+  --topshield-background-content: #FFFFFF;   /* خلفية المكوّنات */
+  --topshield-border-subtle: #DDE3EA;       /* حدود ناعمة */
+  --topshield-text-dark: #1A3372;           /* نص داكن مطابق للوجو */
+  --topshield-text-medium: #2976B4;         /* نص متوسط */
+  --topshield-text-light: #94A3B8;          /* نص رمادي-أزرق */
+  --topshield-error: #DC2626;               /* خطأ */
+  --topshield-success: #059669;             /* نجاح */
+  --topshield-warning: #F59E0B;             /* تحذير */
+
+  /* 🎨 متدرجات */
+  --topshield-gradient-primary: linear-gradient(135deg, #1A3372, #2976B4);
+  --topshield-gradient-gold: linear-gradient(135deg, #F7C100, #C2971E);
+  --topshield-gradient-premium: linear-gradient(135deg, #1A3372 0%, #2976B4 50%, #F7C100 100%);
+  --topshield-glass-bg: rgba(255, 255, 255, 0.05);
+  --topshield-glass-border: rgba(255, 255, 255, 0.2);
+
+  /* 🧱 الزوايا */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 32px;
+
+  /* 🌀 الظلال */
+  --shadow-sm: 0 2px 8px rgba(26, 51, 114, 0.05);
+  --shadow-md: 0 4px 16px rgba(26, 51, 114, 0.10);
+  --shadow-lg: 0 8px 32px rgba(26, 51, 114, 0.15);
+  --shadow-xl: 0 12px 48px rgba(26, 51, 114, 0.20);
+  --interactive-shadow: 0 4px 20px rgba(26, 51, 114, 0.12);
+
+  /* 🔠 الخطوط */
+  --font-base: 'Tajawal', sans-serif;
+  --font-display: 'Manrope', sans-serif;
+
+  /* 📏 المسافات */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+
+  /* 🌗 الوضع الليلي */
+  --topshield-dark-elevated: #0f172a;
+  --topshield-dark-bg: #1e293b;
+  --topshield-dark-text: #e2e8f0;
+
+  /* 🧠 تفاعلات وموشن */
+  --elevation-transition: all 0.3s ease-in-out;
+  --btn-hover-scale: scale(1.02);
+  --tap-feedback: scale(0.97);
+  --touch-highlight: rgba(0, 0, 0, 0.03);
+
+  /* 🌀 أنيميشن */
+  --anim-fast: 0.25s ease-out;
+  --anim-normal: 0.4s ease;
+  --anim-slow: 0.7s ease-in-out;
+  --fade-in: fadeIn 0.4s ease forwards;
+  --scale-up: scaleUp 0.3s ease-out forwards;
+
+  /* 🧊 تأثير زجاج */
+  --glass-blur: blur(8px);
+  --glass-brightness: brightness(1.2);
+}
+
+/* الوضع الداكن حسب النظام */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --topshield-background-light: #0f172a;
+    --topshield-background-content: #1A3372;
+    --topshield-text-dark: #e2e8f0;
+    --topshield-dark-elevated: #111827;
+  }
+}

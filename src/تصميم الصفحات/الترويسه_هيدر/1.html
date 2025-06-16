@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>TopShield Header</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: #142850;
+      margin: 0;
+      padding: 0;
+    }
+    .main-header {
+      background: #142850;
+      height: 80px;
+      min-height: 80px;
+      max-height: 80px;
+      border-bottom: 1.5px solid #223a5f;
+      display: flex;
+      align-items: center;
+      width: 100vw;
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      z-index: 100;
+    }
+    .header-container {
+      width: 100%;
+      max-width: 1600px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 80px;
+      padding: 0 32px;
+    }
+    .logo-img {
+      height: 88px; /* ضعف الحجم السابق */
+      width: auto;
+      display: block;
+    }
+    .nav-list {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      height: 80px;
+    }
+    .nav-link {
+      color: #fff;
+      font-size: 18px;
+      font-weight: 500;
+      padding: 0 8px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      transition: color 0.2s;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .nav-link.active,
+    .nav-link:hover {
+      color: #ffc107;
+    }
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 18px;
+      width: 60%;
+      height: 3px;
+      background: #ffc107;
+      border-radius: 2px;
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .glass-btn {
+      background: #ffc107;
+      color: #142850;
+      font-weight: bold;
+      border-radius: 10px;
+      font-size: 17px;
+      padding: 8px 24px;
+      border: none;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, color 0.2s;
+      margin-left: 8px;
+      cursor: pointer;
+    }
+    .glass-btn:hover {
+      background: #ffd740;
+      color: #142850;
+    }
+    .icon-link {
+      color: #fff;
+      font-size: 19px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: color 0.2s;
+      height: 44px;
+      padding: 0 8px;
+      cursor: pointer;
+    }
+    .icon-link:hover {
+      color: #ffc107;
+    }
+    .lang-switch {
+      display: flex;
+      align-items: center;
+      background: #223a5f;
+      border-radius: 8px;
+      padding: 2px 4px;
+      gap: 2px;
+      height: 40px;
+    }
+    .lang-btn {
+      background: transparent;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 500;
+      padding: 4px 14px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .lang-btn.active {
+      background: #1565c0;
+      color: #fff;
+    }
+    .lang-btn:not(.active):hover {
+      background: #fff;
+      color: #223a5f;
+    }
+    @media (max-width: 1023px) {
+      .main-header, .header-container { height: 64px; min-height: 64px; max-height: 64px; }
+      .logo-img { height: 64px; }
+      .nav-list { gap: 16px; height: 64px; }
+      .nav-link { font-size: 15px; height: 64px; }
+      .glass-btn { font-size: 14px; height: 32px; padding: 4px 12px; }
+      .icon-link { font-size: 16px; height: 32px; }
+      .lang-switch { height: 30px; }
+      .lang-btn { font-size: 12px; padding: 2px 8px; }
+      .header-container { padding: 0 8px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="main-header">
+    <div class="header-container">
+      <!-- الشعار -->
+      <img src="D:\all_mokhtar_tec_projects\topshield_platform\topshield-next\src\auto_tint -simulator\icons\topshield_logo.png" alt="TopShield Logo" class="logo-img" />
+      <!-- القائمة -->
+      <nav>
+        <ul class="nav-list">
+          <li><a href="#" class="nav-link active" onclick="setActiveNav(this)">الرئيسية</a></li>
+          <li><a href="#" class="nav-link" onclick="setActiveNav(this)">التحديات</a></li>
+          <li><a href="#" class="nav-link" onclick="setActiveNav(this)">الحلول</a></li>
+          <li><a href="#" class="nav-link" onclick="setActiveNav(this)">الخدمات</a></li>
+          <li><a href="#" class="nav-link" onclick="setActiveNav(this)">المتجر</a></li>
+          <li><a href="#" class="nav-link" onclick="setActiveNav(this)">العروض</a></li>
+        </ul>
+      </nav>
+      <!-- الأزرار الجانبية -->
+      <div class="header-actions">
+        <button class="glass-btn" onclick="alert('بوابة العملاء')">
+          <i class="fas fa-lock" style="margin-left:8px;"></i>
+          بوابة العملاء
+        </button>
+        <a href="#" class="icon-link" onclick="alert('تواصل معنا')">
+          <i class="fas fa-comment-alt"></i>
+          <span style="font-size:16px;">تواصل معنا</span>
+        </a>
+        <div class="lang-switch">
+          <button class="lang-btn active" id="arBtn" onclick="setLang('ar')">
+            العربية
+          </button>
+          <button class="lang-btn" id="enBtn" onclick="setLang('en')">
+            English
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main style="padding-top:100px"></main>
+  <script>
+    // ديناميكية القائمة الرئيسية
+    function setActiveNav(el) {
+      document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+      el.classList.add('active');
+    }
+    // ديناميكية اللغة
+    function setLang(lang) {
+      const arBtn = document.getElementById('arBtn');
+      const enBtn = document.getElementById('enBtn');
+      if(lang === 'ar') {
+        arBtn.classList.add('active');
+        enBtn.classList.remove('active');
+      } else {
+        enBtn.classList.add('active');
+        arBtn.classList.remove('active');
+      }
+    }
+  </script>
+</body>
+</html>

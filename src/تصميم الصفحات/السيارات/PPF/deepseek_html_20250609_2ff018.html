@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>توبشيلد برو - حماية تتحدى الرمال</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Brand Colors */
+        :root {
+            --topshield-primary-navy: #1A3372;
+            --topshield-primary-blue: #2976B4;
+            --topshield-glass-blue: #56B1DD;
+            --topshield-glass-blue-light: #89C5E8;
+            --topshield-accent-gold: #F7C100;
+            --topshield-accent-gold-darker: #C2971E;
+            --topshield-white: #FFFFFF;
+            
+            --topshield-background-light: #F0F4F8;
+            --topshield-border-subtle: #DDE3EA;
+            --topshield-text-light: #94A3B8;
+            --topshield-overlay-dark: rgba(0, 0, 0, 0.5);
+            
+            --topshield-background-content: #FFFFFF;
+            --topshield-text-dark: #1A3372;
+            --topshield-text-medium: #2976B4;
+            --topshield-text-main: #56B1DD;
+            --topshield-dark-elevated: #1F2937;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, var(--topshield-background-light) 0%, var(--topshield-white) 100%);
+            color: var(--topshield-text-dark);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: rgba(26, 51, 114, 0.95);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 50px;
+            margin-left: 15px;
+        }
+
+        .logo-text {
+            color: var(--topshield-white);
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .logo-text span {
+            color: var(--topshield-accent-gold);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav li {
+            margin: 0 15px;
+        }
+
+        nav a {
+            color: var(--topshield-white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        nav a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--topshield-accent-gold);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover:after {
+            width: 100%;
+        }
+
+        .cta-button {
+            background: var(--topshield-accent-gold);
+            color: var(--topshield-primary-navy);
+            border: none;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(247, 193, 0, 0.3);
+        }
+
+        .cta-button:hover {
+            background: var(--topshield-accent-gold-darker);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(247, 193, 0, 0.4);
+        }
+
+        .cta-button i {
+            margin-left: 8px;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80') center/cover no-repeat;
+            filter: brightness(0.7);
+            z-index: -1;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5%;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            color: var(--topshield-white);
+            margin-bottom: 20px;
+            line-height: 1.2;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero h1 span {
+            color: var(--topshield-accent-gold);
+            display: block;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            color: var(--topshield-white);
+            max-width: 700px;
+            margin-bottom: 40px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .hero-buttons .cta-button {
+            font-size: 1.1rem;
+            padding: 15px 35px;
+        }
+
+        .secondary-button {
+            background: transparent;
+            color: var(--topshield-white);
+            border: 2px solid var(--topshield-white);
+        }
+
+        .secondary-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 5%;
+            background: var(--topshield-white);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--topshield-primary-navy);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--topshield-accent-gold);
+            border-radius: 2px;
+        }
+
+        .section-title p {
+            color: var(--topshield-text-medium);
+            max-width: 700px;
+            margin: 20px auto 0;
+            font-size: 1.2rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: var(--topshield-background-light);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            height: 200px;
+            background: linear-gradient(135deg, var(--topshield-primary-blue) 0%, var(--topshield-glass-blue) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--topshield-white);
+            font-size: 4rem;
+            position: relative;
+        }
+
+        .feature-icon::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/cubes.png');
+            opacity: 0.1;
+        }
+
+        .feature-content {
+            padding: 30px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .feature-content h3 {
+            font-size: 1.8rem;
+            color: var(--topshield-primary-navy);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .feature-content h3 i {
+            color: var(--topshield-accent-gold);
+            margin-left: 10px;
+            font-size: 1.5rem;
+        }
+
+        .feature-content p {
+            color: var(--topshield-dark-elevated);
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .feature-badge {
+            background: var(--topshield-accent-gold);
+            color: var(--topshield-primary-navy);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 700;
+            display: inline-block;
+            align-self: flex-start;
+        }
+
+        /* Warranty Section */
+        .warranty {
+            background: linear-gradient(rgba(26, 51, 114, 0.9), rgba(26, 51, 114, 0.9)), url('https://images.unsplash.com/photo-1511919884226-fd3cad34687c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') center/cover;
+            padding: 100px 5%;
+            color: var(--topshield-white);
+            text-align: center;
+            position: relative;
+        }
+
+        .warranty-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .warranty h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .warranty h2 span {
+            color: var(--topshield-accent-gold);
+        }
+
+        .warranty p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .years-badge {
+            background: var(--topshield-accent-gold);
+            color: var(--topshield-primary-navy);
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 40px;
+            font-weight: 800;
+            font-size: 4.5rem;
+            line-height: 1;
+            box-shadow: 0 0 0 15px rgba(247, 193, 0, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        .years-badge span {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(247, 193, 0, 0.6); }
+            70% { box-shadow: 0 0 0 25px rgba(247, 193, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(247, 193, 0, 0); }
+        }
+
+        /* Call to Action */
+        .cta-section {
+            padding: 100px 5%;
+            background: var(--topshield-white);
+            text-align: center;
+        }
+
+        .cta-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, var(--topshield-primary-navy) 0%, var(--topshield-primary-blue) 100%);
+            border-radius: 30px;
+            padding: 60px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('https://www.transparenttextures.com/patterns/diamond-upholstery.png');
+            opacity: 0.1;
+            transform: rotate(30deg);
+        }
+
+        .cta-container h2 {
+            font-size: 2.8rem;
+            color: var(--topshield-white);
+            margin-bottom: 20px;
+        }
+
+        .cta-container p {
+            font-size: 1.3rem;
+            color: var(--topshield-glass-blue-light);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-container .cta-button {
+            font-size: 1.2rem;
+            padding: 18px 45px;
+            background: var(--topshield-accent-gold);
+            color: var(--topshield-primary-navy);
+            font-weight: 700;
+            z-index: 2;
+            position: relative;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--topshield-dark-elevated);
+            color: var(--topshield-white);
+            padding: 60px 5% 30px;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--topshield-accent-gold);
+        }
+
+        .footer-column p {
+            color: var(--topshield-text-light);
+            margin-bottom: 20px;
+        }
+
+        .contact-info {
+            list-style: none;
+        }
+
+        .contact-info li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .contact-info i {
+            color: var(--topshield-accent-gold);
+            margin-left: 10px;
+            font-size: 1.2rem;
+            margin-top: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--topshield-white);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--topshield-accent-gold);
+            color: var(--topshield-primary-navy);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 40px;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--topshield-text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .feature-card {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 15px;
+            }
+            
+            .logo {
+                margin-bottom: 15px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav li {
+                margin: 5px 10px;
+            }
+            
+            .hero {
+                text-align: center;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .warranty h2 {
+                font-size: 2.2rem;
+            }
+            
+            .years-badge {
+                width: 160px;
+                height: 160px;
+                font-size: 3.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .cta-container {
+                padding: 40px 20px;
+            }
+            
+            .cta-container h2 {
+                font-size: 2rem;
+            }
+            
+            .feature-icon {
+                height: 150px;
+                font-size: 3rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .delay-1 {
+            animation-delay: 0.1s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.2s;
+        }
+
+        .delay-3 {
+            animation-delay: 0.3s;
+        }
+
+        .delay-4 {
+            animation-delay: 0.4s;
+        }
+
+        .delay-5 {
+            animation-delay: 0.5s;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <div class="logo-text">توبشيلد <span>برو</span></div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#features">المزايا</a></li>
+                <li><a href="#warranty">الضمان</a></li>
+                <li><a href="#about">عنّا</a></li>
+                <li><a href="#contact">تواصل معنا</a></li>
+            </ul>
+        </nav>
+        <button class="cta-button">اطلب الآن <i class="fas fa-arrow-left"></i></button>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="animate">توبشيلد برو <span>حماية تتحدى الرمال</span></h1>
+            <p class="animate delay-1">استمتع بحماية فائقة لسيارتك مع فيلم توبشيلد برو® "TOPSHIELD Pro" والمُصمم بأحدث التقنيات المتطورة لحماية الطلاء والحاصل على براءة اختراع أمريكية. يعد فيلم توبشيلد برو الخيار الأمثل والأكثر تطورًا لحماية طلاء سيارتك على مستوى العالم.</p>
+            <div class="hero-buttons">
+                <button class="cta-button animate delay-2">اكتشف المزيد <i class="fas fa-arrow-left"></i></button>
+                <button class="cta-button secondary-button animate delay-3">طلب تركيب <i class="fas fa-car"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-title">
+            <h2>الفوائد الرئيسية لفيلم توبشيلد برو</h2>
+            <p>حماية فائقة تدوم طويلاً لتبقي سيارتك جديدة عام بعد عام</p>
+        </div>
+        
+        <div class="features-grid">
+            <!-- Feature 1 -->
+            <div class="feature-card animate">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="feature-content">
+                    <h3><i class="fas fa-check-circle"></i> حماية دائمة ومتانة عالية</h3>
+                    <p>يتميز فيلم توبشيلد برو بمتانة عالية لمقاومة الصدمات والاحتكاكات والعوامل الجوية المختلفة فهو يعمل كدرع واق متين لحماية طلاء سيارتك من الخدوش والاحتكاكات والحصى، والعواصف الرملية الشديدة. وحطام الطريق ليحافظ على مظهر سيارتك الأصلي أنيق ولامع تحت مختلف الظروف.</p>
+                    <div class="feature-badge">حماية متكاملة</div>
+                </div>
+            </div>
+            
+            <!-- Feature 2 -->
+            <div class="feature-card animate delay-1">
+                <div class="feature-icon">
+                    <i class="fas fa-sun"></i>
+                </div>
+                <div class="feature-content">
+                    <h3><i class="fas fa-check-circle"></i> لون شفاف مقاوم للاصفرار</h3>
+                    <p>يتمتع فيلم توبشيلد برو بشفافية عالية ومظهراً لامعاً يضفي شكل جمالي على سيارتك فهو يعمل على مدار الساعة على حماية سيارتك من الأضرار والتأثيرات الناتجة عن العوامل الجوية ومخلفات الطريق طوال الوقت، يتمتع فيلم برو بجودة فائقة تجعل من لونه غير قابل للتغير والبهت، ليظل على المناطق المحمية غير مرئي تقريباً.</p>
+                    <div class="feature-badge">شفافية دائمة</div>
+                </div>
+            </div>
+            
+            <!-- Feature 3 -->
+            <div class="feature-card animate delay-2">
+                <div class="feature-icon">
+                    <i class="fas fa-flask"></i>
+                </div>
+                <div class="feature-content">
+                    <h3><i class="fas fa-check-circle"></i> طبقة علوية مقاوم للبقع الكيمائية</h3>
+                    <p>صُمِّم فيلم توبشيلد برو لمقاومة البقع الكيميائية والملوثات والغبار والأتربة، ويتميز بطبقة علوية فائقة النعومة واللمعان تضفي ملمسًا فخمًا ولمعة مميزة خارجية، لتحافظ على شفافية الطلاء ما يضمن بقاء سيارتك نظيفة وجذابة وجديدة في أقسى الظروف.</p>
+                    <div class="feature-badge">مقاومة كيميائية</div>
+                </div>
+            </div>
+            
+            <!-- Feature 4 -->
+            <div class="feature-card animate delay-3">
+                <div class="feature-icon">
+                    <i class="fas fa-magic"></i>
+                </div>
+                <div class="feature-content">
+                    <h3><i class="fas fa-check-circle"></i> تقنية المعالجة الذاتية</h3>
+                    <p>تم تصنيع فيلم توبشيلد برو من مادة البولي يوريثين المرنة، تعمل هذه التقنية المتطورة على إصلاح الخدوش ذاتياً وإعادة الفيلم لحالته الأصلية عند تعرضه لحرارة المحرك أو حرارة الشمس.</p>
+                    <div class="feature-badge">إصلاح ذاتي</div>
+                </div>
+            </div>
+            
+            <!-- Feature 5 -->
+            <div class="feature-card animate delay-4">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="feature-content">
+                    <h3><i class="fas fa-check-circle"></i> يحافظ على قيمة السيارة</h3>
+                    <p>تضمن توبشيلد عند تركيب فيلمها برو Pro بقاء سيارتك بأبهى حلة جديدة يومًا بعد يوم، مما يُساهم في الحفاظ على قيمتها السوقية عند الرغبة في بيعها.</p>
+                    <div class="feature-badge">استثمار طويل الأمد</div>
+                </div>
+            </div>
+            
+            <!-- Feature 6 -->
+            <div class="feature-card animate delay-5">
+                <div class="feature-icon">
+                    <i class="fas fa-award"></i>
+                </div>
+                <div class="feature-content">
+                    <h3><i class="fas fa-check-circle"></i> ضمان شامل لمدة 12 سنوات</h3>
+                    <p>يتم تركيب فيلم توبشيلد برو بطريقة احترافية ويأتي بضمانٍ مصنّعي شامل لمدّة 12 سنة ضد التشقّق، أو الفقاعات، أو الاصفرار، مما يضمن لك راحة البال وحماية موثوقة على المدى الطويل.</p>
+                    <div class="feature-badge">ضمان طويل الأمد</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Warranty Section -->
+    <section class="warranty" id="warranty">
+        <div class="warranty-content">
+            <div class="years-badge">
+                12
+                <span>سنة</span>
+            </div>
+            <h2>ضمان شامل <span>لمدة 12 سنة</span></h2>
+            <p>يأتي فيلم توبشيلد برو بضمان مصنّعي شامل لمدة 12 سنة ضد التشقّق، أو الفقاعات، أو الاصفرار، مما يضمن لك راحة البال وحماية موثوقة على المدى الطويل.</p>
+            <button class="cta-button">اطلب التركيب الآن <i class="fas fa-arrow-left"></i></button>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section">
+        <div class="cta-container">
+            <h2>جاهز لحماية سيارتك بشكل استثنائي؟</h2>
+            <p>اتصل بنا اليوم واحصل على استشارة مجانية وتقدير سعر لتركيب فيلم توبشيلد برو على سيارتك</p>
+            <button class="cta-button">اتصل بنا الآن <i class="fas fa-phone-alt"></i></button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>عن توبشيلد برو</h3>
+                <p>توبشيلد برو هو الحل الأمثل لحماية طلاء سيارتك من الخدوش والعوامل الجوية القاسية. بفضل تقنياتنا المتطورة وضماننا الطويل، نضمن لك حماية فائقة تدوم لسنوات.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>اتصل بنا</h3>
+                <ul class="contact-info">
+                    <li><i class="fas fa-map-marker-alt"></i> الرياض، المملكة العربية السعودية</li>
+                    <li><i class="fas fa-phone-alt"></i> +966 11 123 4567</li>
+                    <li><i class="fas fa-envelope"></i> info@topshield-pro.com</li>
+                    <li><i class="fas fa-clock"></i> الأحد - الخميس: 8 صباحاً - 6 مساءً</li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>النشرة البريدية</h3>
+                <p>اشترك في نشرتنا البريدية لتحصل على آخر العروض والأخبار</p>
+                <form>
+                    <input type="email" placeholder="بريدك الإلكتروني" style="width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 30px; border: none;">
+                    <button class="cta-button" style="width: 100%;">اشترك الآن</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>© 2023 توبشيلد برو. جميع الحقوق محفوظة. TOPSHIELD Pro® هي علامة تجارية مسجلة.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Simple animation on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const animateElements = document.querySelectorAll('.animate');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            animateElements.forEach(el => {
+                el.style.opacity = 0;
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                observer.observe(el);
+            });
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

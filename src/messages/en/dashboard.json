@@ -1,0 +1,10 @@
+{
+  "title": "Dashboard",
+  "welcome": "Welcome back, User!",
+  "stats": {
+    "users": "Users",
+    "active": "Active",
+    "inactive": "Inactive"
+  },
+  "recent_activity": "Recent Activity"
+}

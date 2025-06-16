@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TOPSHIELD - محاكي التظليل الذكي</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+  <!-- Custom Theme -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Cairo', 'sans-serif']
+          },
+          colors: {
+            'ts-blue': '#102E6A',  
+            'ts-blue-dark': '#0A2351',
+            'ts-blue-light': '#4A6FA5', // أفتح للاستخدام في hover أو خلفيات خفيفة
+            'ts-gold': '#FFC107',
+            'ts-gold-light': '#FFF8E1', // خلفية ذهبية فاتحة جداً للعناصر المختارة
+            'ts-gray': {
+              50: '#F9FAFB',  // خلفية الصفحة
+              100: '#F3F4F6', // خلفيات فاتحة للعناصر
+              200: '#E5E7EB', // حدود خفيفة
+              300: '#D1D5DB', // حدود أغمق قليلاً
+              400: '#9CA3AF', // نصوص ثانوية
+              500: '#6B7280', // نصوص أساسية
+              600: '#4B5563', // نصوص أغمق
+              700: '#374151', // عناوين فرعية
+              800: '#1F2937', // للخلفيات الداكنة
+              900: '#111827'  // للخلفيات الداكنة جداً
+            }
+          },
+          boxShadow: {
+            'card': '0 4px 12px rgba(0, 0, 0, 0.08)',
+            'card-hover': '0 8px 16px rgba(0, 0, 0, 0.12)',
+            'selected': '0 0 0 3px rgba(255, 193, 7, 0.5)', // ظل لتحديد العناصر الذهبية
+            'selected-blue': '0 0 0 3px rgba(16, 46, 106, 0.4)', // ظل لتحديد العناصر الزرقاء
+          },
+          transitionProperty: {
+            'height': 'height',
+            'spacing': 'margin, padding',
+            'transform-shadow': 'transform, box-shadow'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .vehicle-option.selected {
+      border-color: tailwind.config.theme.extend.colors['ts-gold'] !important;
+      background-color: tailwind.config.theme.extend.colors['ts-gold-light'] !important;
+      box-shadow: tailwind.config.theme.extend.boxShadow['selected'];
+      transform: translateY(-2px);
+    }
+    .vehicle-option.selected img {
+      filter: none;
+    }
+     .vehicle-option.selected span {
+      color: tailwind.config.theme.extend.colors['ts-blue-dark'];
+      font-weight: 700;
+    }
+
+    .tint-button.selected {
+      border-color: tailwind.config.theme.extend.colors['ts-blue'] !important;
+      box-shadow: tailwind.config.theme.extend.boxShadow['selected-blue'];
+      transform: scale(1.05) translateY(-2px);
+      /* الألوان النص والخلفية يتم التحكم بها مباشرة في HTML للتباين */
+    }
+    .tint-button.selected-dark-text { /* فئة إضافية للنصوص الداكنة على خلفيات فاتحة */
+        color: tailwind.config.theme.extend.colors['ts-blue-dark'] !important;
+    }
+
+
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="bg-ts-gray-50 text-ts-gray-700 antialiased">
+
+<!-- Alert Container -->
+<div id="alert-message-container" class="fixed top-5 left-1/2 transform -translate-x-1/2 opacity-0 -translate-y-10 z-[100] transition-all duration-300 w-full max-w-md px-4"></div>
+
+<!-- Header -->
+<header class="bg-ts-blue text-white shadow-lg sticky top-0 z-50 h-20">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-full">
+    <a href="#" class="logo flex items-center space-x-reverse space-x-3">
+      <img src="https://assets.stickpng.com/images/580b57fcd9996e24bc43c521.png"  alt="شعار Topshield" class="h-10 sm:h-12 object-contain">
+      <span class="font-bold text-2xl tracking-tight">TopShield</span>
+    </a>
+    <nav class="hidden md:flex space-x-reverse space-x-6 items-center">
+      <a href="#" class="text-base hover:text-ts-gold transition-colors duration-200 ease-in-out">الرئيسية</a>
+      <a href="#" class="text-base hover:text-ts-gold transition-colors duration-200 ease-in-out">عنا</a>
+      <a href="#" class="text-base text-ts-gold font-semibold border-b-2 border-ts-gold pb-1">العازل الحراري للسيارات</a>
+    </nav>
+    <button id="mobile-menu-toggle" class="md:hidden text-white hover:text-ts-gold focus:outline-none transition-colors">
+      <i class="fas fa-bars text-2xl"></i>
+    </button>
+  </div>
+  <div id="mobile-menu" class="hidden bg-ts-blue-dark md:hidden shadow-xl">
+    <a href="#" class="block py-3 px-4 hover:bg-ts-blue-light text-center text-sm transition-colors">الرئيسية</a>
+    <a href="#" class="block py-3 px-4 hover:bg-ts-blue-light text-center text-sm transition-colors">عنا</a>
+    <a href="#" class="block py-3 px-4 bg-ts-blue text-ts-gold font-semibold text-center text-sm">العازل الحراري للسيارات</a>
+  </div>
+</header>
+
+<!-- Main Content -->
+<main class="container mx-auto p-4 lg:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 mt-4 mb-8">
+  
+  <!-- Controls Panel -->
+  <aside class="lg:col-span-5 bg-white rounded-2xl shadow-2xl p-5 space-y-6 order-2 lg:order-1 overflow-y-auto no-scrollbar" style="max-height: calc(100vh - 7rem);">
+    
+    <!-- Step 1: Choose Vehicle -->
+    <section>
+      <h3 class="text-xl font-bold text-ts-blue-dark border-b-2 border-ts-blue pb-2.5 mb-4 flex items-center">
+        <i class="fas fa-car text-ts-blue-light mr-3 text-lg"></i>1. اختر نوع السيارة
+      </h3>
+      <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-2 gap-3">
+        <div data-car="رياضية" data-image="https://placehold.co/800x500/e0e0e0/333?text=سيارة+رياضية&font=cairo"
+             onclick="selectCar(this)"
+             class="vehicle-option group p-3 border-2 border-ts-gray-200 rounded-xl hover:border-ts-gold hover:bg-ts-gold-light transition-transform-shadow duration-200 cursor-pointer text-center hover:shadow-card-hover">
+          <img src="https://placehold.co/70x45/cccccc/555555?text=رياضية&font=cairo" alt="رياضية" class="w-20 h-12 mx-auto mb-2 filter grayscale group-hover:filter-none transition-all duration-200">
+          <span class="text-sm font-semibold text-ts-gray-700 group-hover:text-ts-blue-dark">رياضية</span>
+        </div>
+        <div data-car="سيدان" data-image="https://placehold.co/800x500/e0e0e0/333?text=سيارة+سيدان&font=cairo"
+             onclick="selectCar(this)"
+             class="vehicle-option group p-3 border-2 border-ts-gray-200 rounded-xl hover:border-ts-gold hover:bg-ts-gold-light transition-transform-shadow duration-200 cursor-pointer text-center hover:shadow-card-hover">
+          <img src="https://placehold.co/70x45/cccccc/555555?text=سيدان&font=cairo" alt="سيدان" class="w-20 h-12 mx-auto mb-2 filter grayscale group-hover:filter-none transition-all duration-200">
+          <span class="text-sm font-semibold text-ts-gray-700 group-hover:text-ts-blue-dark">سيدان</span>
+        </div>
+        <div data-car="عائلية" data-image="https://placehold.co/800x500/e0e0e0/333?text=SUV&font=cairo"
+             onclick="selectCar(this)"
+             class="vehicle-option group p-3 border-2 border-ts-gray-200 rounded-xl hover:border-ts-gold hover:bg-ts-gold-light transition-transform-shadow duration-200 cursor-pointer text-center hover:shadow-card-hover">
+          <img src="https://placehold.co/70x45/cccccc/555555?text=SUV&font=cairo" alt="عائلية" class="w-20 h-12 mx-auto mb-2 filter grayscale group-hover:filter-none transition-all duration-200">
+          <span class="text-sm font-semibold text-ts-gray-700 group-hover:text-ts-blue-dark">عائلية / SUV</span>
+        </div>
+        <div data-car="شاحنة" data-image="https://placehold.co/800x500/e0e0e0/333?text=شاحنة&font=cairo"
+             onclick="selectCar(this)"
+             class="vehicle-option group p-3 border-2 border-ts-gray-200 rounded-xl hover:border-ts-gold hover:bg-ts-gold-light transition-transform-shadow duration-200 cursor-pointer text-center hover:shadow-card-hover">
+          <img src="https://placehold.co/70x45/cccccc/555555?text=شاحنة&font=cairo" alt="شاحنة" class="w-20 h-12 mx-auto mb-2 filter grayscale group-hover:filter-none transition-all duration-200">
+          <span class="text-sm font-semibold text-ts-gray-700 group-hover:text-ts-blue-dark">شاحنة</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Step 2: General Tint -->
+    <section>
+      <h3 class="text-xl font-bold text-ts-blue-dark border-b-2 border-ts-blue pb-2.5 mb-4 flex items-center">
+        <i class="fas fa-palette text-ts-blue-light mr-3 text-lg"></i>2. اختر درجة التظليل العام
+      </h3>
+      <p id="tint-label" class="text-center text-sm text-ts-gray-600 mb-3">اختر درجة VLT</p>
+      <div class="flex flex-wrap justify-center gap-2.5">
+        <button onclick="selectTint(this)" data-vlt="0.05" class="tint-button w-16 h-16 rounded-xl border-2 border-ts-gray-300 flex flex-col items-center justify-center bg-black/95 text-white font-semibold text-xs hover:scale-105 transition-transform-shadow duration-200 hover:shadow-card">5%</button>
+        <button onclick="selectTint(this)" data-vlt="0.15" class="tint-button w-16 h-16 rounded-xl border-2 border-ts-gray-300 flex flex-col items-center justify-center bg-black/85 text-white font-semibold text-xs hover:scale-105 transition-transform-shadow duration-200 hover:shadow-card">15%</button>
+        <button onclick="selectTint(this)" data-vlt="0.25" class="tint-button w-16 h-16 rounded-xl border-2 border-ts-gray-300 flex flex-col items-center justify-center bg-black/75 text-white font-semibold text-xs hover:scale-105 transition-transform-shadow duration-200 hover:shadow-card">25%</button>
+        <button onclick="selectTint(this)" data-vlt="0.35" class="tint-button w-16 h-16 rounded-xl border-2 border-ts-gray-300 flex flex-col items-center justify-center bg-black/65 text-white font-semibold text-xs hover:scale-105 transition-transform-shadow duration-200 hover:shadow-card">35%</button>
+        <button onclick="selectTint(this)" data-vlt="0.50" class="tint-button w-16 h-16 rounded-xl border-2 border-ts-gray-300 flex flex-col items-center justify-center bg-black/50 text-white font-semibold text-xs hover:scale-105 transition-transform-shadow duration-200 hover:shadow-card">50%</button>
+        <button onclick="selectTint(this)" data-vlt="0.70" class="tint-button w-16 h-16 rounded-xl border-2 border-ts-gray-300 flex flex-col items-center justify-center bg-black/30 text-ts-gray-800 font-semibold text-xs hover:scale-105 transition-transform-shadow duration-200 hover:shadow-card">70%</button>
+        <button onclick="selectTint(this)" data-vlt="0.80" class="tint-button w-16 h-16 rounded-xl border-2 border-ts-gray-300 flex flex-col items-center justify-center bg-black/20 text-ts-gray-800 font-semibold text-xs hover:scale-105 transition-transform-shadow duration-200 hover:shadow-card">80%</button>
+        <button onclick="selectTint(this)" data-vlt="1.00" class="tint-button w-16 h-16 rounded-xl border-2 border-dashed border-ts-gray-400 flex flex-col items-center justify-center bg-transparent text-ts-gray-600 font-semibold text-xs hover:scale-105 transition-transform-shadow duration-200 hover:shadow-card">بدون</button>
+      </div>
+    </section>
+
+    <!-- Step 3: Detailed Tint Options -->
+    <section>
+      <h3 class="text-xl font-bold text-ts-blue-dark border-b-2 border-ts-blue pb-2.5 mb-4 flex items-center">
+         <i class="fas fa-cogs text-ts-blue-light mr-3 text-lg"></i>3. اختيار تفصيلي لكل زجاج
+      </h3>
+      <div class="space-y-3">
+        <div>
+          <label class="block text-sm font-semibold text-ts-gray-700 mb-1.5">الزجاج الأمامي</label>
+          <select onchange="updateTintDetail('front_windshield', this.value)" class="vlt-select w-full p-2.5">
+            <option value="">اختر درجة</option>
+            <option value="0.70">70% - شفاف</option>
+            <option value="0.50">50% - خفيف</option>
+            <option value="0.35">35% - متوسط</option>
+            <option value="0.25">25% - عالي</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-ts-gray-700 mb-1.5">الزجاج الجانبي</label>
+          <select onchange="updateTintDetail('side_windows', this.value)" class="vlt-select w-full p-2.5">
+            <option value="">اختر درجة</option>
+            <option value="0.70">70% - شفاف</option>
+            <option value="0.50">50% - خفيف</option>
+            <option value="0.35">35% - متوسط</option>
+            <option value="0.25">25% - عالي</option>
+            <option value="0.15">15% - شديد</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-ts-gray-700 mb-1.5">الزجاج الخلفي</label>
+          <select onchange="updateTintDetail('rear_window', this.value)" class="vlt-select w-full p-2.5">
+            <option value="">اختر درجة</option>
+            <option value="0.70">70% - شفاف</option>
+            <option value="0.50">50% - خفيف</option>
+            <option value="0.35">35% - متوسط</option>
+            <option value="0.25">25% - عالي</option>
+            <option value="0.15">15% - شديد</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Next Button -->
+    <button id="next-btn" onclick="goToNext()" disabled class="btn-next w-full mt-4">
+      استمر في التخصيص <i class="fas fa-arrow-left mr-2 arrow-icon"></i>
+    </button>
+
+  </aside>
+
+  <!-- Preview Area -->
+  <div class="lg:col-span-7 bg-gradient-to-br from-ts-gray-800 to-ts-gray-900 rounded-2xl shadow-2xl flex items-center justify-center p-6 relative min-h-[450px] lg:min-h-[550px] order-1 lg:order-2">
+    <img id="preview-img" src="https://placehold.co/800x500/e0e0e0/333?text=اختر+سيارة+للمعاينة&font=cairo" alt="معاينة السيارة" class="max-w-full max-h-[calc(100vh-10rem)] object-contain rounded-xl shadow-xl z-10">
+    <div id="tint-overlay" class="absolute inset-0 bg-black/5 pointer-events-none transition-colors duration-300 ease-in-out rounded-xl"></div>
+  </div>
+
+</main>
+
+<script>
+  let selectedCar = null;
+  let tintVLT = 0.05; // Default tint VLT
+
+  const previewImg = document.getElementById('preview-img');
+  const tintOverlay = document.getElementById('tint-overlay');
+  const tintLabel = document.getElementById('tint-label');
+  const nextBtn = document.getElementById('next-btn');
+  const alertContainer = document.getElementById('alert-message-container');
+
+  function selectCar(element) {
+    document.querySelectorAll('.vehicle-option').forEach(el => el.classList.remove('selected'));
+    element.classList.add('selected');
+    selectedCar = element.dataset.car;
+    previewImg.src = element.dataset.image;
+    previewImg.alt = `معاينة سيارة ${selectedCar}`;
+    nextBtn.disabled = false;
+    // Reset general tint to default when car changes, or keep current? For now, keep.
+    // applyTintToPreview(tintVLT); 
+  }
+
+  function selectTint(element) {
+    document.querySelectorAll('.tint-button').forEach(el => {
+        el.classList.remove('selected', 'selected-dark-text');
+        // Reset text color for non-selected buttons that might have had dark text
+        if (parseFloat(el.dataset.vlt) >= 0.70) {
+            el.classList.remove('text-ts-blue-dark');
+            el.classList.add('text-white');
+        }
+    });
+    element.classList.add('selected');
+    tintVLT = parseFloat(element.dataset.vlt);
+
+    // Adjust text color for selected light tint buttons
+    if (tintVLT >= 0.70 && tintVLT < 1.00) { // For 70% and 80%
+        element.classList.add('selected-dark-text'); // Special class for dark text on light selected bg
+        element.classList.remove('text-white'); // Ensure white text is removed
+    } else if (tintVLT === 1.00) { // For "بدون"
+         element.classList.remove('text-white');
+         element.classList.add('text-ts-gray-600'); // Ensure text is visible
+    } else {
+        element.classList.add('text-white'); // Darker tints get white text
+    }
+
+
+    applyTintToPreview(tintVLT);
+    if(tintLabel) {
+        tintLabel.textContent = `التظليل العام: ${element.textContent.trim()}`;
+    }
+  }
+  
+  function applyTintToPreview(vltValue) {
+      const overlayOpacity = 1 - vltValue;
+      tintOverlay.style.backgroundColor = `rgba(0,0,0,${overlayOpacity.toFixed(2)})`;
+  }
+
+
+  function updateTintDetail(part, value) {
+    console.log(`تحديث تفصيلي لـ (${part}): ${value}`);
+    // This function is a placeholder as per the user's provided HTML.
+    // Future logic could store these values or even attempt to apply them to specific
+    // parts of the car image if a more complex overlay/canvas system is implemented.
+  }
+
+  function goToNext() {
+    if (!selectedCar) {
+      showAlert("الرجاء اختيار نوع السيارة أولاً للمتابعة.", "error");
+      return;
+    }
+    // Placeholder for actual next step
+    showAlert(`تم اختيار ${selectedCar} بدرجة تظليل عام ${Math.round(tintVLT*100)}%. جاهز للمتابعة!`, "success");
+    console.log("Selected Car:", selectedCar, "General VLT:", tintVLT);
+    // window.location.href = 'next-page.html'; // Example navigation
+  }
+
+  function showAlert(message, type = 'error') {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert-message alert-${type} px-6 py-3 rounded-xl text-base font-medium shadow-xl`;
+    if (type === 'error') {
+        alertDiv.classList.add('bg-red-100', 'text-red-700', 'border', 'border-red-300');
+    } else { // success
+        alertDiv.classList.add('bg-green-100', 'text-green-700', 'border', 'border-green-300');
+    }
+    alertDiv.textContent = message;
+    
+    alertContainer.innerHTML = '';
+    alertContainer.appendChild(alertDiv);
+    alertContainer.classList.remove('opacity-0', '-translate-y-10');
+    alertContainer.classList.add('opacity-100', 'translate-y-0');
+    
+    setTimeout(() => {
+      alertContainer.classList.add('opacity-0', '-translate-y-10');
+      alertContainer.classList.remove('opacity-100', 'translate-y-0');
+      setTimeout(() => alertContainer.innerHTML = '', 300);
+    }, 4000);
+  }
+
+  // Mobile Menu Toggle
+  document.getElementById('mobile-menu-toggle').addEventListener('click', () => {
+    document.getElementById('mobile-menu').classList.toggle('hidden');
+  });
+
+  // Initialize with a default tint appearance if needed
+  document.addEventListener('DOMContentLoaded', () => {
+    const defaultTintButton = document.querySelector('.tint-button[data-vlt="0.05"]');
+    if (defaultTintButton) {
+        selectTint(defaultTintButton); // Select 5% tint by default
+    }
+  });
+
+</script>
+
+</body>
+</html>

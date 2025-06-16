@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محاكاة تأثير أشعة الشمس على الزجاج</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2980, #26d0ce);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px;
+            width: 100%;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            text-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .simulation-area {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+        
+        .simulation-container {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 1000px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .scene {
+            height: 500px;
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            background: linear-gradient(to bottom, #87CEEB, #1E90FF);
+            box-shadow: inset 0 0 50px rgba(255, 255, 255, 0.2);
+        }
+        
+        .sun {
+            position: absolute;
+            top: 50px;
+            right: 50px;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, #FFD700, #FF8C00);
+            border-radius: 50%;
+            box-shadow: 0 0 60px #FF4500, 0 0 100px rgba(255, 69, 0, 0.5);
+            z-index: 5;
+            animation: sun-pulse 3s infinite alternate;
+        }
+        
+        .sun-rays {
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            border: 4px solid rgba(255, 215, 0, 0.4);
+            animation: ray-pulse 3s infinite alternate;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+        }
+        
+        .tower {
+            position: absolute;
+            bottom: 100px;
+            left: 200px;
+            width: 80px;
+            height: 300px;
+            background: linear-gradient(to right, rgba(173, 216, 230, 0.8), rgba(224, 255, 255, 0.9));
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(173, 216, 230, 0.7);
+            z-index: 10;
+            transition: all 0.5s ease;
+        }
+        
+        .tower::before {
+            content: '';
+            position: absolute;
+            top: -40px;
+            left: 10px;
+            width: 60px;
+            height: 40px;
+            background: linear-gradient(to bottom, #c0c0c0, #f0f8ff);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            border-radius: 5px;
+        }
+        
+        .car {
+            position: absolute;
+            bottom: 110px;
+            left: 450px;
+            width: 200px;
+            height: 80px;
+            background: linear-gradient(to right, #ff0000, #cc0000);
+            border-radius: 15px 15px 5px 5px;
+            z-index: 10;
+            transition: all 0.5s ease;
+        }
+        
+        .car-window {
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            width: 140px;
+            height: 30px;
+            background: rgba(173, 216, 230, 0.7);
+            border-radius: 5px;
+        }
+        
+        .car::after {
+            content: '';
+            position: absolute;
+            top: -30px;
+            left: 50px;
+            width: 100px;
+            height: 30px;
+            background: #ff0000;
+            border-radius: 50% 50% 0 0;
+        }
+        
+        .sun-beam {
+            position: absolute;
+            top: 100px;
+            right: 100px;
+            width: 600px;
+            height: 20px;
+            background: linear-gradient(to right, rgba(255, 215, 0, 0.2), rgba(255, 140, 0, 0.8));
+            border-radius: 10px;
+            transform-origin: right center;
+            transform: rotate(-20deg);
+            z-index: 2;
+            animation: beam-move 15s infinite linear;
+            box-shadow: 0 0 20px rgba(255, 69, 0, 0.5);
+        }
+        
+        .sun-beam:nth-child(2) {
+            top: 150px;
+            transform: rotate(-25deg);
+            animation-delay: -3s;
+            width: 550px;
+        }
+        
+        .sun-beam:nth-child(3) {
+            top: 200px;
+            transform: rotate(-30deg);
+            animation-delay: -6s;
+            width: 500px;
+        }
+        
+        .heat-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 0, 0, 0) 0%, rgba(255, 0, 0, 0.1) 100%);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s ease;
+        }
+        
+        .heat-waves {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><path fill="none" stroke="rgba(255,100,0,0.1)" stroke-width="1" d="M0,100 Q50,80 100,100 T200,100" /></svg>');
+            opacity: 0;
+            animation: heat-wave 3s infinite linear;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .control-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+        
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+        }
+        
+        .control-btn i {
+            font-size: 1.3rem;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            width: 100%;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .stat-card {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            min-width: 200px;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 10px 0;
+            color: #FFD700;
+        }
+        
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+        
+        .temperature-bar {
+            width: 100%;
+            height: 30px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            margin-top: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .temperature-fill {
+            height: 100%;
+            background: linear-gradient(to right, #00bfff, #ff0000);
+            width: 0%;
+            transition: width 2s linear;
+        }
+        
+        .temperature-marks {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 10px;
+            font-size: 0.8rem;
+        }
+        
+        .temperature-mark {
+            position: relative;
+        }
+        
+        .temperature-mark::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.5);
+        }
+        
+        .explanation {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 20px;
+            max-width: 800px;
+            line-height: 1.8;
+            backdrop-filter: blur(5px);
+        }
+        
+        .explanation h2 {
+            margin-bottom: 15px;
+            color: #FFD700;
+            text-align: center;
+        }
+        
+        .explanation p {
+            margin-bottom: 15px;
+        }
+        
+        .hot-spot {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, rgba(255,0,0,0.8), rgba(255,0,0,0));
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+        }
+        
+        @keyframes sun-pulse {
+            0% { transform: scale(1); box-shadow: 0 0 60px #FF4500, 0 0 100px rgba(255, 69, 0, 0.5); }
+            100% { transform: scale(1.05); box-shadow: 0 0 80px #FF4500, 0 0 140px rgba(255, 69, 0, 0.7); }
+        }
+        
+        @keyframes ray-pulse {
+            0% { transform: scale(1); opacity: 0.7; }
+            100% { transform: scale(1.2); opacity: 0.3; }
+        }
+        
+        @keyframes beam-move {
+            0% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+            100% { opacity: 0.3; }
+        }
+        
+        @keyframes heat-wave {
+            0% { background-position: 0 0; }
+            100% { background-position: 100% 0; }
+        }
+        
+        .glass-reflection {
+            position: absolute;
+            width: 30px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            transform: rotate(45deg);
+            opacity: 0.7;
+            z-index: 15;
+            animation: reflection-move 8s infinite linear;
+        }
+        
+        @keyframes reflection-move {
+            0% { top: 150px; left: 220px; }
+            25% { top: 180px; left: 210px; }
+            50% { top: 200px; left: 220px; }
+            75% { top: 180px; left: 230px; }
+            100% { top: 150px; left: 220px; }
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .subtitle { font-size: 1.2rem; }
+            .scene { height: 400px; }
+            .tower { left: 50px; }
+            .car { left: 250px; }
+            .sun { top: 30px; right: 30px; width: 70px; height: 70px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>محاكاة تأثير أشعة الشمس على الزجاج</h1>
+            <p class="subtitle">تجربة واقع معزز تظهر تأثير أشعة الشمس على برج زجاجي ومركبة فاخرة وارتفاع درجة الحرارة بمرور الوقت</p>
+        </header>
+        
+        <div class="simulation-area">
+            <div class="simulation-container">
+                <div class="scene" id="scene">
+                    <div class="sun"></div>
+                    <div class="sun-rays"></div>
+                    
+                    <div class="sun-beam"></div>
+                    <div class="sun-beam"></div>
+                    <div class="sun-beam"></div>
+                    
+                    <div class="tower" id="tower">
+                        <div class="glass-reflection"></div>
+                    </div>
+                    
+                    <div class="car" id="car">
+                        <div class="car-window"></div>
+                    </div>
+                    
+                    <div class="heat-effect" id="heatEffect"></div>
+                    <div class="heat-waves" id="heatWaves"></div>
+                    
+                    <!-- Hot spots will be added dynamically -->
+                </div>
+                
+                <div class="controls">
+                    <button class="control-btn" id="startBtn">
+                        <i class="fas fa-play"></i> بدء المحاكاة
+                    </button>
+                    <button class="control-btn" id="resetBtn">
+                        <i class="fas fa-redo"></i> إعادة الضبط
+                    </button>
+                    <button class="control-btn" id="infoBtn">
+                        <i class="fas fa-info-circle"></i> معلومات علمية
+                    </button>
+                </div>
+                
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-label">درجة الحرارة الخارجية</div>
+                        <div class="stat-value" id="outTemp">32°C</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-label">درجة الحرارة الداخلية</div>
+                        <div class="stat-value" id="inTemp">25°C</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-label">ارتفاع درجة الحرارة</div>
+                        <div class="temperature-bar">
+                            <div class="temperature-fill" id="tempFill"></div>
+                            <div class="temperature-marks">
+                                <span class="temperature-mark">0%</span>
+                                <span class="temperature-mark">25%</span>
+                                <span class="temperature-mark">50%</span>
+                                <span class="temperature-mark">75%</span>
+                                <span class="temperature-mark">100%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="explanation" id="explanation">
+                <h2>كيف تؤثر أشعة الشمس على المباني الزجاجية؟</h2>
+                <p>عندما تخترق أشعة الشمس الزجاج، تتحول الطاقة الضوئية إلى طاقة حرارية. تحتوي أشعة الشمس على ثلاثة أنواع من الأشعة:</p>
+                <ul>
+                    <li><strong>الأشعة المرئية (52%)</strong>: يمكن رؤيتها وتنفذ عبر الزجاج</li>
+                    <li><strong>الأشعة تحت الحمراء (43%)</strong>: تحمل معظم الحرارة، يمتصها الزجاج والأجسام الداخلية</li>
+                    <li><strong>الأشعة فوق البنفسجية (5%)</strong>: ضارة بالجلد، تمتصها معظم أنواع الزجاج</li>
+                </ul>
+                <p>الزجاج العادي يسمح بمرور أكثر من 80% من الأشعة المرئية وحوالي 45% من الأشعة تحت الحمراء، مما يؤدي إلى ارتفاع درجة الحرارة داخل الأماكن المغلقة بشكل كبير خلال دقائق معدودة.</p>
+                <p>يمكن تقليل هذه المشكلة باستخدام زجاج عاكس أو أفلام تظليل عازلة للحرارة تقوم بعكس الأشعة تحت الحمراء مع الحفاظ على النفاذية الضوئية.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // عناصر DOM
+        const scene = document.getElementById('scene');
+        const tower = document.getElementById('tower');
+        const car = document.getElementById('car');
+        const heatEffect = document.getElementById('heatEffect');
+        const heatWaves = document.getElementById('heatWaves');
+        const startBtn = document.getElementById('startBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const infoBtn = document.getElementById('infoBtn');
+        const outTemp = document.getElementById('outTemp');
+        const inTemp = document.getElementById('inTemp');
+        const tempFill = document.getElementById('tempFill');
+        const explanation = document.getElementById('explanation');
+        
+        // متغيرات المحاكاة
+        let simulationRunning = false;
+        let temperature = 25;
+        let timeElapsed = 0;
+        let simulationInterval;
+        let hotSpots = [];
+        
+        // بدء المحاكاة
+        startBtn.addEventListener('click', () => {
+            if (simulationRunning) return;
+            
+            simulationRunning = true;
+            startBtn.innerHTML = '<i class="fas fa-pause"></i> إيقاف مؤقت';
+            heatEffect.style.opacity = '0.3';
+            heatWaves.style.opacity = '0.3';
+            
+            // إنشاء بقع ساخنة عشوائية
+            createHotSpots();
+            
+            simulationInterval = setInterval(() => {
+                timeElapsed += 1;
+                temperature = 25 + (timeElapsed * 0.7);
+                if (temperature > 45) temperature = 45;
+                
+                // تحديث الإحصائيات
+                inTemp.textContent = Math.round(temperature) + '°C';
+                tempFill.style.width = ((temperature - 25) / 20 * 100) + '%';
+                
+                // تغيير لون الزجاج مع ارتفاع الحرارة
+                const heatLevel = (temperature - 25) / 20;
+                tower.style.background = `linear-gradient(to right, 
+                    rgba(173, 216, 230, ${0.8 - heatLevel * 0.3}), 
+                    rgba(224, 255, 255, ${0.9 - heatLevel * 0.4}))`;
+                
+                // تحريك البقع الساخنة
+                moveHotSpots();
+                
+                // إيقاف المحاكاة عند الوصول إلى الحد الأقصى
+                if (temperature >= 45) {
+                    clearInterval(simulationInterval);
+                    startBtn.innerHTML = '<i class="fas fa-play"></i> بدء المحاكاة';
+                    simulationRunning = false;
+                }
+            }, 500);
+        });
+        
+        // إعادة الضبط
+        resetBtn.addEventListener('click', () => {
+            clearInterval(simulationInterval);
+            simulationRunning = false;
+            temperature = 25;
+            timeElapsed = 0;
+            
+            inTemp.textContent = '25°C';
+            tempFill.style.width = '0%';
+            heatEffect.style.opacity = '0';
+            heatWaves.style.opacity = '0';
+            startBtn.innerHTML = '<i class="fas fa-play"></i> بدء المحاكاة';
+            
+            // إعادة لون الزجاج
+            tower.style.background = 'linear-gradient(to right, rgba(173, 216, 230, 0.8), rgba(224, 255, 255, 0.9))';
+            
+            // إزالة البقع الساخنة
+            hotSpots.forEach(spot => spot.remove());
+            hotSpots = [];
+        });
+        
+        // تبديل معلومات علمية
+        infoBtn.addEventListener('click', () => {
+            explanation.style.display = explanation.style.display === 'none' ? 'block' : 'none';
+        });
+        
+        // إنشاء بقع ساخنة
+        function createHotSpots() {
+            // إزالة أي بقع موجودة
+            hotSpots.forEach(spot => spot.remove());
+            hotSpots = [];
+            
+            // إنشاء بقع ساخنة على البرج
+            for (let i = 0; i < 3; i++) {
+                const spot = document.createElement('div');
+                spot.className = 'hot-spot';
+                spot.style.top = (150 + Math.random() * 150) + 'px';
+                spot.style.left = (200 + Math.random() * 20) + 'px';
+                scene.appendChild(spot);
+                hotSpots.push(spot);
+            }
+            
+            // إنشاء بقع ساخنة على السيارة
+            for (let i = 0; i < 2; i++) {
+                const spot = document.createElement('div');
+                spot.className = 'hot-spot';
+                spot.style.top = (450 + Math.random() * 20) + 'px';
+                spot.style.left = (460 + Math.random() * 100) + 'px';
+                scene.appendChild(spot);
+                hotSpots.push(spot);
+            }
+        }
+        
+        // تحريك البقع الساخنة
+        function moveHotSpots() {
+            hotSpots.forEach(spot => {
+                // زيادة حجم البقعة مع ارتفاع الحرارة
+                const size = 30 + (temperature - 25) * 2;
+                spot.style.width = size + 'px';
+                spot.style.height = size + 'px';
+                
+                // تغيير الشفافية
+                spot.style.opacity = 0.5 + (temperature - 25) * 0.02;
+                
+                // حركة طفيفة
+                const top = parseInt(spot.style.top);
+                const left = parseInt(spot.style.left);
+                spot.style.top = (top + (Math.random() - 0.5) * 3) + 'px';
+                spot.style.left = (left + (Math.random() - 0.5) * 3) + 'px';
+            });
+        }
+        
+        // تأثير إشعاع الشمس عند التحميل
+        setTimeout(() => {
+            heatEffect.style.opacity = '0.1';
+            heatWaves.style.opacity = '0.1';
+        }, 1000);
+    </script>
+</body>
+</html>

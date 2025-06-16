@@ -1,0 +1,23 @@
+{
+  "title": "لوحة التحكم",
+  "subtitle": "إدارة حسابك والخدمات الخاصة بك",
+  "sections": {
+    "profile": {
+      "title": "الملف الشخصي",
+      "description": "تحديث بياناتك الشخصية"
+    },
+    "services": {
+      "title": "الخدمات",
+      "description": "إدارة خدماتك المسجلة"
+    },
+    "settings": {
+      "title": "إعدادات الحساب",
+      "description": "تعديل إعدادات الحساب الخاصة بك"
+    }
+  },
+  "buttons": {
+    "update_profile": "تحديث الملف الشخصي",
+    "manage_services": "إدارة الخدمات",
+    "save_settings": "حفظ الإعدادات"
+  }
+}

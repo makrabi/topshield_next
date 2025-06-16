@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TOPSHIELD | محاكي التظليل الذكي</title>
+  
+  <!-- ====== Fonts & Icons ====== -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+  <!-- ====== Tailwind ====== -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            cairo: ['Cairo', 'sans-serif']
+          },
+          colors: {
+            ts: {
+              blue: '#102E6A',
+              blueDark: '#0A2351',
+              gold: '#FFC107',
+              goldLight: '#FFF8E1'
+            }
+          },
+          boxShadow: {
+            focus: '0 0 0 3px rgba(16, 46, 106, .35)'
+          },
+          keyframes: {
+            fadeInUp: {
+              '0%': {opacity: 0, transform: 'translateY(12px)'},
+              '100%': {opacity: 1, transform: 'translateY(0)'}
+            }
+          },
+          animation: {
+            fadeInUp: 'fadeInUp .6s ease-out forwards'
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- ====== Global Style overrides ====== -->
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Cairo", sans-serif;
+      background: linear-gradient(135deg, #f3f4f6 0%, #ffffff 60%);
+      min-height: 100vh;
+    }
+
+    /* ===== Scrollbars ===== */
+    .no-scrollbar::-webkit-scrollbar {display: none;}
+    .no-scrollbar {-ms-overflow-style: none; scrollbar-width: none;}
+
+    /* ===== Gallery Thumbs ===== */
+    .gallery-thumb {
+      @apply transition-all duration-300 border-2 border-transparent rounded-lg opacity-70 hover:opacity-100 hover:border-ts-blue;
+    }
+
+    .gallery-thumb.active {
+      @apply opacity-100 border-ts-gold shadow-lg scale-105;
+    }
+
+    /* ===== Tab ===== */
+    .tab-btn {
+      @apply flex-1 flex items-center justify-center gap-2 rounded-xl py-3 px-4 text-sm font-medium transition-colors duration-300;
+    }
+
+    .tab-btn:not(.active):hover {
+      @apply bg-gray-100 text-ts-blueDark;
+    }
+
+    .tab-btn.active {
+      @apply bg-ts-blue text-white shadow-lg transform -translate-y-0.5;
+    }
+
+    .fade-panel {
+      display:none;
+    }
+    .fade-panel.active {
+      display:block;
+      animation: fadeInUp .6s ease-out;
+    }
+  </style>
+</head>
+
+<body class="text-gray-800">
+  <!-- ====== Alert ====== -->
+  <div id="alertBox" class="fixed top-6 left-1/2 -translate-x-1/2 bg-white border rounded-xl shadow-xl px-6 py-3 text-sm font-bold opacity-0 pointer-events-none transition-all duration-300 z-50"></div>
+
+  <!-- ====== Header ====== -->
+  <header class="sticky top-0 z-40 backdrop-blur bg-white/80 border-b">
+    <div class="container mx-auto flex items-center justify-between px-4 lg:px-8 h-16">
+      <a href="#" class="flex items-center gap-2">
+        <img src="https://assets.stickpng.com/images/580b57fcd9996e24bc43c521.png" class="h-8" alt="Topshield" />
+        <span class="sr-only">TOPSHIELD</span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex gap-6 text-sm font-semibold">
+        <a href="#sim" class="hover:text-ts-gold">المحاكي</a>
+        <a href="#gallery" class="hover:text-ts-gold">المعرض</a>
+        <a href="#details" class="hover:text-ts-gold">التفاصيل</a>
+      </nav>
+
+      <!-- Mobile btn -->
+      <button id="navToggle" class="md:hidden text-ts-blue hover:text-ts-gold">
+        <i class="fas fa-bars text-lg"></i>
+      </button>
+    </div>
+    <!-- Mobile Nav -->
+    <nav id="mobileNav" class="md:hidden bg-white border-t hidden flex-col px-6 py-4 gap-3 text-sm font-semibold">
+      <a href="#sim" class="hover:text-ts-gold">المحاكي</a>
+      <a href="#gallery" class="hover:text-ts-gold">المعرض</a>
+      <a href="#details" class="hover:text-ts-gold">التفاصيل</a>
+    </nav>
+  </header>
+
+  <!-- ====== Simulator ====== -->
+  <section id="sim" class="container mx-auto px-4 lg:px-8 py-10 flex flex-col lg:flex-row gap-8">
+    <!-- Control Panel -->
+    <aside class="lg:w-1/3 bg-white/70 backdrop-blur rounded-3xl shadow-2xl p-6 flex flex-col overflow-y-auto no-scrollbar h-[75vh]">
+      <!-- Step 1 -->
+      <h3 class="text-lg font-extrabold text-ts-blueDark mb-4">1. اختر نوع المركبة</h3>
+      <div class="grid grid-cols-4 gap-2 mb-8" id="carGrid"></div>
+
+      <!-- Step 2 -->
+      <h3 class="text-lg font-extrabold text-ts-blueDark mb-4">2. درجة التظليل العامة</h3>
+      <p id="genTintLabel" class="text-xs text-gray-500 mb-2 text-center"></p>
+      <div class="flex gap-2 overflow-x-auto no-scrollbar mb-8" id="genTintRow"></div>
+
+      <!-- Step 3 -->
+      <h3 class="text-lg font-extrabold text-ts-blueDark mb-4">3. التخصيص التفصيلي</h3>
+      <div id="detailForm" class="space-y-4 overflow-y-auto no-scrollbar pr-1 flex-1"></div>
+
+      <!-- Footer Buttons -->
+      <div class="pt-4 border-t mt-auto">
+        <button id="nextBtn" class="w-full flex items-center justify-center gap-2 bg-ts-blue text-white rounded-xl py-3 font-bold shadow hover:bg-ts-blueDark transition disabled:opacity-50" disabled>
+          <span>استمر</span>
+          <i class="fas fa-arrow-left text-xs"></i>
+        </button>
+        <div id="actionBox" class="hidden mt-5 space-y-3">
+          <div class="text-center">
+            <p class="text-sm text-gray-500">السعر الإجمالي</p>
+            <p class="text-3xl font-extrabold text-ts-blueDark" id="totalPrice">-</p>
+          </div>
+          <button class="w-full flex items-center justify-center gap-2 bg-ts-blue text-white rounded-xl py-3 font-bold shadow hover:bg-ts-blueDark transition">
+            <i class="fas fa-shopping-cart"></i>
+            <span>أضف للسلة</span>
+          </button>
+          <button class="w-full flex items-center justify-center gap-2 bg-ts-gold text-ts-blueDark rounded-xl py-3 font-bold shadow hover:bg-amber-400 transition">
+            <i class="fas fa-bolt"></i>
+            <span>اشترِ الآن</span>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Preview Area -->
+    <div class="lg:flex-1 bg-gradient-to-br from-gray-700 to-gray-900 rounded-3xl relative flex items-center justify-center p-4 shadow-2xl min-h-[380px]">
+      <img id="previewImg" src="https://placehold.co/900x520/e0e0e0/333?text=اختر+سيارة&font=cairo" alt="preview" class="max-h-[70vh] object-contain rounded-2xl shadow-2xl" />
+      <div id="tintLayer" class="absolute inset-0 rounded-2xl transition-colors duration-300 pointer-events-none"></div>
+    </div>
+  </section>
+
+  <!-- ====== Gallery ====== -->
+  <section id="gallery" class="bg-gray-50 py-16">
+    <div class="container mx-auto px-4 lg:px-8 text-center">
+      <h2 class="text-3xl font-extrabold text-ts-blueDark mb-10">معرض الصور</h2>
+      <div class="max-w-5xl mx-auto relative">
+        <img id="mainImg" src="https://placehold.co/900x560/374151/FFFFFF?text=صورة" class="rounded-2xl shadow-2xl w-full object-cover" alt="product" />
+      </div>
+      <div id="thumbRow" class="flex flex-wrap justify-center gap-3 mt-6"></div>
+    </div>
+  </section>
+
+  <!-- ====== Details ====== -->
+  <section id="details" class="container mx-auto px-4 lg:px-8 py-16">
+    <div class="bg-white rounded-3xl shadow-2xl p-8">
+      <nav class="flex flex-col sm:flex-row gap-2 mb-6" id="tabNav"></nav>
+      <div id="tabPanels">
+        <article id="tab-overview" class="fade-panel active prose max-w-none">
+          <h3>نظرة عامة</h3>
+          <p>تم تصميم هذا العازل بتقنية النانو سيراميك ليوفر أداءً مبهراً في عزل الحرارة والأشعة فوق البنفسجية مع الحفاظ على رؤية واضحة.</p>
+        </article>
+        <article id="tab-cut" class="fade-panel prose max-w-none">
+          <h3>القص بالكمبيوتر</h3>
+          <p>استفد من دقة الأجهزة CNC للحصول على قطع مثالي دون استخدام الشفرة على زجاج سيارتك.</p>
+        </article>
+        <article id="tab-spec" class="fade-panel prose max-w-none">
+          <h3>المواصفات</h3>
+          <table class="w-full text-sm text-left">
+            <thead><tr><th>الخاصية</th><th>القيمة</th></tr></thead>
+            <tbody>
+              <tr class="border-b"><td>IRR</td><td>98%</td></tr>
+              <tr class="border-b"><td>UVR</td><td>99.9%</td></tr>
+              <tr><td>TSER</td><td>65%</td></tr>
+            </tbody>
+          </table>
+        </article>
+        <article id="tab-benefit" class="fade-panel prose max-w-none">
+          <h3>الفوائد</h3>
+          <ul>
+            <li>تقليل حرارة المقصورة</li>
+            <li>حماية الديكور الداخلي</li>
+            <li> خصوصية معززة</li>
+            <li>توفير الوقود</li>
+          </ul>
+        </article>
+        <article id="tab-warranty" class="fade-panel prose max-w-none">
+          <h3>الضمان</h3>
+          <p>ضمان ضد تغير اللون وظهور الفقاعات لمدة 10 سنوات.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== Script ====== -->
+  <script>
+    const qs           = (s, o=document)=>o.querySelector(s);
+    const qsa          = (s, o=document)=>[...o.querySelectorAll(s)];
+
+    const alertBox     = qs('#alertBox');
+    const previewImg   = qs('#previewImg');
+    const tintLayer    = qs('#tintLayer');
+    const genTintLabel = qs('#genTintLabel');
+    const nextBtn      = qs('#nextBtn');
+    const actionBox    = qs('#actionBox');
+    const totalPrice   = qs('#totalPrice');
+
+    /* ====== Data ====== */
+    const cars = [
+      {name:'رياضية', img:'https://placehold.co/900x520/e0e0e0/333?text=رياضية&font=cairo'},
+      {name:'سيدان',   img:'https://placehold.co/900x520/cccccc/333?text=سيدان&font=cairo'},
+      {name:'عائلية/دفع رباعي', img:'https://placehold.co/900x520/9ca3af/333?text=SUV&font=cairo'},
+      {name:'شاحنة',  img:'https://placehold.co/900x520/6b7280/EEE?text=شاحنة&font=cairo'}
+    ];
+
+    const tints = [1,0.80,0.70,0.50,0.35,0.25,0.15,0.05];
+
+    const detailFields = [
+      {id:'windshield', label:'الزجاج الأمامي*', allow:[0.8,0.7]},
+      {id:'frontDoors', label:'الأبواب الأمامية*', allow:tints.filter(t=>t<=0.8)},
+      {id:'rearDoors', label:'الأبواب الخلفية*', allow:tints.filter(t=>t<=0.8)},
+      {id:'rearWindow', label:'الزجاج الخلفي*', allow:tints.filter(t=>t<=0.8)},
+      {id:'sunroof', label:'فتحة السقف', allow:tints}
+    ];
+
+    const galleryImgs = Array.from({length:8}, (_,i)=>({thumb:`https://placehold.co/140x90/f3f4f6/333?text=${i+1}`, large:`https://placehold.co/900x560/f3f4f6/333?text=${i+1}`}));
+
+    /* ====== Helpers ====== */
+    function toast(msg, type='info'){
+      alertBox.textContent=msg;
+      alertBox.className='fixed top-6 left-1/2 -translate-x-1/2 rounded-xl px-6 py-3 text-sm font-bold shadow-xl z-50 ' + (type==='error'?'bg-red-100 border-red-400 text-red-700':'bg-green-100 border-green-400 text-green-700');
+      alertBox.style.opacity='1';
+      setTimeout(()=>alertBox.style.opacity='0',2500);
+    }
+
+    /* ====== Generate UI ====== */
+    const carGrid = qs('#carGrid');
+    cars.forEach(c=>{
+      const btn = document.createElement('button');
+      btn.className='flex flex-col items-center gap-1 p-2 border rounded-xl hover:bg-ts-goldLight transition';
+      btn.innerHTML=`<img src="${c.img}&w=80" class="w-14 h-10 object-contain grayscale opacity-60 group-hover:opacity-100"/><span class="text-xs font-semibold">${c.name}</span>`;
+      btn.onclick=()=>selectCar(c);
+      carGrid.appendChild(btn);
+    });
+
+    const genTintRow = qs('#genTintRow');
+    tints.forEach(v=>{
+      const btn=document.createElement('button');
+      btn.className='flex flex-col items-center gap-1 p-2 border rounded-xl hover:border-ts-blue flex-shrink-0';
+      btn.dataset.v=v;
+      btn.innerHTML=`<span style="background:rgba(0,0,0,${1-v});width:36px;height:28px;border-radius:6px"></span><span class="text-xs">${v===1?'بدون':Math.round(v*100)+'%'}</span>`;
+      btn.onclick=()=>selectGenTint(v,btn);
+      genTintRow.appendChild(btn);
+    });
+
+    const detailForm = qs('#detailForm');
+    detailFields.forEach(f=>{
+      const wrap=document.createElement('div');
+      wrap.innerHTML=`<label class="block text-sm font-semibold mb-1">${f.label}</label>`;
+      const sel=document.createElement('select');
+      sel.id=f.id;
+      sel.className='w-full border rounded-xl p-2 text-sm focus:shadow-focus';
+      sel.innerHTML='<option value="">اختر</option>'+f.allow.map(v=>`<option value="${v}">${v===1?'بدون':Math.round(v*100)+'%'}</option>`).join('');
+      sel.onchange=checkCompletion;
+      wrap.appendChild(sel);
+      detailForm.appendChild(wrap);
+    });
+
+    /* ===== Gallery ===== */
+    const mainImg = qs('#mainImg');
+    const thumbRow = qs('#thumbRow');
+    galleryImgs.forEach((g,i)=>{
+      const img=document.createElement('img');
+      img.src=g.thumb;
+      img.className='gallery-thumb w-24 h-16 object-cover';
+      img.onclick=()=>{
+        mainImg.src=g.large;
+        qsa('.gallery-thumb',thumbRow).forEach(t=>t.classList.remove('active'));
+        img.classList.add('active');
+      }
+      if(i===0) img.classList.add('active');
+      thumbRow.appendChild(img);
+    });
+    /* default */ mainImg.src=galleryImgs[0].large;
+
+    /* ===== Tabs ===== */
+    const tabs=[
+      {id:'overview', icon:'info-circle', label:'نظرة عامة'},
+      {id:'cut', icon:'cut', label:'القص بالكمبيوتر'},
+      {id:'spec', icon:'cogs', label:'المواصفات'},
+      {id:'benefit', icon:'star', label:'المنافع'},
+      {id:'warranty', icon:'shield-alt', label:'الضمان'}
+    ];
+    const tabNav = qs('#tabNav');
+    tabs.forEach(t=>{
+      const b=document.createElement('button');
+      b.className='tab-btn';
+      b.dataset.tab=t.id;
+      b.innerHTML=`<i class="fas fa-${t.icon} w-5"></i><span>${t.label}</span>`;
+      b.onclick=()=>activateTab(t.id,b);
+      tabNav.appendChild(b);
+    });
+    /* activate first */ activateTab('overview', tabNav.firstChild);
+
+    function activateTab(id,btn){
+      qsa('.tab-btn',tabNav).forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      qsa('.fade-panel').forEach(p=>p.classList.remove('active'));
+      qs(`#tab-${id}`).classList.add('active');
+    }
+
+    /* ===== Mobile Nav Toggle ===== */
+    const navToggle=qs('#navToggle');
+    const mobileNav=qs('#mobileNav');
+    navToggle.onclick=()=>mobileNav.classList.toggle('hidden');
+
+    /* ===== State ===== */
+    let state={car:null, genTint:1, details:{}};
+
+    function selectCar(car){
+      state.car=car;
+      previewImg.src=car.img;
+      toast(`تم اختيار ${car.name}`);
+      checkCompletion();
+    }
+
+    function selectGenTint(v,btn){
+      state.genTint=v;
+      tintLayer.style.background=`rgba(0,0,0,${1-v})`;
+      genTintLabel.textContent=v===1?'بدون':'VLT '+Math.round(v*100)+'%';
+      qsa('[data-v]',genTintRow).forEach(b=>b.classList.remove('border-ts-blue','bg-gray-100'));
+      btn.classList.add('border-ts-blue','bg-gray-100');
+    }
+
+    function checkCompletion(){
+      /* buttons */
+      const required=[...'windshield,frontDoors,rearDoors,rearWindow'.split(',')];
+      const allFilled=state.car && required.every(id=>qs('#'+id).value);
+      nextBtn.disabled=!allFilled;
+      if(allFilled){
+        totalPrice.textContent='589 ريال';
+      }
+    }
+
+    nextBtn.onclick=()=>{
+      actionBox.classList.remove('hidden');
+      nextBtn.classList.add('hidden');
+      toast('اكتمل التخصيص!','success');
+    }
+  </script>
+</body>
+</html>
