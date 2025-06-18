@@ -1,13 +1,18 @@
-import { PageProps } from 'next/types';
+'use client'; 
+
 import { useTranslations } from 'next-intl';
 import LoginForm from './LoginForm';
 
-// جعل المكون غير متزامن
-export default async function LoginPage({ params }: PageProps<{ locale: string }>) {
-  // استخراج المتغير 'locale' من الـ params باستخدام await
-  const { locale } = await params;
+// تعريف Props صحيح للمكون العميل (params هو كائن)
+type Props = {
+  params: {
+    locale: string;
+  };
+};
 
-  const t = useTranslations('LoginPage');
+// الدالة لا تحتاج أن تكون async ولا تحتاج await لـ params
+export default function LoginPage({ params: { locale } }: Props) {
+  const t = useTranslations('LoginPage'); // استخدام hook الترجمة هنا
 
   return (
     <div>
