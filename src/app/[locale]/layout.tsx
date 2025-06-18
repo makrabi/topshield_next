@@ -1,17 +1,12 @@
-// src/app/[locale]/layout.tsx
-
-// ✅ تم تعديل هذا السطر ليشير إلى الملف الصحيح
+// المسار: src/app/[locale]/layout.tsx
 import '../globals.css';
-
 import type { Metadata } from 'next';
 import { getMessages, getTranslations } from 'next-intl/server';
 import React from 'react';
-
 import { Locale, locales as appLocales } from '@/i18n/routing';
 import { Tajawal, Manrope } from 'next/font/google';
 import Providers from '@/core/provider/Providers';
 
-/* ✅ إعداد الخطوط */
 const tajawal = Tajawal({
   subsets: ['arabic'],
   weight: ['400', '500', '700'],
@@ -24,15 +19,14 @@ const manrope = Manrope({
   variable: '--font-display'
 });
 
-/* ✅ النوع الصحيح في Next.js 15: params عبارة عن Promise */
-type LayoutProps = {
+// ✅ تم تعديل Props: params هو كائن مباشر
+type Props = {
   children: React.ReactNode;
-  params: Promise<{ locale: Locale }>;
+  params: { locale: Locale }; // لا يوجد Promise هنا
 };
 
-/* ✅ مكون layout يجب أن يكون async */
-export default async function LocaleLayout({ children, params }: LayoutProps) {
-  const { locale } = await params;
+// ✅ الدالة async ولكنها تستقبل params مباشرة
+export default async function LocaleLayout({ children, params: { locale } }: Props) {
   const messages = await getMessages({ locale });
 
   return (
@@ -48,29 +42,22 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
   );
 }
 
-/* ✅ ثابتة لإنشاء الصفحات */
 export function generateStaticParams(): { locale: Locale }[] {
   return appLocales.map((locale) => ({ locale }));
 }
 
-/* ✅ metadata باستخدام params كـ Promise */
+// ✅ تم تعديل metadata: params هو كائن مباشر
 export async function generateMetadata({
-  params
-}: {
-  params: Promise<{ locale: Locale }>;
-}): Promise<Metadata> {
-  const { locale } = await params;
-
+  params: { locale }
+}: Props): Promise<Metadata> {
   try {
     const t = await getTranslations({ locale, namespace: 'LayoutMetadata' });
-
     return {
       title: t('pageTitle'),
       description: t('pageDescription')
     };
   } catch (err) {
     console.error(`[Metadata Error] locale ${locale}:`, err);
-
     return {
       title: 'Error',
       description: 'Could not load metadata.'
