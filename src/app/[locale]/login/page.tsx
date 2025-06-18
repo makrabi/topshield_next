@@ -1,15 +1,11 @@
 'use client';
 
+import { PageProps } from 'next/types';
 import { useTranslations } from 'next-intl';
-import LoginForm from './LoginForm'; // تأكد أن هذا المكون موجود لديك
+import LoginForm from './LoginForm';
 
-type Props = {
-  params: {
-    locale: string;
-  };
-};
-
-export default function LoginPage({ params: { locale } }: Props) {
+export default function LoginPage({ params }: PageProps<{ locale: string }>) {
+  const { locale } = params;
   const t = useTranslations('LoginPage');
 
   return (
