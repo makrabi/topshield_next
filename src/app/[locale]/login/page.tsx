@@ -1,20 +1,29 @@
-// src/app/[locale]/login/page.tsx
+// المسار: src/app/[locale]/login/page.tsx
+'use client';
 
-import { type FC } from 'react'
-import LoginForm from './LoginForm'
+// بما أنه مكون عميل، نستخدم useTranslations
+import { useTranslations } from 'next-intl';
+import LoginForm from './LoginForm';
 
-// لا تستخدم PageProps من next لأنه غير مخصص للاستيراد من هناك
-// واستخدامه يسبب فشل التحقق من الأنواع في Next.js 15
-// لذلك نحدد النوع يدويًا
-
+// 1. هذا هو التعريف الصحيح للـ props
 type Props = {
   params: {
-    locale: string
-  }
-}
+    locale: string;
+  };
+};
 
-const LoginPage: FC<Props> = ({ params }) => {
-  return <LoginForm locale={params.locale} />
-}
+// 2. لاحظ أننا نتعامل مع params ككائن مباشر، وليس Promise
+export default function LoginPage({ params: { locale } }: Props) {
+  // 3. بما أنه "use client"، يمكننا استخدام hook الترجمة هنا
+  const t = useTranslations('LoginPage');
 
-export default LoginPage
+  return (
+    <div>
+      {/* كمثال، يمكننا إضافة عنوان للصفحة من ملفات الترجمة */}
+      <h1>{t('title')}</h1>
+
+      {/* تمرير اللغة إلى مكون الفورم */}
+      <LoginForm locale={locale} />
+    </div>
+  );
+}
