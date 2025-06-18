@@ -11,7 +11,7 @@ type Props = {
 
 export default function LoginPage({ params: { locale } }: Props) {
   const t = useTranslations('LoginPage');
-
+  
   return (
     <div>
       <h1>{t('title')}</h1>
