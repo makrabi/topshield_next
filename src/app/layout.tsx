@@ -1,12 +1,12 @@
 // src/app/layout.tsx
 
-// استيراد ملف التنسيقات العام
 import './globals.css';
-
 import React from 'react';
 import { Tajawal, Manrope } from 'next/font/google';
 
-// إعداد الخطوط لتطابق نظام التصميم في ملف الإعدادات
+// استيراد مكون الترويسة
+import Header from '@/components/layout/Header';
+
 const tajawal = Tajawal({
   subsets: ['arabic'],
   weight: ['400', '500', '700'],
@@ -19,25 +19,25 @@ const manrope = Manrope({
   variable: '--font-heading'
 });
 
-// معلومات الصفحة الوصفية (Metadata)
+// تم تحديث البيانات الوصفية (metadata) هنا
 export const metadata = {
-  title: 'TopShield - حجز موعد',
-  description: 'صفحة حجز المواعيد لمنصة TopShield',
+  title: {
+    default: 'TOPSHIELD | الشركة الأمريكية الرائدة في تصنيع أفلام العازل الحراري وأفلام حماية الطلاء',
+    template: '%s | TOPSHIELD',
+  },
+  description: {
+    default: 'TOPSHIELD | The Leading American Company in Manufacturing Window Films and Paint Protection',
+  },
 };
 
-// مكون التخطيط الأساسي (Root Layout)
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ar" dir="rtl">
       <body
-        // تطبيق الخطوط والألوان الأساسية من ملف globals.css
         className={`${tajawal.variable} ${manrope.variable} font-tajawal bg-topshield-bg-main text-topshield-text-main`}
       >
-        {children}
+        <Header />
+        <main>{children}</main>
       </body>
     </html>
   );

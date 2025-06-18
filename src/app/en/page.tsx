@@ -1,5 +1,6 @@
 // src/app/en/page.tsx
-import { HomePage } from '@/app/[locale]/page';
+
+import HomePage from '@/components/homepage/HomePage';
 
 export default function EnglishHomePage() {
   return <HomePage />;

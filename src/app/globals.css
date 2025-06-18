@@ -44,12 +44,9 @@
     font-family: 'Tajawal', sans-serif;
   }
 
-  body {
-    background: linear-gradient(135deg, #0c1a3a 0%, #1a2b5e 100%);
-    min-height: 100vh;
-    color: #f5f6fa;
-    overflow-x: hidden;
-  }
+  /*
+    ملاحظة: تم حذف كتلة body القديمة من هنا لحل المشكلة
+  */
 
   .futuristic-header {
     perspective: 1000px;
