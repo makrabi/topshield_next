@@ -1,4 +1,4 @@
-// المسار: src/app/[locale]/login/page.tsx
+// src/app/[locale]/login/page.tsx
 'use client';
 
 import { useTranslations } from 'next-intl';
@@ -12,7 +12,7 @@ type Props = {
 
 export default function LoginPage({ params: { locale } }: Props) {
   const t = useTranslations('LoginPage');
-  
+
   return (
     <div>
       <h1>{t('title')}</h1>
