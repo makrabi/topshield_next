@@ -1,11 +1,12 @@
-'use client';
-
 import { PageProps } from 'next/types';
 import { useTranslations } from 'next-intl';
 import LoginForm from './LoginForm';
 
-export default function LoginPage({ params }: PageProps<{ locale: string }>) {
-  const { locale } = params;
+// جعل المكون غير متزامن
+export default async function LoginPage({ params }: PageProps<{ locale: string }>) {
+  // استخراج المتغير 'locale' من الـ params باستخدام await
+  const { locale } = await params;
+
   const t = useTranslations('LoginPage');
 
   return (
