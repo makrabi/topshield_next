@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import LoginForm from './LoginForm';
+import LoginForm from './LoginForm'; // تأكد أن هذا المكون موجود لديك
 
 type Props = {
   params: {
